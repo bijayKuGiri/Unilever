@@ -1,2 +1,1 @@
-# QATitanAutomation
-Automation Framework
+# QaTitan
