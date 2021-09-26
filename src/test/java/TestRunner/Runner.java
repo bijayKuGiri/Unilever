@@ -14,10 +14,9 @@ import org.junit.runner.RunWith;
         //plugin = {"json:resources/cucumber.json","html:resources/cucumber.html"},
 
         glue = "Steps",
-        plugin = {"pretty","json:target/cucumber.json","html:target/cucumber.html"},
+        plugin = {"pretty","json:target/cucumber.json","html:target/cucumber.html", "io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"},
+        tags = "@SmokeTest",
         monochrome = true
 )
 public class Runner {
 }
-//public class Runner extends AbstractTestNGCucumberTests {
-//}

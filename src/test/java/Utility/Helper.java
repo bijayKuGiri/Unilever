@@ -40,7 +40,7 @@ public class Helper {
 
     }
     public static void NavigateToUAT(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
-        _driver.navigate().to(getNodeValue(filePath,"uat"));
+        //_driver.navigate().to(getNodeValue(filePath,"uat"));
         _driver.navigate().to(getNodeValue(filePath,"uatcred"));
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout  (40, TimeUnit.SECONDS);
