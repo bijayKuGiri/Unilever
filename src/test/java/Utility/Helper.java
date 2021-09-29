@@ -10,12 +10,12 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import org.w3c.dom.*;
 import org.xml.sax.SAXException;
 
-//import javax.swing.*;
+import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-//import java.awt.event.ActionEvent;
-//import java.beans.PropertyChangeListener;
+import java.awt.event.ActionEvent;
+import java.beans.PropertyChangeListener;
 import java.io.File;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
@@ -60,13 +60,12 @@ public class Helper {
 //        JavascriptExecutor executor = (JavascriptExecutor) driver;
 //        executor.executeScript("arguments[0].scrollIntoView(true);", element);
         try {
-            element.click();
-
+            Actions action = new Actions(driver);
+            action.moveToElement(element).click().perform();
         } catch (ElementClickInterceptedException ex) {
             if(driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size()>0)
                 driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).click();
-            Actions action = new Actions(driver);
-            action.moveToElement(element).click().perform();
+            element.click();
         }
     }
 
