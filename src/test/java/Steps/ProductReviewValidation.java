@@ -8,8 +8,10 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.List;
 import java.util.Random;
 
@@ -37,7 +39,7 @@ public class ValidateProductReviewSteps extends BaseUtilities {
         review=_home.navReview();
         Thread.sleep(5000);
     }
-    @Then("it should navigate to Product Review Page Page")
+    @Then("it should navigate to Product Review Page")
     public void it_should_navigate_to_product_review_page_page() throws InterruptedException {
 
         review.enterReview();
