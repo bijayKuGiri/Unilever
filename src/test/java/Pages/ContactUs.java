@@ -13,11 +13,12 @@ import java.util.ArrayList;
 
 public class ContactUs extends Helper {
     private RemoteWebDriver driver;
+    private boolean isValid = false;
 
     public ContactUs(RemoteWebDriver _driver) {
 
-        PageFactory.initElements(_driver,this);
-        driver=_driver;
+        PageFactory.initElements(_driver, this);
+        driver = _driver;
     }
 
     @FindBy(css = "#contactUs-inquiryType[name='enquirySubj']")
@@ -66,83 +67,100 @@ public class ContactUs extends Helper {
     @FindBy(css = "#legalAgeConfirmation_Err>p")
     WebElement lbllegalConfErr;
 
-    @FindBy(xpath="//p[@class='small']/a[2]")
+    @FindBy(xpath = "//p[@class='small']/a[2]")
     WebElement lnkTermsOfUse;
 
-    @FindBy(xpath="//p[@class='small']/a[1]")
+    @FindBy(xpath = "//p[@class='small']/a[1]")
     WebElement lnkPrivacyNotice;
 
-    @FindBy(xpath="//p[@class='small']/a[3]")
+    @FindBy(xpath = "//p[@class='small']/a[3]")
     WebElement lnkCookiesNotice;
-    @FindBy(css="p.small")
+
+    @FindBy(css = "p.small")
     WebElement lblBottom;
 
-    public boolean isNameErrorDisplay(){
+    public void setValid(boolean valid) {
+        isValid = valid;
+    }
+
+    public boolean isValid() {
+        return isValid;
+    }
+
+    public boolean isNameErrorDisplay() {
         return lblfirstnameErr.isDisplayed();
     }
-    public boolean isLegalAgeErrorDisplay(){
+
+    public boolean isLegalAgeErrorDisplay() {
         return lbllegalConfErr.isDisplayed();
     }
-    public boolean isLastNameErrorDisplay(){
+
+    public boolean isLastNameErrorDisplay() {
         return lblLastnameErr.isDisplayed();
     }
-    public boolean isEmailErrorDisplay(){
+
+    public boolean isEmailErrorDisplay() {
         return lblemailErr.isDisplayed();
     }
-    public boolean isCommentErrorDisplay(){
+
+    public boolean isCommentErrorDisplay() {
         return lblCommentErr.isDisplayed();
     }
-    public void SelectReason(String reason){
-        Helper.selectFromDDn(reason,selectReason);
+
+    public void SelectReason(String reason) {
+        Helper.selectFromDDn(reason, selectReason);
     }
 
-    public void SelectSubject(String subject){
-        Helper.selectFromDDn(subject,selectSubject);
+    public void SelectSubject(String subject) {
+        Helper.selectFromDDn(subject, selectSubject);
     }
 
-    public void enterNameEmailAndComments(String name,String lastName, String email, String Comments) throws InterruptedException {
-        Helper.scrollDownPage(driver,1);
+    public void enterNameEmailAndComments(String name, String lastName, String email, String Comments) throws InterruptedException {
+        Helper.scrollDownPage(driver, 1);
         txtName.findElement(By.tagName("input")).sendKeys(name);
         txtLastName.findElement(By.tagName("input")).sendKeys(lastName);
         txtEmail.findElement(By.tagName("input")).sendKeys(email);
-        if(!Comments.trim().isEmpty())
+        if (!Comments.trim().isEmpty())
             txtComments.findElement(By.tagName("textarea")).sendKeys(Comments);
-        //Helper.scrollUpPage(driver,1);
-        //Helper.downKeyOnPage(driver,2);
         if (!Comments.trim().isEmpty()) {
-            //Helper.click(driver, chkAgeConfirm);
-            //Helper.click(driver, btnSubmit);
             chkAgeConfirm.click();
         }
+
+    }
+
+    public void hitSubmit() {
+
         btnSubmit.submit();
-        while (driver.findElements(By.cssSelector("svg#star.loadingIcon")).size()>0){}
-        //Thread.sleep(1000);
+        if (isValid)
+            while (driver.findElements(By.cssSelector("svg#star.loadingIcon")).size() > 0) {
+            }
 
     }
 
-    public boolean VerifySuccessContactUS(){
-       return lblConform.isDisplayed();
+    public boolean VerifySuccessContactUS() {
+        return lblConform.isDisplayed();
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return lblConform.getText();
     }
 
     public RemoteWebDriver navTermsOfUse() throws InterruptedException {
 
-        Helper.scrollDownPage(driver,3);
-        WebElement element=lblBottom.findElement(By.xpath("//a[@class='optInLinks'][2]"));
-        while (!element.isDisplayed()){
-            Helper.downKeyOnPage(driver,1);
+        Helper.scrollDownPage(driver, 3);
+        WebElement element = lblBottom.findElement(By.xpath("//a[@class='optInLinks'][2]"));
+        while (!element.isDisplayed()) {
+            Helper.downKeyOnPage(driver, 1);
         }
         //element.click();
-        Helper.click(driver,element);
+        Helper.click(driver, element);
         //lnkTermsOfUse.click();
         Thread.sleep(5000);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver;
     }
+
     public boolean IsNavigateTermsOfUse(RemoteWebDriver driver) {
         System.out.println(driver.getCurrentUrl());
         System.out.println("https://www.unilever.com.br/legal/");
@@ -150,12 +168,12 @@ public class ContactUs extends Helper {
     }
 
     public RemoteWebDriver navPrivacyNotice() throws InterruptedException {
-        Helper.scrollDownPage(driver,3);
-        WebElement element=lblBottom.findElement(By.xpath("//a[@class='optInLinks'][1]"));
-        while (!element.isDisplayed()){
-            Helper.downKeyOnPage(driver,2);
+        Helper.scrollDownPage(driver, 3);
+        WebElement element = lblBottom.findElement(By.xpath("//a[@class='optInLinks'][1]"));
+        while (!element.isDisplayed()) {
+            Helper.downKeyOnPage(driver, 2);
         }
-        Helper.click(driver,element);
+        Helper.click(driver, element);
         //lnkPrivacyNotice.click();
         //element.click();
         Thread.sleep(2000);
@@ -163,6 +181,7 @@ public class ContactUs extends Helper {
         driver.switchTo().window(tabs2.get(1));
         return driver;
     }
+
     public boolean IsNavigatePrivacyNotice(RemoteWebDriver driver) {
         System.out.println(driver.getCurrentUrl());
         System.out.println("https://www.unilevernotices.com/brazil/portuguese/privacy-notice/notice.html");
@@ -170,18 +189,19 @@ public class ContactUs extends Helper {
     }
 
     public RemoteWebDriver navCookiesNotice() throws InterruptedException {
-        Helper.scrollDownPage(driver,3);
-        WebElement element=lblBottom.findElement(By.xpath("//a[@class='optInLinks'][3]"));
-        while (!element.isDisplayed()){
-            Helper.downKeyOnPage(driver,1);
+        Helper.scrollDownPage(driver, 3);
+        WebElement element = lblBottom.findElement(By.xpath("//a[@class='optInLinks'][3]"));
+        while (!element.isDisplayed()) {
+            Helper.downKeyOnPage(driver, 1);
         }
-        Helper.click(driver,element);
+        Helper.click(driver, element);
         //element.click();
         Thread.sleep(2000);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver;
     }
+
     public boolean IsNavigateCookiesNotice(RemoteWebDriver driver) {
         System.out.println(driver.getCurrentUrl());
         System.out.println("https://www.unilevernotices.com/brazil/portuguese/cookie-notice/notice.html");

@@ -1,5 +1,6 @@
 Feature: Validate the footer hyperlink validation
 
+
   Scenario: Verifying foot Hyperlink loading time
     Given The site is Up & Running
     When i try to get the footer links

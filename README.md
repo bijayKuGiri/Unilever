@@ -1,1 +1,1 @@
-# QaTitan
+# Automation

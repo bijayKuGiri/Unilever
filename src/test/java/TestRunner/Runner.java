@@ -1,11 +1,12 @@
 
 package TestRunner;
 
+
 import io.cucumber.junit.Cucumber;
 import io.cucumber.junit.CucumberOptions;
-//import io.cucumber.testng.AbstractTestNGCucumberTests;
-import org.junit.runner.JUnitCore;
+import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.junit.runner.RunWith;
+
 
 @RunWith(Cucumber.class)
 @CucumberOptions(
@@ -15,8 +16,9 @@ import org.junit.runner.RunWith;
 
         glue = "Steps",
         plugin = {"pretty","json:target/cucumber.json","html:target/cucumber.html", "io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"},
-        tags = "@SmokeTest",
+        //tags = "@SmokeTest",
         monochrome = true
 )
-public class Runner {
+public class Runner{
+
 }

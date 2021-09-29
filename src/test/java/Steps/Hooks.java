@@ -5,6 +5,7 @@ import Utility.Helper;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -51,6 +52,7 @@ public class Hooks extends BaseUtilities {
             else if(OS.contains("nix") || OS.contains("nux") || OS.contains("aix"))
                 System.setProperty("webdriver.chrome.driver", ".//src//main//resources//ChromeDriver//linux");
             ChromeOptions options = new ChromeOptions();
+            options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT_AND_NOTIFY);
             options.addArguments("enable-automation");
             if(Objects.requireNonNull(Helper.getNodeValue(Helper.filePath, "headless")).toLowerCase().equals("yes"))
                 options.addArguments("--headless");
@@ -61,6 +63,7 @@ public class Hooks extends BaseUtilities {
             options.addArguments("--disable-gpu");
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             _driver = new ChromeDriver(options);
+            _driver.manage().deleteAllCookies();
             _driver.manage().window().maximize();
         }
         else if(browser==Browsertype.EDGE) {

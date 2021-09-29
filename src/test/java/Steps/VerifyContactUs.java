@@ -38,20 +38,26 @@ public class VerifyContactUs extends BaseUtilities {
     public void user_should_get_message_based_on_valid(String Criteria) {
         switch (Criteria){
             case "Valid":
+                _contact.setValid(true);
+                _contact.hitSubmit();
                 Assert.assertTrue(_contact.VerifySuccessContactUS());
                 System.out.println(_contact.getMessage());
                 break;
             case "NameMissing":
+                _contact.hitSubmit();
                 Assert.assertTrue(_contact.isNameErrorDisplay());
                 break;
             case "lastnameMissing":
+                _contact.hitSubmit();
                 Assert.assertTrue(_contact.isLastNameErrorDisplay());
                 break;
             case "emailMissing":
             case "inValidEmail":
+                _contact.hitSubmit();
                 Assert.assertTrue(_contact.isEmailErrorDisplay());
                 break;
             case "commentMissing":
+                _contact.hitSubmit();
                 Assert.assertTrue(_contact.isCommentErrorDisplay());
                 Assert.assertTrue(_contact.isLegalAgeErrorDisplay());
                 break;

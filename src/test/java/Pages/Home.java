@@ -7,11 +7,15 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
+import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +27,8 @@ import javax.imageio.ImageIO;
 import java.io.File;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+
+import static java.time.Duration.ofSeconds;
 
 
 public class Home {
@@ -152,6 +158,10 @@ public class Home {
     public boolean IsLogoImageDisplayed() {
         return logo.isDisplayed();
     }
+    public String logoText() {
+        return logo.getAttribute("alt");
+    }
+
 
     public void getScreenShot() throws InterruptedException, IOException {
         //WebElement webElement = driver.findElement(By.cssSelector("img[title='Magnum Logo']"));
@@ -179,7 +189,9 @@ public class Home {
     }
 
     public Review navReview() {
-        summarySection.click();
+        WebDriverWait wait= new WebDriverWait(driver,15);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section"))).click();
+        //summarySection.click();
         Helper.click(driver, lblWriteReview);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
