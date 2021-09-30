@@ -51,14 +51,6 @@ public class Helper {
     }
 
     public static void click(RemoteWebDriver driver, WebElement element) {
-//        try {
-//            element.findElement(By.tagName("input")).click();
-//        } catch (Exception e) {
-//            JavascriptExecutor executor = (JavascriptExecutor) driver;
-//            executor.executeScript("arguments[0].click();", element);
-//        }
-//        JavascriptExecutor executor = (JavascriptExecutor) driver;
-//        executor.executeScript("arguments[0].scrollIntoView(true);", element);
         try {
             Actions action = new Actions(driver);
             action.moveToElement(element).click().perform();
@@ -66,6 +58,17 @@ public class Helper {
             if(driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size()>0)
                 driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).click();
             element.click();
+        }
+    }
+
+    public static void EnterText(RemoteWebDriver driver, WebElement element,String value) {
+        try {
+            element.sendKeys(value);
+        } catch (ElementClickInterceptedException ex) {
+            if(driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size()>0)
+                driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).click();
+            click(driver,element);
+            element.sendKeys(value);
         }
     }
 

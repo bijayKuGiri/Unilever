@@ -16,10 +16,10 @@ public class Review {
     private RemoteWebDriver driver;
     private boolean isValid = false;
     private boolean isRatingRequired = true;
-    private String reviewTitle=new String();
-    private String urReview=new String();
-    private String nickName=new String();
-    private String email=new String();
+    private String reviewTitle = new String();
+    private String urReview = new String();
+    private String nickName = new String();
+    private String email = new String();
     private boolean termAndCondition = true;
 
 
@@ -139,35 +139,50 @@ public class Review {
         int int_random = rand.nextInt(upperbound);
 
         for (int i = 1; i <= int_random; i++) {
-            if (!chkStar.findElements(By.tagName("input")).get(i).isSelected())
-                chkStar.findElements(By.tagName("input")).get(i).click();
+            //if (!chkStar.findElements(By.tagName("input")).get(i).isSelected())
+            //chkStar.findElements(By.tagName("input")).get(i).click();
+            Helper.click(driver, chkStar.findElements(By.tagName("input")).get(i));
         }
     }
 
     public void enterReview() {
         fillStar();
-        txtReviewTitle.sendKeys("Review Testing");
-        txtYourReview.sendKeys("Customer reviews build something known as social proof, a phenomenon that" +
+        Helper.EnterText(driver, txtReviewTitle, "Review Testing");
+        Helper.EnterText(driver, txtYourReview, "Customer reviews build something known as social proof, a phenomenon that" +
+                " states people are influenced by those around them. This might include friends and family, industry experts" +
+                " and influencers, or even internet strangers.Social proof can push customers who are on the fence about " +
+                "buying a product to make a purchase (or consider other alternatives). ");
+        //txtReviewTitle.sendKeys("Review Testing");
+        /*txtYourReview.sendKeys("Customer reviews build something known as social proof, a phenomenon that" +
                 " states people are influenced by those around them. This might include friends and family, industry experts" +
                 " and influencers, or even internet strangers.Social proof can push customers who are on the fence about " +
                 "buying a product to make a purchase (or consider other alternatives). ");
         //While there are many different forms " +
         //"of social proof (like influencer campaigns and company partnerships), customer reviews have a special place " +
-        //"in shoppers’ hearts. ");
-        txtNickName.sendKeys("Automatic");
-        txtEmail.sendKeys("Test@test.com");
-        chkTermCondition.click();
+        //"in shoppers’ hearts. ");*/
+//        txtNickName.sendKeys("Automatic");
+//        txtEmail.sendKeys("Test@test.com");
+        //chkTermCondition.click();
+        Helper.EnterText(driver, txtNickName, "Automatic");
+        Helper.EnterText(driver, txtEmail, "Test@test.com");
+        Helper.click(driver, chkTermCondition);
     }
 
     public void enterReviewDetails() {
         if (isRatingRequired)
             fillStar();
-        txtReviewTitle.sendKeys(reviewTitle);
-        txtYourReview.sendKeys(urReview);
-        txtNickName.sendKeys(nickName);
-        txtEmail.sendKeys(email);
+//        txtReviewTitle.sendKeys(reviewTitle);
+//        txtYourReview.sendKeys(urReview);
+//        txtNickName.sendKeys(nickName);
+//        txtEmail.sendKeys(email);
+//        if (termAndCondition)
+//            chkTermCondition.click();
+        Helper.EnterText(driver, txtReviewTitle, reviewTitle);
+        Helper.EnterText(driver, txtYourReview, urReview);
+        Helper.EnterText(driver, txtNickName, nickName);
+        Helper.EnterText(driver, txtEmail, email);
         if (termAndCondition)
-            chkTermCondition.click();
+            Helper.click(driver, chkTermCondition);
     }
 
 

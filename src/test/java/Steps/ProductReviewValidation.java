@@ -121,6 +121,20 @@ public class ProductReviewValidation extends BaseUtilities {
         Assert.assertTrue(review.isNickNameMsgDisplay());
     }
 
+    @When("Fill the details with wrong email")
+    public void fill_the_details_with_wrong_email() {
+        review.setRatingRequired(true);
+        review.setUrReview("Customer reviews build something known as social proof, a phenomenon that" +
+                " states people are influenced by those around them. This might include friends and family, industry experts" +
+                " and influencers, or even internet strangers.Social proof can push customers who are on the fence about " +
+                "buying a product to make a purchase (or consider other alternatives). ");
+        review.setReviewTitle("Reviw Product");
+        review.setNickName("Testing");
+        review.setEmail("abcdefgh.cmmc");
+        review.setTermAndCondition(true);
+        review.setValid(false);
+        review.enterReviewDetails();
+    }
 
 
     @When("Fill the details without Email")

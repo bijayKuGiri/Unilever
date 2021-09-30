@@ -106,7 +106,8 @@ public class Home {
     public void verifyRotation(List<WebElement> elements) throws InterruptedException {
         for (int i = 0; i < elements.size(); i++) {
             WebElement itemSelected = carouselContent.findElement(By.xpath(active_carousel));
-            carouselNavigateNext.click();
+            //carouselNavigateNext.click();
+            Helper.click(driver,carouselNavigateNext);
             Thread.sleep(2000);
             WebElement itemSelected_Current = carouselContent.findElement(By.xpath(active_carousel));
             Assert.assertNotEquals(itemSelected, itemSelected_Current);
@@ -172,12 +173,14 @@ public class Home {
     }
 
     public ContactUs navContactUs() {
-        contactUs.click();
+        Helper.click(driver,contactUs);
+        //contactUs.click();
         return new ContactUs(driver);
     }
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
-        lnkFacebook.click();
+        Helper.click(driver,lnkFacebook);
+        //lnkFacebook.click();
         Thread.sleep(5000);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
@@ -199,8 +202,9 @@ public class Home {
     }
 
     public RemoteWebDriver navTwitter() throws InterruptedException {
-        lnkTwitter.click();
-        Thread.sleep(5000);
+//        lnkTwitter.click();
+        Helper.click(driver,lnkTwitter);
+        Thread.sleep(2000);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver;
@@ -211,9 +215,12 @@ public class Home {
     }
 
     public void searchfn(String productName) {
-        icnSearch.click();
-        txtSearch.sendKeys(productName);
-        lblSearch.click();
+        Helper.click(driver,icnSearch);
+        Helper.EnterText(driver,txtSearch,productName);
+        Helper.click(driver,lblSearch);
+        //icnSearch.click();
+        //txtSearch.sendKeys(productName);
+        //lblSearch.click();
         while (driver.findElements(By.cssSelector(".search-list-label")).size() != 1) {
         }
     }
