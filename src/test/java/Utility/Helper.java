@@ -4,6 +4,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -43,7 +44,33 @@ public class Helper {
         _driver.navigate().to(getNodeValue(filePath, "uatcred"));
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+
     }
+
+    /*public boolean waitForJStoLoad() {
+        WebDriverWait wait = new WebDriverWait(_driver, 30);
+        // wait for jQuery to load
+        ExpectedConditions<Boolean> jQueryLoad = new ExpectedConditions<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                try {
+                    return ((Long)executeJavaScript("return jQuery.active") == 0);
+                }
+                catch (Exception e) {
+                    return true;
+                }
+            }
+        };
+        // wait for Javascript to load
+        ExpectedCondition<Boolean> jsLoad = new ExpectedCondition<Boolean>() {
+            @Override
+            public Boolean apply(WebDriver driver) {
+                return executeJavaScript("return document.readyState")
+                        .toString().equals("complete");
+            }
+        };
+        return wait.until(jQueryLoad) && wait.until(jsLoad);
+    }*/
 
     public static void selectFromDDn(String Value, WebElement element) {
         Select se = new Select(element);
@@ -52,17 +79,24 @@ public class Helper {
 
     public static void click(RemoteWebDriver driver, WebElement element) {
         try {
-            Actions action = new Actions(driver);
-            action.moveToElement(element).click().perform();
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOf(element));
+            element.click();
         } catch (ElementClickInterceptedException ex) {
             if(driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size()>0)
                 driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).click();
-            element.click();
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOf(element));
+            Actions action = new Actions(driver);
+            action.moveToElement(element).click().perform();
         }
     }
 
     public static void EnterText(RemoteWebDriver driver, WebElement element,String value) {
+
         try {
+            WebDriverWait wait = new WebDriverWait(driver, 10);
+            wait.until(ExpectedConditions.visibilityOf(element));
             element.sendKeys(value);
         } catch (ElementClickInterceptedException ex) {
             if(driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size()>0)

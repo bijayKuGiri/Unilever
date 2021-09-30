@@ -47,3 +47,16 @@ Feature: Validate the Product Review
     When i navigate to a product and select the Review section
     And Fill the details without agreement
     Then it should display validation message for agreement
+
+  Scenario: Verifying Product Review section without your Review
+    Given The site is Up and Running
+    When i navigate to a product and select the Review section
+    And Fill the details without your Review
+    Then it should display validation message for minimum Your Review
+
+
+  Scenario: Verifying Product Review section with your Review more than 500 character
+    Given The site is Up and Running
+    When i navigate to a product and select the Review section
+    And Fill the details with your Review more than five hundred char
+    Then it should display validation message for maximum Your Review

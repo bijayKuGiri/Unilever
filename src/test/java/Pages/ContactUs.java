@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
 public class ContactUs extends Helper {
     private RemoteWebDriver driver;
@@ -120,14 +121,11 @@ public class ContactUs extends Helper {
         Helper.EnterText(driver,txtName.findElement(By.tagName("input")),name);
         Helper.EnterText(driver,txtLastName.findElement(By.tagName("input")),lastName);
         Helper.EnterText(driver,txtEmail.findElement(By.tagName("input")),email);
-        //txtName.findElement(By.tagName("input")).sendKeys(name);
-        //txtLastName.findElement(By.tagName("input")).sendKeys(lastName);
-        //txtEmail.findElement(By.tagName("input")).sendKeys(email);
         if (!Comments.trim().isEmpty())
             Helper.EnterText(driver,txtComments.findElement(By.tagName("textarea")),Comments);
-            //txtComments.findElement(By.tagName("textarea")).sendKeys(Comments);
+
         if (!Comments.trim().isEmpty()) {
-            //chkAgeConfirm.click();
+
             Helper.click(driver,chkAgeConfirm);
         }
 
@@ -157,10 +155,10 @@ public class ContactUs extends Helper {
         while (!element.isDisplayed()) {
             Helper.downKeyOnPage(driver, 1);
         }
-        //element.click();
         Helper.click(driver, element);
-        //lnkTermsOfUse.click();
-        Thread.sleep(5000);
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+        //Thread.sleep(5000);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver;
@@ -179,9 +177,8 @@ public class ContactUs extends Helper {
             Helper.downKeyOnPage(driver, 2);
         }
         Helper.click(driver, element);
-        //lnkPrivacyNotice.click();
-        //element.click();
-        Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver;
@@ -200,8 +197,9 @@ public class ContactUs extends Helper {
             Helper.downKeyOnPage(driver, 1);
         }
         Helper.click(driver, element);
-        //element.click();
-        Thread.sleep(2000);
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+        //Thread.sleep(2000);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver;

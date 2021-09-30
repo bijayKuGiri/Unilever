@@ -66,8 +66,13 @@ public class Review {
     WebElement lblMsg;
 
 
-    @FindBy(css = "#kr-content")
-    WebElement divMsg;
+    @FindBy(css = "#kr-comment-max-error")
+    WebElement divUrCommentMaxError;
+
+    @FindBy(css = "#kr-comment-min-error")
+    WebElement divUrCommentMinError;
+
+
 
     public boolean isRatingRequired() {
         return isRatingRequired;
@@ -139,8 +144,6 @@ public class Review {
         int int_random = rand.nextInt(upperbound);
 
         for (int i = 1; i <= int_random; i++) {
-            //if (!chkStar.findElements(By.tagName("input")).get(i).isSelected())
-            //chkStar.findElements(By.tagName("input")).get(i).click();
             Helper.click(driver, chkStar.findElements(By.tagName("input")).get(i));
         }
     }
@@ -171,12 +174,6 @@ public class Review {
     public void enterReviewDetails() {
         if (isRatingRequired)
             fillStar();
-//        txtReviewTitle.sendKeys(reviewTitle);
-//        txtYourReview.sendKeys(urReview);
-//        txtNickName.sendKeys(nickName);
-//        txtEmail.sendKeys(email);
-//        if (termAndCondition)
-//            chkTermCondition.click();
         Helper.EnterText(driver, txtReviewTitle, reviewTitle);
         Helper.EnterText(driver, txtYourReview, urReview);
         Helper.EnterText(driver, txtNickName, nickName);
@@ -187,24 +184,40 @@ public class Review {
 
 
     public void submit() {
-        btnSubmit.click();
+        Helper.click(driver,btnSubmit);
+        //btnSubmit.click();
         if (isValid()) {
             WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.visibilityOf(lblThanksMsg));
-
         }
 
     }
 
     public boolean isThanksMsgDisplay() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(lblThanksMsg));
         return lblThanksMsg.isDisplayed();
     }
 
     public boolean isRatingMsgDisplay() {
+
         return chkStarMsg.isDisplayed();
+    }
+    public boolean isUrReviewMaxMsgDisplay() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(divUrCommentMaxError));
+        System.out.println(divUrCommentMaxError.getText());
+        return divUrCommentMaxError.isDisplayed();
+    }
+    public boolean isUrReviewMinMsgDisplay() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(divUrCommentMinError));
+        return divUrCommentMinError.isDisplayed();
     }
 
     public boolean isReviewTitleMsgDisplay() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(txtReviewTitleMsg));
         return txtReviewTitleMsg.isDisplayed();
     }
 

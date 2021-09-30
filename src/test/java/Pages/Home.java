@@ -33,8 +33,6 @@ import static java.time.Duration.ofSeconds;
 
 public class Home {
 
-    //private Helper _helper;
-    //private String filePath="config.xml";
     private RemoteWebDriver driver;
 
     public Home(RemoteWebDriver _driver) {
@@ -114,7 +112,6 @@ public class Home {
         }
 
     }
-
     public void clickLogo() throws InterruptedException {
 
         Helper.click(driver, logo);
@@ -122,7 +119,7 @@ public class Home {
     }
 
     public List<WebElement> getProducts() {
-        List<WebElement> lstProducts = driver.findElements(By.xpath("//div[contains(@class,'button button--primary') or contains(@class,'button button--secondary') ]"));
+        List<WebElement> lstProducts = driver.findElements(By.xpath("//div[contains(@class,'button button--primary') or contains(@class,'button button--secondary')]//a"));
         return lstProducts;
     }
 
@@ -153,6 +150,8 @@ public class Home {
     }
 
     public boolean IsSummeryExist() {
+        WebDriverWait wait= new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.visibilityOf(summarySection));
         return summarySection.isDisplayed();
     }
 
@@ -192,9 +191,12 @@ public class Home {
     }
 
     public Review navReview() {
-        WebDriverWait wait= new WebDriverWait(driver,15);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section"))).click();
+        WebDriverWait wait= new WebDriverWait(driver,10);
+        wait.until(ExpectedConditions.visibilityOf(summarySection));
+
+//        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section"))).click();
         //summarySection.click();
+        Helper.click(driver, summarySection);
         Helper.click(driver, lblWriteReview);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
