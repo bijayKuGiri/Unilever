@@ -73,49 +73,32 @@ public class Review {
     WebElement divUrCommentMinError;
 
 
+    @FindBy(css = "#kr-content")
+    WebElement reviewContent;
 
-    public boolean isRatingRequired() {
-        return isRatingRequired;
+    public void WaitForReviewPageToLoad(int timeInSecond){
+        WebDriverWait wait= new WebDriverWait(driver,timeInSecond);
+        wait.until(ExpectedConditions.visibilityOf(reviewContent));
     }
 
     public void setRatingRequired(boolean ratingRequired) {
         isRatingRequired = ratingRequired;
     }
 
-    public String getReviewTitle() {
-        return reviewTitle;
-    }
-
     public void setReviewTitle(String reviewTitle) {
         this.reviewTitle = reviewTitle;
-    }
-
-    public String getUrReview() {
-        return urReview;
     }
 
     public void setUrReview(String urReview) {
         this.urReview = urReview;
     }
 
-    public String getNickName() {
-        return nickName;
-    }
-
     public void setNickName(String nickName) {
         this.nickName = nickName;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean isTermAndCondition() {
-        return termAndCondition;
     }
 
     public void setTermAndCondition(boolean termAndCondition) {
@@ -139,10 +122,13 @@ public class Review {
 
 
     private void fillStar() {
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.visibilityOf(chkStar));
         Random rand = new Random();
         int upperbound = chkStar.findElements(By.tagName("input")).size();
         int int_random = rand.nextInt(upperbound);
-
+        while (int_random == 1)
+            int_random = rand.nextInt(upperbound);
         for (int i = 1; i <= int_random; i++) {
             Helper.click(driver, chkStar.findElements(By.tagName("input")).get(i));
         }
@@ -184,7 +170,7 @@ public class Review {
 
 
     public void submit() {
-        Helper.click(driver,btnSubmit);
+        Helper.click(driver, btnSubmit);
         //btnSubmit.click();
         if (isValid()) {
             WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -203,12 +189,14 @@ public class Review {
 
         return chkStarMsg.isDisplayed();
     }
+
     public boolean isUrReviewMaxMsgDisplay() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(divUrCommentMaxError));
         System.out.println(divUrCommentMaxError.getText());
         return divUrCommentMaxError.isDisplayed();
     }
+
     public boolean isUrReviewMinMsgDisplay() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.visibilityOf(divUrCommentMinError));

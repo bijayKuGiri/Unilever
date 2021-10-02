@@ -164,7 +164,6 @@ public class Home {
 
 
     public void getScreenShot() throws InterruptedException, IOException {
-        //WebElement webElement = driver.findElement(By.cssSelector("img[title='Magnum Logo']"));
         System.out.println(logo.getAttribute("src"));
         Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(100)).takeScreenshot(driver, logo);
         ImageIO.write(screenshot.getImage(), "PNG", new File(System.getProperty("user.dir") + "Logo.png"));
@@ -173,13 +172,11 @@ public class Home {
 
     public ContactUs navContactUs() {
         Helper.click(driver,contactUs);
-        //contactUs.click();
         return new ContactUs(driver);
     }
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
         Helper.click(driver,lnkFacebook);
-        //lnkFacebook.click();
         Thread.sleep(5000);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
@@ -194,17 +191,14 @@ public class Home {
         WebDriverWait wait= new WebDriverWait(driver,10);
         wait.until(ExpectedConditions.visibilityOf(summarySection));
 
-//        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section"))).click();
-        //summarySection.click();
         Helper.click(driver, summarySection);
         Helper.click(driver, lblWriteReview);
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-        return new Review(driver);
+        Review review=new Review(driver);
+        review.WaitForReviewPageToLoad(15);
+        return review;
     }
 
     public RemoteWebDriver navTwitter() throws InterruptedException {
-//        lnkTwitter.click();
         Helper.click(driver,lnkTwitter);
         Thread.sleep(2000);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
@@ -220,9 +214,6 @@ public class Home {
         Helper.click(driver,icnSearch);
         Helper.EnterText(driver,txtSearch,productName);
         Helper.click(driver,lblSearch);
-        //icnSearch.click();
-        //txtSearch.sendKeys(productName);
-        //lblSearch.click();
         while (driver.findElements(By.cssSelector(".search-list-label")).size() != 1) {
         }
     }
