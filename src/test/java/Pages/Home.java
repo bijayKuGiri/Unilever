@@ -3,6 +3,7 @@ package Pages;
 
 import Utility.Helper;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -80,7 +81,7 @@ public class Home {
     WebElement lblWriteReview;
 
 
-    @FindBy(xpath = "//footer//a[@class='cmp-image__link' and contains(@href,'facebook')]//picture//img")
+    @FindBy(xpath = "//footer//a[@class='cmp-image__link' and contains(@href,'facebook') and not(@disabled)]//picture//img")
     WebElement lnkFacebook;
 
     @FindBy(xpath = "//footer//a[@class='cmp-image__link' and contains(@href,'twitter')]//picture//img")
@@ -191,8 +192,9 @@ public class Home {
     }
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
-
         //lnkFacebook.click();
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", lnkFacebook);
         Helper.click(driver,lnkFacebook);
         Thread.sleep(5000);
         /*ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
@@ -216,7 +218,8 @@ public class Home {
     }
 
     public RemoteWebDriver navTwitter() throws InterruptedException {
-        //Helper.scrollDownPage(driver,3);
+        JavascriptExecutor js = (JavascriptExecutor) driver;
+        js.executeScript("arguments[0].scrollIntoView();", lnkFacebook);
         lnkTwitter.click();
         //Helper.click(driver,lnkTwitter);
         Thread.sleep(2000);
