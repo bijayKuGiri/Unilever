@@ -127,11 +127,7 @@ public class Review {
         Random rand = new Random();
         int upperbound = chkStar.findElements(By.tagName("input")).size();
         int int_random = rand.nextInt(upperbound);
-        while (int_random == 1)
-            int_random = rand.nextInt(upperbound);
-        for (int i = 1; i <= int_random; i++) {
-            Helper.click(driver, chkStar.findElements(By.tagName("input")).get(i));
-        }
+        chkStar.findElements(By.tagName("input")).get(int_random).click();
     }
 
     public void enterReview() {
@@ -141,17 +137,7 @@ public class Review {
                 " states people are influenced by those around them. This might include friends and family, industry experts" +
                 " and influencers, or even internet strangers.Social proof can push customers who are on the fence about " +
                 "buying a product to make a purchase (or consider other alternatives). ");
-        //txtReviewTitle.sendKeys("Review Testing");
-        /*txtYourReview.sendKeys("Customer reviews build something known as social proof, a phenomenon that" +
-                " states people are influenced by those around them. This might include friends and family, industry experts" +
-                " and influencers, or even internet strangers.Social proof can push customers who are on the fence about " +
-                "buying a product to make a purchase (or consider other alternatives). ");
-        //While there are many different forms " +
-        //"of social proof (like influencer campaigns and company partnerships), customer reviews have a special place " +
-        //"in shoppers’ hearts. ");*/
-//        txtNickName.sendKeys("Automatic");
-//        txtEmail.sendKeys("Test@test.com");
-        //chkTermCondition.click();
+
         Helper.EnterText(driver, txtNickName, "Automatic");
         Helper.EnterText(driver, txtEmail, "Test@test.com");
         Helper.click(driver, chkTermCondition);
@@ -171,11 +157,11 @@ public class Review {
 
     public void submit() {
         Helper.click(driver, btnSubmit);
-        //btnSubmit.click();
         if (isValid()) {
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.visibilityOf(lblThanksMsg));
         }
+
 
     }
 

@@ -15,28 +15,29 @@ public class VerifyContactUs extends BaseUtilities {
     private BaseUtilities base;
     private Home _home;
     private ContactUs _contact;
-    SoftAssert softAssert=new SoftAssert();
+    SoftAssert softAssert = new SoftAssert();
     private RemoteWebDriver _driver;
 
     public VerifyContactUs(BaseUtilities base) {
         this.base = base;
-        _driver=base._driver;
+        _driver = base._driver;
     }
 
 
     @When("navigate to contact us page and fill the details {},{},{} and {}")
-    public void navigateToContactUsPageAndFillTheDetailsNameLastnameEmailAndComment(String name,String lastname,
-                                                                                    String email,String Comment) throws InterruptedException {
-        _home=new Home(base._driver);
-        _contact=_home.navContactUs();
+    public void navigateToContactUsPageAndFillTheDetailsNameLastnameEmailAndComment(String name, String lastname,
+                                                                                    String email, String Comment) throws InterruptedException {
+        _home = new Home(base._driver);
+        _contact = _home.navContactUs();
         _contact.SelectReason("Question");
         _contact.SelectSubject("Business");
-        _contact.enterNameEmailAndComments(name,lastname,email,Comment);
+        _contact.enterNameEmailAndComments(name, lastname, email, Comment);
 
     }
+
     @Then("user should get message based on {} Criteria")
     public void user_should_get_message_based_on_valid(String Criteria) {
-        switch (Criteria){
+        switch (Criteria) {
             case "Valid":
                 _contact.setValid(true);
                 _contact.hitSubmit();
@@ -61,10 +62,24 @@ public class VerifyContactUs extends BaseUtilities {
                 Assert.assertTrue(_contact.isCommentErrorDisplay());
                 Assert.assertTrue(_contact.isLegalAgeErrorDisplay());
                 break;
+
+            case "ageConfirmMissing":
+                _contact.hitSubmit();
+                Assert.assertTrue(_contact.isLegalAgeErrorDisplay());
+                break;
             default:
                 System.out.println("No Criteria");
         }
     }
 
 
+    @When("navigate to contact us page and without Age confirmation fill the details {},{},{} and {}")
+    public void navigateToContactUsPageAndWithoutAgeConfirmationFillTheDetailsNameLastnameEmailAndComment(String name, String lastname,
+                                                                                                          String email, String Comment) throws InterruptedException {
+        _home = new Home(base._driver);
+        _contact = _home.navContactUs();
+        _contact.SelectReason("Question");
+        _contact.SelectSubject("Business");
+        _contact.enterDetailsWithoutAgeConfirm(name, lastname, email, Comment);
+    }
 }

@@ -1,5 +1,7 @@
 Feature: Validate the CookiesNotice link
 
+  @brazil
+  @magnum
   Scenario: Verifying CookiesNotice link navigation
     Given The site is Up and Running
     And Navigate to Contactus Page

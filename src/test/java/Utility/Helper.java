@@ -44,6 +44,14 @@ public class Helper {
         _driver.navigate().to(getNodeValue(filePath, "uatcred"));
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+        //handleCookie(_driver);
+        if(_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()){
+            WebElement webElement=_driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
+            Actions actions = new Actions(_driver);
+            actions.moveToElement(webElement);
+            actions.click().perform();
+            while(_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()){}
+        }
 
     }
 
@@ -81,10 +89,17 @@ public class Helper {
         try {
             WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.visibilityOf(element));
-            element.click();
+            //element.click();
+            Actions action = new Actions(driver);
+            action.moveToElement(element).click().perform();
         } catch (ElementClickInterceptedException ex) {
-            if(driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size()>0)
-                driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).click();
+            if(driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()){
+                WebElement webElement=driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
+                Actions actions = new Actions(driver);
+                actions.moveToElement(webElement);
+                actions.click().perform();
+                while(driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()){}
+            }
             WebDriverWait wait = new WebDriverWait(driver, 10);
             wait.until(ExpectedConditions.visibilityOf(element));
             Actions action = new Actions(driver);
@@ -92,6 +107,10 @@ public class Helper {
         }
     }
 
+    public static void handleCookie(RemoteWebDriver driver){
+        if(driver.findElements(By.xpath("//div[@id='onetrust-banner-sdk']")).size()>0)
+            driver.findElement(By.xpath("//button[@id='onetrust-accept-btn-handler']")).submit();
+    }
     public static void EnterText(RemoteWebDriver driver, WebElement element,String value) {
 
         try {
@@ -99,8 +118,14 @@ public class Helper {
             wait.until(ExpectedConditions.visibilityOf(element));
             element.sendKeys(value);
         } catch (ElementClickInterceptedException ex) {
-            if(driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size()>0)
-                driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).click();
+            if(driver.findElement(By.cssSelector("button[id='onetrust-accept-btn-handler']")).isDisplayed()){
+                WebElement webElement=driver.findElement(By.cssSelector("button[id='onetrust-accept-btn-handler']>font>font"));
+                Actions actions = new Actions(driver);
+                actions.moveToElement(webElement);
+                actions.click().perform();
+                while(driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()){}
+            }
+
             click(driver,element);
             element.sendKeys(value);
         }

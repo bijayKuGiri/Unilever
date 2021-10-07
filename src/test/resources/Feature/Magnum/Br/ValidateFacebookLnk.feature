@@ -1,5 +1,7 @@
 Feature: Validate the facebook link
 
+  @brazil
+  @magnum
   Scenario: Verifying facebook link navigation
     Given The site is Up and Running
     When i try to click on facebook link

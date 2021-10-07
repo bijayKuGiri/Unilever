@@ -1,6 +1,7 @@
 Feature: Validate the Product Details
 
-
+  @brazil
+  @magnum
   Scenario: Verifying Product details available
     Given The site is Up and Running
     When verifying the Products

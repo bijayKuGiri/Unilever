@@ -131,6 +131,14 @@ public class ContactUs extends Helper {
 
     }
 
+    public void enterDetailsWithoutAgeConfirm(String name, String lastName, String email, String Comments) throws InterruptedException {
+        Helper.scrollDownPage(driver, 1);
+        Helper.EnterText(driver,txtName.findElement(By.tagName("input")),name);
+        Helper.EnterText(driver,txtLastName.findElement(By.tagName("input")),lastName);
+        Helper.EnterText(driver,txtEmail.findElement(By.tagName("input")),email);
+        Helper.EnterText(driver,txtComments.findElement(By.tagName("textarea")),Comments);
+    }
+
     public void hitSubmit() {
 
         btnSubmit.submit();

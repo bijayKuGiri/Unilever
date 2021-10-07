@@ -1,6 +1,7 @@
 Feature: Validate the carousel
 
-
+  @brazil
+  @magnum
   @SmokeTest
   Scenario: Verifying carousel available
     Given The site is Up and Running

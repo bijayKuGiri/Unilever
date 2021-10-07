@@ -4,6 +4,7 @@ package Pages;
 import Utility.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -79,10 +80,10 @@ public class Home {
     WebElement lblWriteReview;
 
 
-    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'facebook')]")
+    @FindBy(xpath = "//footer//a[@class='cmp-image__link' and contains(@href,'facebook')]//picture//img")
     WebElement lnkFacebook;
 
-    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'twitter')]")
+    @FindBy(xpath = "//footer//a[@class='cmp-image__link' and contains(@href,'twitter')]//picture//img")
     WebElement lnkTwitter;
 
     @FindBy(css = "a.cmp-button")
@@ -109,6 +110,20 @@ public class Home {
             Thread.sleep(2000);
             WebElement itemSelected_Current = carouselContent.findElement(By.xpath(active_carousel));
             Assert.assertNotEquals(itemSelected, itemSelected_Current);
+        }
+
+    }
+
+    public void getFirstCarosel(List<WebElement> elements) throws InterruptedException {
+        for (int i = 0; i < elements.size(); i++) {
+            WebElement itemSelected = carouselContent.findElement(By.xpath(active_carousel));
+            if(itemSelected.findElement(By.tagName("a")).getAttribute("href").contains("ifoodbr")) {
+                itemSelected.click();
+                break;
+            }
+            carouselNavigateNext.click();
+            Thread.sleep(2000);
+
         }
 
     }
@@ -176,10 +191,11 @@ public class Home {
     }
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
-        Helper.click(driver,lnkFacebook);
+        lnkFacebook.click();
+        //Helper.click(driver,lnkFacebook);
         Thread.sleep(5000);
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(1));
+        /*ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs2.get(1));*/
         return driver;
     }
 
@@ -199,10 +215,12 @@ public class Home {
     }
 
     public RemoteWebDriver navTwitter() throws InterruptedException {
-        Helper.click(driver,lnkTwitter);
+        //Helper.scrollDownPage(driver,3);
+        lnkTwitter.click();
+        //Helper.click(driver,lnkTwitter);
         Thread.sleep(2000);
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(1));
+        /*ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs2.get(1));*/
         return driver;
     }
 
@@ -221,4 +239,12 @@ public class Home {
     public int getSearchCount() {
         return driver.findElements(By.cssSelector(".search-result-card")).size();
     }
+
+    public boolean IsNavigateToIfoodPage() throws InterruptedException {
+        Thread.sleep(2000);
+        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        driver.switchTo().window(tabs2.get(1));
+        return driver.getCurrentUrl().contains("https://www.ifood.com");
+    }
+
 }
