@@ -87,7 +87,7 @@ public class Helper {
 
     public static void click(RemoteWebDriver driver, WebElement element) {
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.visibilityOf(element));
             //element.click();
             Actions action = new Actions(driver);
@@ -100,7 +100,7 @@ public class Helper {
                 actions.click().perform();
                 while(driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()){}
             }
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.visibilityOf(element));
             Actions action = new Actions(driver);
             action.moveToElement(element).click().perform();
@@ -114,7 +114,7 @@ public class Helper {
     public static void EnterText(RemoteWebDriver driver, WebElement element,String value) {
 
         try {
-            WebDriverWait wait = new WebDriverWait(driver, 10);
+            WebDriverWait wait = new WebDriverWait(driver, 20);
             wait.until(ExpectedConditions.visibilityOf(element));
             element.sendKeys(value);
         } catch (ElementClickInterceptedException ex) {

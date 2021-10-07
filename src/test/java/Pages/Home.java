@@ -191,8 +191,9 @@ public class Home {
     }
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
-        lnkFacebook.click();
-        //Helper.click(driver,lnkFacebook);
+
+        //lnkFacebook.click();
+        Helper.click(driver,lnkFacebook);
         Thread.sleep(5000);
         /*ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));*/
@@ -204,8 +205,8 @@ public class Home {
     }
 
     public Review navReview() {
-        WebDriverWait wait= new WebDriverWait(driver,10);
-        wait.until(ExpectedConditions.visibilityOf(summarySection));
+        WebDriverWait wait= new WebDriverWait(driver,20);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section")));
 
         Helper.click(driver, summarySection);
         Helper.click(driver, lblWriteReview);
