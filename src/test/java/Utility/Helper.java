@@ -89,7 +89,6 @@ public class Helper {
         try {
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.visibilityOf(element));
-            //element.click();
             Actions action = new Actions(driver);
             action.moveToElement(element).click().perform();
         } catch (ElementClickInterceptedException ex) {
