@@ -39,7 +39,7 @@ public class FooterLinkLoadValidation extends BaseUtilities {
     @When("i try to get the footer links")
     public void i_try_to_get_the_footer_links() {
         System.out.println("When");
-        linkTxt=_home.getfooterLinktext();
+        linkTxt=_home.getFooterLinkText();
     }
     @Then("All the footer link should load within {int} second")
     public void all_the_footer_link_should_load_within_second(Integer timeSecond) {

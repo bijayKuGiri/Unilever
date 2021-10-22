@@ -9,7 +9,6 @@ import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
@@ -17,7 +16,6 @@ import org.testng.Assert;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,18 +23,15 @@ import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
-import javax.imageio.ImageIO;
-import java.io.File;
+import java.util.Objects;
 import java.util.Random;
-import java.util.Set;
 import java.util.concurrent.TimeUnit;
-
-import static java.time.Duration.ofSeconds;
+import java.util.stream.Collectors;
 
 
 public class Home {
 
-    private RemoteWebDriver driver;
+    private final RemoteWebDriver driver;
 
     public Home(RemoteWebDriver _driver) {
 
@@ -45,8 +40,8 @@ public class Home {
     }
 
     String active_carousel = "//div[@class='cmp-carousel__content']/div[@class='cmp-carousel__item cmp-carousel__item--active']";
-    String selectedCountry = new String();
-    String getSiteText = new String();
+    String selectedCountry = "";
+    String getSiteText = "";
     WebElement faqElement;
     @FindBy(xpath = "//header")
     WebElement header;
@@ -71,6 +66,9 @@ public class Home {
 
     @FindBy(css = "button.cmp-carousel__action.cmp-carousel__action--next>span.cmp-carousel__action-icon")
     WebElement carouselNavigateNext;
+
+    @FindBy(xpath = "//button[@class='productcarousel__btn productcarousel__btn--next']")
+    WebElement prCarouselNavigateNext;
 
     @FindBy(css = "div.cmp-carousel__content")
     WebElement carouselContent;
@@ -115,6 +113,12 @@ public class Home {
     @FindBy(xpath = "//a[contains(@href,'sitemap')]//span")
     WebElement lnkSiteMap;
 
+    @FindBy(xpath = "//div[@class='productcarousel__root']")
+    WebElement prodCarousal;
+
+    @FindBy(xpath = "//button[@class='productcarousel__btn productcarousel__btn--next']")
+    WebElement prodCarousalNext;
+
     public boolean isNoResultDisplay() {
         return noResults.isDisplayed();
     }
@@ -122,6 +126,13 @@ public class Home {
     public List<WebElement> getCarouselList() {
         return carouselContent
                 .findElements(By.xpath("//div[@class='cmp-carousel__content']/div[contains(@id,'carousel')]"));
+
+    }
+
+    private List<WebElement> getProductCarouselList() {
+        return prodCarousal
+                .findElements(By.xpath("//div[@role='displaycard']")).stream().filter(el -> el.findElement(By.tagName("h3")).isDisplayed())
+                .collect(Collectors.toList());
 
     }
 
@@ -134,10 +145,23 @@ public class Home {
             WebElement itemSelected_Current = carouselContent.findElement(By.xpath(active_carousel));
             Assert.assertNotEquals(itemSelected, itemSelected_Current);
         }
+    }
+
+    public void verifyProductCarouselRotation() throws InterruptedException {
+        var currentItems=getProductCarouselList();
+        while (prodCarousalNext.isEnabled()){
+            Helper.click(driver,prodCarousalNext);
+            Thread.sleep(5000);
+            var newItems=getProductCarouselList();
+            System.out.println(currentItems.size());
+            System.out.println(newItems.size());
+            Assert.assertTrue(!(Objects.equals( currentItems,newItems)));
+        }
 
     }
 
-    public void getFirstCarosel(List<WebElement> elements) throws InterruptedException {
+
+    public void getFirstCarousel(List<WebElement> elements) throws InterruptedException {
         for (int i = 0; i < elements.size(); i++) {
             WebElement itemSelected = carouselContent.findElement(By.xpath(active_carousel));
             if (itemSelected.findElement(By.tagName("a")).getAttribute("href").contains("ifoodbr")) {
@@ -151,19 +175,18 @@ public class Home {
 
     }
 
-    public void clickLogo() throws InterruptedException {
+    public void clickLogo() {
 
         Helper.click(driver, logo);
         //logo.click();
     }
 
     public List<WebElement> getProducts() {
-        List<WebElement> lstProducts = driver.findElements(By.xpath("//div[contains(@class,'button button--primary') or contains(@class,'button button--secondary')]//a"));
-        return lstProducts;
+        return driver.findElements(By.xpath("//div[contains(@class,'button button--primary') or contains(@class,'button button--secondary')]//a"));
     }
 
-    public List<String> getLinktext() {
-        List<String> linkTxt = new ArrayList<String>();
+    public List<String> getLinkText() {
+        List<String> linkTxt = new ArrayList<>();
         List<WebElement> links = header.findElements(By.tagName("li"));
         for (WebElement var : links) {
             linkTxt.add(var.findElement(By.tagName("a")).getAttribute("href"));
@@ -171,8 +194,8 @@ public class Home {
         return linkTxt;
     }
 
-    public List<String> getfooterLinktext() {
-        List<String> linkTxt = new ArrayList<String>();
+    public List<String> getFooterLinkText() {
+        List<String> linkTxt = new ArrayList<>();
         List<WebElement> links = footerContainer.findElements(By.tagName("li"));
         for (WebElement var : links) {
             linkTxt.add(var.findElement(By.tagName("a")).getAttribute("href"));
@@ -216,15 +239,13 @@ public class Home {
     }
 
     public void selectSiteMap() throws InterruptedException {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", lnkSiteMap);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkSiteMap);
         Helper.click(driver, lnkSiteMap);
         Thread.sleep(5000);
     }
 
     public void selectFAQ() throws InterruptedException {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", lnkFAQ);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFAQ);
         Helper.click(driver, lnkFAQ);
         Thread.sleep(5000);
 
@@ -238,8 +259,7 @@ public class Home {
         WebElement element=lstElements.get(int_random);
         getSiteText = element.getText();
         Helper.scrollUpPage(driver,3);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", element);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         Actions action = new Actions(driver);
         action.moveToElement(element).doubleClick().perform();
 
@@ -254,7 +274,7 @@ public class Home {
         return driver.getCurrentUrl().contains(getSiteText);
     }
 
-    public void selectFAQans() {
+    public void selectFAQAns() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span.cmp-accordion__icon")));
         List<WebElement> lstElements = driver.findElements(By.cssSelector("span.cmp-accordion__icon"));
@@ -262,8 +282,7 @@ public class Home {
         int upperbound = lstElements.size() - 1;
         int int_random = rand.nextInt(upperbound);
         faqElement = lstElements.get(int_random);
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", faqElement);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", faqElement);
         //Helper.click(driver,faqElement);
         faqElement.click();
     }
@@ -273,13 +292,13 @@ public class Home {
     }
 
     public void clickCrossMark(){
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", faqElement);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", faqElement);
         Helper.click(driver,faqElement);
     }
 
     public RemoteWebDriver selectCountry() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
+        JavascriptExecutor js;
+        js = driver;
         js.executeScript("arguments[0].scrollIntoView();", lnkSelectCountry);
         Helper.click(driver, lnkSelectCountry);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
@@ -290,7 +309,7 @@ public class Home {
         int int_random = rand.nextInt(upperbound);
         selectedCountry = lstElements.get(int_random).getText();
         Helper.click(driver, lstElements.get(int_random));
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
@@ -298,7 +317,7 @@ public class Home {
     }
 
     public boolean isCountrySelected() {
-        if (selectedCountry == "Brazil")
+        if (Objects.equals(selectedCountry, "Brazil"))
             return driver.getTitle().contains("Magnum Brasil");
         else
             return !driver.getTitle().contains("Magnum Brasil");
@@ -306,8 +325,7 @@ public class Home {
 
 
     public void BackToStartClick() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", btnBackToTop);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", btnBackToTop);
         Helper.click(driver, btnBackToTop);
 
     }
@@ -318,8 +336,7 @@ public class Home {
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
         //lnkFacebook.click();
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", lnkFacebook);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFacebook);
         Helper.click(driver, lnkFacebook);
         Thread.sleep(5000);
         /*ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
@@ -328,8 +345,7 @@ public class Home {
     }
 
     public void navArticlePageByImg() {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", imgArticle);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", imgArticle);
         Helper.click(driver, imgArticle);
     }
 
@@ -355,8 +371,7 @@ public class Home {
     }
 
     public RemoteWebDriver navTwitter() throws InterruptedException {
-        JavascriptExecutor js = (JavascriptExecutor) driver;
-        js.executeScript("arguments[0].scrollIntoView();", lnkFacebook);
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFacebook);
         lnkTwitter.click();
         //Helper.click(driver,lnkTwitter);
         Thread.sleep(2000);
@@ -369,7 +384,7 @@ public class Home {
         return driver.getCurrentUrl().contains("twitter.com");
     }
 
-    public void searchfn(String productName) {
+    public void search(String productName) {
         Helper.click(driver, icnSearch);
         Helper.EnterText(driver, txtSearch, productName);
         Helper.click(driver, lblSearch);
@@ -383,9 +398,13 @@ public class Home {
 
     public boolean IsNavigateToIfoodPage() throws InterruptedException {
         Thread.sleep(2000);
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver.getCurrentUrl().contains("https://www.ifood.com");
     }
 
+    public void isProductCarousalDisplayed() {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", prodCarousal);
+        Assert.assertTrue(prodCarousal.isDisplayed(),"Expected Product Carousal should displayed");
+    }
 }

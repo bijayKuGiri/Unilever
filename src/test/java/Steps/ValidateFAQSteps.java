@@ -27,7 +27,7 @@ public class ValidateFAQSteps extends BaseUtilities {
 
     @When("i try to click on + icon")
     public void i_try_to_click_on_icon() {
-        _home.selectFAQans();
+        _home.selectFAQAns();
     }
 
     @Then("the answer should be visible")

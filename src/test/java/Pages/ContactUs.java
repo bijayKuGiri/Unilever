@@ -3,7 +3,6 @@ package Pages;
 import Utility.Helper;
 //import gherkin.lexer.He;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -60,13 +59,13 @@ public class ContactUs extends Helper {
     WebElement lblLastnameErr;
 
     @FindBy(css = "#email_Err>p")
-    WebElement lblemailErr;
+    WebElement emailErr;
 
     @FindBy(css = "#commentError>p")
     WebElement lblCommentErr;
 
     @FindBy(css = "#legalAgeConfirmation_Err>p")
-    WebElement lbllegalConfErr;
+    WebElement legalConfErr;
 
     @FindBy(xpath = "//p[@class='small']/a[2]")
     WebElement lnkTermsOfUse;
@@ -93,7 +92,7 @@ public class ContactUs extends Helper {
     }
 
     public boolean isLegalAgeErrorDisplay() {
-        return lbllegalConfErr.isDisplayed();
+        return legalConfErr.isDisplayed();
     }
 
     public boolean isLastNameErrorDisplay() {
@@ -101,7 +100,7 @@ public class ContactUs extends Helper {
     }
 
     public boolean isEmailErrorDisplay() {
-        return lblemailErr.isDisplayed();
+        return emailErr.isDisplayed();
     }
 
     public boolean isCommentErrorDisplay() {
@@ -167,7 +166,7 @@ public class ContactUs extends Helper {
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         //Thread.sleep(5000);
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver;
     }
@@ -208,7 +207,7 @@ public class ContactUs extends Helper {
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         //Thread.sleep(2000);
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));
         return driver;
     }

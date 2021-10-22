@@ -10,16 +10,15 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.Random;
-import java.util.concurrent.TimeUnit;
 
 public class Review {
-    private RemoteWebDriver driver;
+    private final RemoteWebDriver driver;
     private boolean isValid = false;
     private boolean isRatingRequired = true;
-    private String reviewTitle = new String();
-    private String urReview = new String();
-    private String nickName = new String();
-    private String email = new String();
+    private String reviewTitle = "";
+    private String urReview = "";
+    private String nickName = "";
+    private String email = "";
     private boolean termAndCondition = true;
 
 

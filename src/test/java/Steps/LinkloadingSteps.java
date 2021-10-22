@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.testng.Assert;
-import org.testng.annotations.Test;
 import org.testng.asserts.SoftAssert;
 
 
@@ -42,7 +40,7 @@ public class LinkloadingSteps extends BaseUtilities {
     @When("i try to get the header links")
     public void i_try_to_get_the_header_links() {
         System.out.println("When");
-        linkTxt=_home.getLinktext();
+        linkTxt=_home.getLinkText();
     }
     @Then("All the header link should load within {int} second")
     public void all_the_header_link_should_load_within_second(Integer timeSecond) {

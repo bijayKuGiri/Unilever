@@ -2,7 +2,6 @@ package Steps;
 
 import Base.BaseUtilities;
 import Pages.Home;
-import Utility.Helper;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
@@ -25,7 +24,7 @@ public class IfoodPagenavigationSteps extends BaseUtilities {
     public void verifying_the_ifood_link_on_carousel() throws InterruptedException {
         _home=new Home(base._driver);
         elements= _home.getCarouselList();
-        _home.getFirstCarosel(elements);
+        _home.getFirstCarousel(elements);
     }
     @Then("it should navigate to ifood page")
     public void it_should_navigate_to_ifood_page() throws InterruptedException {

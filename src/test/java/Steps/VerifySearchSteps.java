@@ -2,14 +2,10 @@ package Steps;
 
 import Base.BaseUtilities;
 import Pages.Home;
-import Pages.Review;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
-
-import java.util.List;
 
 public class VerifySearchSteps extends BaseUtilities {
 
@@ -26,7 +22,7 @@ public class VerifySearchSteps extends BaseUtilities {
     @When("i navigate to search page and search for a product")
     public void i_navigate_to_search_page_and_search_for_a_product() {
         _home = new Home(_driver);
-        _home.searchfn("Magnum Vegan Almonds");
+        _home.search("Magnum Vegan Almonds");
     }
 
     @Then("it should shows the products in Results")
@@ -37,7 +33,7 @@ public class VerifySearchSteps extends BaseUtilities {
     @When("i navigate to search page and search for a  wrong product")
     public void iNavigateToSearchPageAndSearchForAWrongProduct() {
         _home = new Home(_driver);
-        _home.searchfn("invalidbhhsbhddh");
+        _home.search("invalidbhhsbhddh");
     }
 
     @Then("it should not shows any products in Results")
