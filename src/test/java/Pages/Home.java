@@ -52,6 +52,9 @@ public class Home {
     @FindBy(css = "img[title='Magnum Logo']")
     WebElement logo;
 
+    @FindBy(css = ".cmp-accordion__title")
+    WebElement lnkNutritionDetails;
+
     @FindBy(css = "button.cmp-button[data-target='#searchmodal']")
     WebElement icnSearch;
 
@@ -119,6 +122,10 @@ public class Home {
     @FindBy(xpath = "//button[@class='productcarousel__btn productcarousel__btn--next']")
     WebElement prodCarousalNext;
 
+    @FindBy(xpath = "//div[@data-cmp-hook-accordion='panel']//div[@class='container responsivegrid']")
+    WebElement nutritionDetails;
+
+
     public boolean isNoResultDisplay() {
         return noResults.isDisplayed();
     }
@@ -127,6 +134,21 @@ public class Home {
         return carouselContent
                 .findElements(By.xpath("//div[@class='cmp-carousel__content']/div[contains(@id,'carousel')]"));
 
+    }
+
+    public void clickOnNutritionLnk() {
+        Helper.click(driver, lnkNutritionDetails);
+    }
+
+    public void VerifyTheNutritionDetails() {
+        Assert.assertTrue(nutritionDetails.isDisplayed(), "Expected nutrition Details should display");
+        var elements = nutritionDetails.findElements(By.xpath("//div[contains(@class,'productInfoItem')]" +
+                "//*[contains(@class,'product-info-item')][not(descendant::*)]"));
+        for (WebElement item :
+                elements) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", item);
+            System.out.println(item.getText());
+        }
     }
 
     private List<WebElement> getProductCarouselList() {
@@ -148,14 +170,14 @@ public class Home {
     }
 
     public void verifyProductCarouselRotation() throws InterruptedException {
-        var currentItems=getProductCarouselList();
-        while (prodCarousalNext.isEnabled()){
-            Helper.click(driver,prodCarousalNext);
+        var currentItems = getProductCarouselList();
+        while (prodCarousalNext.isEnabled()) {
+            Helper.click(driver, prodCarousalNext);
             Thread.sleep(5000);
-            var newItems=getProductCarouselList();
+            var newItems = getProductCarouselList();
             System.out.println(currentItems.size());
             System.out.println(newItems.size());
-            Assert.assertTrue(!(Objects.equals( currentItems,newItems)));
+            Assert.assertTrue(!(Objects.equals(currentItems, newItems)));
         }
 
     }
@@ -256,9 +278,9 @@ public class Home {
         Random rand = new Random();
         int upperbound = lstElements.size() - 1;
         int int_random = rand.nextInt(upperbound);
-        WebElement element=lstElements.get(int_random);
+        WebElement element = lstElements.get(int_random);
         getSiteText = element.getText();
-        Helper.scrollUpPage(driver,3);
+        Helper.scrollUpPage(driver, 3);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         Actions action = new Actions(driver);
         action.moveToElement(element).doubleClick().perform();
@@ -268,32 +290,31 @@ public class Home {
 
     }
 
-    public boolean verifySitemapRedirection(){
+    public boolean verifySitemapRedirection() {
         System.out.println(driver.getCurrentUrl());
-        System.out.println("+++++++++"+getSiteText);
+        System.out.println("+++++++++" + getSiteText);
         return driver.getCurrentUrl().contains(getSiteText);
     }
 
     public void selectFAQAns() {
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("span.cmp-accordion__icon")));
+        /*WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("span.cmp-accordion__icon")));*/
         List<WebElement> lstElements = driver.findElements(By.cssSelector("span.cmp-accordion__icon"));
         Random rand = new Random();
         int upperbound = lstElements.size() - 1;
         int int_random = rand.nextInt(upperbound);
-        faqElement = lstElements.get(int_random);
+        faqElement = lstElements.get(3);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", faqElement);
-        //Helper.click(driver,faqElement);
-        faqElement.click();
+        driver.executeScript("arguments[0].click();", faqElement);
     }
 
-    public boolean isAnswerDisplay(){
-         return faqElement.findElement(By.xpath("parent::button/parent::h2/following-sibling::div")).isDisplayed();
+    public boolean isAnswerDisplay() {
+        return faqElement.findElement(By.xpath("parent::button/parent::h2/following-sibling::div")).isDisplayed();
     }
 
-    public void clickCrossMark(){
+    public void clickCrossMark() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", faqElement);
-        Helper.click(driver,faqElement);
+        driver.executeScript("arguments[0].click();", faqElement);
     }
 
     public RemoteWebDriver selectCountry() {
@@ -335,7 +356,6 @@ public class Home {
     }
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
-        //lnkFacebook.click();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFacebook);
         Helper.click(driver, lnkFacebook);
         Thread.sleep(5000);
@@ -405,6 +425,6 @@ public class Home {
 
     public void isProductCarousalDisplayed() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", prodCarousal);
-        Assert.assertTrue(prodCarousal.isDisplayed(),"Expected Product Carousal should displayed");
+        Assert.assertTrue(prodCarousal.isDisplayed(), "Expected Product Carousal should displayed");
     }
 }

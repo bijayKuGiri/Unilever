@@ -64,7 +64,7 @@ public class Hooks extends BaseUtilities {
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             _driver = new ChromeDriver(options);
             _driver.manage().deleteAllCookies();
-            _driver.manage().window().maximize();
+            //_driver.manage().window().maximize();
         }
         else if(browser==Browsertype.EDGE) {
             System.out.println("Initialise Edge Browser");
