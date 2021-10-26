@@ -4,7 +4,11 @@ import Base.BaseUtilities;
 import Utility.Helper;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
+import io.cucumber.java.Scenario;
+import io.qameta.allure.Allure;
+import org.openqa.selenium.OutputType;
 import org.openqa.selenium.PageLoadStrategy;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.UnexpectedAlertBehaviour;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -13,6 +17,7 @@ import org.testng.Assert;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -26,7 +31,12 @@ public class Hooks extends BaseUtilities {
     }
 
     @After
-    public void TearDown(){
+    public void TearDown(Scenario scenario){
+        if(scenario.isFailed()){
+            Allure.addAttachment(scenario.getName(),
+                    new ByteArrayInputStream(((TakesScreenshot)_driver)
+                            .getScreenshotAs(OutputType.BYTES)));
+        }
         if(_driver!=null){
             _driver.quit();
         }

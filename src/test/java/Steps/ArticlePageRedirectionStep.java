@@ -13,7 +13,6 @@ public class ArticlePageRedirectionStep extends BaseUtilities {
     private Home _home;
     private RemoteWebDriver _driver;
     public ArticlePageRedirectionStep(BaseUtilities base) {
-
         this.base = base;
         _driver= base._driver;
     }

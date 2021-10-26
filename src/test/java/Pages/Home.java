@@ -273,28 +273,24 @@ public class Home {
 
     }
 
-    public void selectAnySite() throws InterruptedException {
+    public void selectAnySite(){
         List<WebElement> lstElements = driver.findElements(By.xpath("//div[@id='contentWrapperSection']//a[@class='cmp-list__item-link']"));
         Random rand = new Random();
         int upperbound = lstElements.size() - 1;
         int int_random = rand.nextInt(upperbound);
         WebElement element = lstElements.get(int_random);
-        getSiteText = element.getText();
-        Helper.scrollUpPage(driver, 3);
+        getSiteText = driver.getCurrentUrl();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-        Actions action = new Actions(driver);
-        action.moveToElement(element).doubleClick().perform();
-
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+        driver.executeScript("arguments[0].click();", element);
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
 
     }
 
     public boolean verifySitemapRedirection() {
-        System.out.println(driver.getCurrentUrl());
-        System.out.println("+++++++++" + getSiteText);
-        return driver.getCurrentUrl().contains(getSiteText);
+        return !driver.getCurrentUrl().equals(getSiteText);
     }
+
 
     public void selectFAQAns() {
         /*WebDriverWait wait = new WebDriverWait(driver, 30);
@@ -393,7 +389,6 @@ public class Home {
     public RemoteWebDriver navTwitter() throws InterruptedException {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFacebook);
         lnkTwitter.click();
-        //Helper.click(driver,lnkTwitter);
         Thread.sleep(2000);
         /*ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
         driver.switchTo().window(tabs2.get(1));*/
