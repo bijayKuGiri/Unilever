@@ -19,6 +19,7 @@ public class ContactUs extends Helper {
 
         PageFactory.initElements(_driver, this);
         driver = _driver;
+
     }
 
     @FindBy(css = "#contactUs-inquiryType[name='enquirySubj']")
@@ -108,11 +109,11 @@ public class ContactUs extends Helper {
     }
 
     public void SelectReason(String reason) {
-        Helper.selectFromDDn(reason, selectReason);
+        Helper.selectFromDDn(driver,reason , selectReason);
     }
 
     public void SelectSubject(String subject) {
-        Helper.selectFromDDn(subject, selectSubject);
+        Helper.selectFromDDn(driver,subject, selectSubject);
     }
 
     public void enterNameEmailAndComments(String name, String lastName, String email, String Comments) throws InterruptedException {
