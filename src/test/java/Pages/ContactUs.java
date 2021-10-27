@@ -3,10 +3,13 @@ package Pages;
 import Utility.Helper;
 //import gherkin.lexer.He;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
@@ -140,15 +143,17 @@ public class ContactUs extends Helper {
     }
 
     public void hitSubmit() {
-
-        btnSubmit.submit();
-        if (isValid)
-            while (driver.findElements(By.cssSelector("svg#star.loadingIcon")).size() > 0) {
-            }
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", btnSubmit);
+        btnSubmit.click();
+//        if (isValid)
+//            while (driver.findElement(By.cssSelector("svg#star.loadingIcon")).isDisplayed()) {
+//            }
 
     }
 
     public boolean VerifySuccessContactUS() {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(lblConform));
         return lblConform.isDisplayed();
     }
 

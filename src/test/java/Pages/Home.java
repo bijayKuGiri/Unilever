@@ -257,7 +257,8 @@ public class Home {
 
     public ContactUs navContactUs() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", contactUs);
-        Helper.click(driver, contactUs);
+        //Helper.click(driver, contactUs);
+        contactUs.click();
         return new ContactUs(driver);
     }
 
@@ -318,7 +319,8 @@ public class Home {
         JavascriptExecutor js;
         js = driver;
         js.executeScript("arguments[0].scrollIntoView();", lnkSelectCountry);
-        Helper.click(driver, lnkSelectCountry);
+        lnkSelectCountry.click();
+        //Helper.click(driver, lnkSelectCountry);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         List<WebElement> lstElements = driver.findElements(By.xpath("//a[@class='cmp-languagenavigation__item-link']"));
