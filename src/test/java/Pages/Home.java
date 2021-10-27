@@ -256,6 +256,7 @@ public class Home {
     }
 
     public ContactUs navContactUs() {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", contactUs);
         Helper.click(driver, contactUs);
         return new ContactUs(driver);
     }

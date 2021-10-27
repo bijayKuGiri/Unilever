@@ -153,7 +153,7 @@ public class ContactUs extends Helper {
     }
 
     public String getMessage() {
-        return lblConform.getText();
+        return lblConformMsg.getText();
     }
 
     public RemoteWebDriver navTermsOfUse() throws InterruptedException {
