@@ -5,7 +5,6 @@ import Utility.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -94,6 +93,13 @@ public class Home {
 
     @FindBy(css = "a.cmp-button")
     WebElement products;
+
+    @FindBy(xpath = "//a[normalize-space()='Magnum Oversized Towels']")
+    WebElement lnkMagnumOverSizedTowel;
+
+    @FindBy(xpath = "//a[normalize-space()='Artigos']")
+    WebElement lnkArticle;
+
 
     @FindBy(css = "div.no-results")
     WebElement noResults;
@@ -424,5 +430,16 @@ public class Home {
     public void isProductCarousalDisplayed() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", prodCarousal);
         Assert.assertTrue(prodCarousal.isDisplayed(), "Expected Product Carousal should displayed");
+    }
+
+    public MagnumTowel navMagnumOversizeTowel() {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.visibilityOf(lnkMagnumOverSizedTowel)).click();
+        return new MagnumTowel(driver);
+    }
+    public Article navArticlePage() {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.visibilityOf(lnkArticle)).click();
+        return new Article(driver);
     }
 }

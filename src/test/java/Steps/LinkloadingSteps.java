@@ -22,7 +22,7 @@ public class LinkloadingSteps extends BaseUtilities {
 
     private BaseUtilities base;
     private Home _home;
-    private RemoteWebDriver _driver;
+    //private RemoteWebDriver _driver;
     private List<String> linkTxt=new ArrayList<String>();
     public LinkloadingSteps(BaseUtilities base) {
 

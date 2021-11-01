@@ -1,7 +1,6 @@
 package Pages;
 
 import Utility.Helper;
-//import gherkin.lexer.He;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
