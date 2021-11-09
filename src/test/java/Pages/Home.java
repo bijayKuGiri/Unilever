@@ -6,6 +6,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -15,15 +16,12 @@ import org.testng.Assert;
 import javax.imageio.ImageIO;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import ru.yandex.qatools.ashot.AShot;
 import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
-import java.util.Objects;
-import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -42,6 +40,9 @@ public class Home {
     String selectedCountry = "";
     String getSiteText = "";
     WebElement faqElement;
+    List<String> productImgsBefore;
+    List<String> productImgsAfter;
+
     @FindBy(xpath = "//header")
     WebElement header;
 
@@ -131,9 +132,57 @@ public class Home {
     @FindBy(xpath = "//div[@data-cmp-hook-accordion='panel']//div[@class='container responsivegrid']")
     WebElement nutritionDetails;
 
+    @FindBy(xpath = "//ol[@role='tablist' and @class='cmp-tabs__tablist']")
+    WebElement productTab;
+
+    @FindBy(xpath = "//ol[@role='tablist' and @class='cmp-tabs__tablist']//parent::div")
+    WebElement productTabImages;
+
 
     public boolean isNoResultDisplay() {
         return noResults.isDisplayed();
+    }
+
+    public List<String> getProductImages() {
+        List<String> imgSrc = new ArrayList<>();
+        var tabElements = productTabImages.findElements(By.xpath("//div[@class='container responsivegrid']//img"))
+                .stream().filter(ele -> ele.isDisplayed()).collect(Collectors.toList());
+        for (WebElement element : tabElements
+        ) {
+            imgSrc.add(element.getAttribute("src"));
+
+        }
+        return imgSrc;
+    }
+
+    public void navigateProductTabs() {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", productTab);
+    }
+
+    public void selectProductTabs() {
+        productImgsBefore = getProductImages();
+        var tabElements = productTab.findElements(By.tagName("li"));
+        System.out.println("There count of available tabs are " + tabElements.size());
+        for (int i = 0; i < tabElements.size(); i++) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElements.get(i));
+            System.out.println(tabElements.get(i).getAttribute("aria-selected"));
+            if (tabElements.get(i).getAttribute("aria-selected").toLowerCase().equals("false")) {
+                System.out.println(tabElements.get(i).getText()+" going to selected");
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElements.get(i));
+                driver.executeScript("arguments[0].click();", tabElements.get(i));
+                driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+                driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+            }
+            else{
+                System.out.println(tabElements.get(i).getText()+" already selected");
+            }
+
+        }
+    }
+
+    public void VerifyProductImages() {
+        productImgsAfter = getProductImages();
+        Assert.assertTrue(!productImgsBefore.equals(productImgsAfter));
     }
 
     public List<WebElement> getCarouselList() {
@@ -281,7 +330,7 @@ public class Home {
 
     }
 
-    public void selectAnySite(){
+    public void selectAnySite() {
         List<WebElement> lstElements = driver.findElements(By.xpath("//div[@id='contentWrapperSection']//a[@class='cmp-list__item-link']"));
         Random rand = new Random();
         int upperbound = lstElements.size() - 1;
@@ -437,6 +486,7 @@ public class Home {
         wait.until(ExpectedConditions.visibilityOf(lnkMagnumOverSizedTowel)).click();
         return new MagnumTowel(driver);
     }
+
     public Article navArticlePage() {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.visibilityOf(lnkArticle)).click();
