@@ -47,7 +47,8 @@ public class MagnumTowel {
     public void clickBtnLoadMore() {
         items = getImageList();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", btnLoadMore);
-        btnLoadMore.click();
+        driver.executeScript("arguments[0].click();", btnLoadMore);
+//        btnLoadMore.click();
     }
 
     public void ValidateVideo() {

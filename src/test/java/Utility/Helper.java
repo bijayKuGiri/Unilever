@@ -83,6 +83,13 @@ public class Helper {
         return wait.until(jQueryLoad) && wait.until(jsLoad);
     }*/
 
+    public static void scrollAndClick(RemoteWebDriver driver, WebElement element){
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+        driver.executeScript("arguments[0].click();", element);
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+    }
+
     public static void selectFromDDn(RemoteWebDriver driver,String Value, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(element));

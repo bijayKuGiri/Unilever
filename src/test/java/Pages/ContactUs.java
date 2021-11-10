@@ -143,7 +143,8 @@ public class ContactUs extends Helper {
 
     public void hitSubmit() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", btnSubmit);
-        btnSubmit.click();
+        driver.executeScript("arguments[0].click();", btnSubmit);
+        //btnSubmit.click();
 //        if (isValid)
 //            while (driver.findElement(By.cssSelector("svg#star.loadingIcon")).isDisplayed()) {
 //            }
@@ -172,7 +173,9 @@ public class ContactUs extends Helper {
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         //Thread.sleep(5000);
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(1));
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
         return driver;
     }
 
@@ -192,7 +195,9 @@ public class ContactUs extends Helper {
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(1));
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
         return driver;
     }
 
@@ -213,7 +218,11 @@ public class ContactUs extends Helper {
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         //Thread.sleep(2000);
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(1));
+        /*driver.switchTo().window(tabs2.get(1));
+        return driver;*/
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
         return driver;
     }
 

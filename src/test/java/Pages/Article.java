@@ -1,6 +1,7 @@
 package Pages;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -20,7 +21,8 @@ public class Article {
         driver = _driver;
     }
 
-    String imgPath = "//div[@id='contentWrapperSection']//div[@class='cmp-container']//div[@class='list']//ul//div[@class='cmp-teaser__image']";
+//    String imgPath = "//div[@id='contentWrapperSection']//div[@class='cmp-container']//div[@class='list']//ul//div[@class='cmp-teaser__image']";
+    String imgPath = "//div[@class='cmp-teaser__image']//img[@class='cmp-image__image' and @alt='']";
 
     @FindBy(xpath = "//div[@class='productcarousel carousel c-related-products--fixed']")
     WebElement lnkFeatureProduct;
@@ -31,7 +33,10 @@ public class Article {
     public void navigateToImgUrl() {
         List<WebElement> imgItems = driver.findElements(By.xpath(imgPath));
         Random randomizer = new Random();
-        imgItems.get(randomizer.nextInt(imgItems.size())).click();
+        var item=imgItems.get(randomizer.nextInt(imgItems.size()));
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", item);
+        driver.executeScript("arguments[0].click();", item);
+
     }
 
     public void validatePageNavigationToArticle(){

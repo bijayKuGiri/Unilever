@@ -6,7 +6,6 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -46,7 +45,7 @@ public class Home {
     @FindBy(xpath = "//header")
     WebElement header;
 
-    @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever']")
+    @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
 
     @FindBy(css = "img[title='Magnum Logo']")
@@ -70,8 +69,8 @@ public class Home {
     @FindBy(css = "button.cmp-carousel__action.cmp-carousel__action--next>span.cmp-carousel__action-icon")
     WebElement carouselNavigateNext;
 
-    @FindBy(xpath = "//button[@class='productcarousel__btn productcarousel__btn--next']")
-    WebElement prCarouselNavigateNext;
+//    @FindBy(xpath = "//button[@class='productcarousel__btn productcarousel__btn--next']")
+//    WebElement prCarouselNavigateNext;
 
     @FindBy(css = "div.cmp-carousel__content")
     WebElement carouselContent;
@@ -86,10 +85,10 @@ public class Home {
     WebElement lblWriteReview;
 
 
-    @FindBy(xpath = "//footer//a[@class='cmp-image__link' and contains(@href,'facebook') and not(@disabled)]//picture//img")
+    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'facebook')]")
     WebElement lnkFacebook;
 
-    @FindBy(xpath = "//footer//a[@class='cmp-image__link' and contains(@href,'twitter')]//picture//img")
+    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'twitter')]")
     WebElement lnkTwitter;
 
     @FindBy(css = "a.cmp-button")
@@ -105,7 +104,8 @@ public class Home {
     @FindBy(css = "div.no-results")
     WebElement noResults;
 
-    @FindBy(xpath = "//img[@alt='From bean to bite']")
+    //@FindBy(xpath = "//img[@alt='From bean to bite']")
+    @FindBy(xpath = "//li//div[@class='cmp-teaser__image']//img")
     WebElement imgArticle;
 
     @FindBy(xpath = "//div[@class='productcarousel carousel c-related-products--fixed']")
@@ -129,6 +129,9 @@ public class Home {
     @FindBy(xpath = "//button[@class='productcarousel__btn productcarousel__btn--next']")
     WebElement prodCarousalNext;
 
+    @FindBy(xpath = "//button[@class='productcarousel__btn productcarousel__btn--prev']")
+    WebElement prodCarousalPrev;
+
     @FindBy(xpath = "//div[@data-cmp-hook-accordion='panel']//div[@class='container responsivegrid']")
     WebElement nutritionDetails;
 
@@ -146,7 +149,7 @@ public class Home {
     public List<String> getProductImages() {
         List<String> imgSrc = new ArrayList<>();
         var tabElements = productTabImages.findElements(By.xpath("//div[@class='container responsivegrid']//img"))
-                .stream().filter(ele -> ele.isDisplayed()).collect(Collectors.toList());
+                .stream().filter(ele ->ele.isDisplayed()).collect(Collectors.toList());
         for (WebElement element : tabElements
         ) {
             imgSrc.add(element.getAttribute("src"));
@@ -162,27 +165,24 @@ public class Home {
     public void selectProductTabs() {
         productImgsBefore = getProductImages();
         var tabElements = productTab.findElements(By.tagName("li"));
+        Helper.scrollAndClick(driver,tabElements.get(0));
         System.out.println("There count of available tabs are " + tabElements.size());
         for (int i = 0; i < tabElements.size(); i++) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElements.get(i));
             System.out.println(tabElements.get(i).getAttribute("aria-selected"));
             if (tabElements.get(i).getAttribute("aria-selected").toLowerCase().equals("false")) {
                 System.out.println(tabElements.get(i).getText()+" going to selected");
-                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElements.get(i));
-                driver.executeScript("arguments[0].click();", tabElements.get(i));
-                driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-                driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-            }
-            else{
-                System.out.println(tabElements.get(i).getText()+" already selected");
+                Helper.scrollAndClick(driver,tabElements.get(i));
+
             }
 
         }
     }
 
-    public void VerifyProductImages() {
+    public void VerifyProductImages() throws InterruptedException {
+        Thread.sleep(3000);
         productImgsAfter = getProductImages();
-        Assert.assertTrue(!productImgsBefore.equals(productImgsAfter));
+        Assert.assertFalse(productImgsBefore.equals(productImgsAfter));
     }
 
     public List<WebElement> getCarouselList() {
@@ -208,7 +208,7 @@ public class Home {
 
     private List<WebElement> getProductCarouselList() {
         return prodCarousal
-                .findElements(By.xpath("//div[@role='displaycard']")).stream().filter(el -> el.findElement(By.tagName("h3")).isDisplayed())
+                .findElements(By.xpath("//div[@class='productcarousel__cardscontainer']//h3")).stream().filter(WebElement::isDisplayed)
                 .collect(Collectors.toList());
 
     }
@@ -225,9 +225,13 @@ public class Home {
     }
 
     public void verifyProductCarouselRotation() throws InterruptedException {
+
+        while (prodCarousalPrev.isEnabled()){
+            Helper.scrollAndClick(driver, prodCarousalPrev);
+        }
         var currentItems = getProductCarouselList();
         while (prodCarousalNext.isEnabled()) {
-            Helper.click(driver, prodCarousalNext);
+            Helper.scrollAndClick(driver, prodCarousalNext);
             Thread.sleep(5000);
             var newItems = getProductCarouselList();
             System.out.println(currentItems.size());
@@ -385,7 +389,9 @@ public class Home {
         selectedCountry = lstElements.get(int_random).getText();
         Helper.click(driver, lstElements.get(int_random));
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(1));
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         return driver;
@@ -410,17 +416,18 @@ public class Home {
     }
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFacebook);
-        Helper.click(driver, lnkFacebook);
-        Thread.sleep(5000);
-        /*ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(1));*/
+        Helper.scrollAndClick(driver, lnkFacebook);
+        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
         return driver;
     }
 
     public void navArticlePageByImg() {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", imgArticle);
-        Helper.click(driver, imgArticle);
+        /*((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", imgArticle);
+        Helper.click(driver, imgArticle);*/
+        Helper.scrollAndClick(driver, imgArticle);
     }
 
     public boolean IsUrlContainArtigos() {
@@ -445,11 +452,11 @@ public class Home {
     }
 
     public RemoteWebDriver navTwitter() throws InterruptedException {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFacebook);
-        lnkTwitter.click();
-        Thread.sleep(2000);
-        /*ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        driver.switchTo().window(tabs2.get(1));*/
+        Helper.scrollAndClick(driver,lnkTwitter);
+        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
         return driver;
     }
 
