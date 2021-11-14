@@ -39,4 +39,14 @@ public class VerifyCookiesNoticeSteps extends BaseUtilities {
     public void the_page_should_redirect_to_cookies_notice_page() {
         Assert.assertTrue(_contact.IsNavigateCookiesNotice(_driver));
     }
+
+    @When("i try to click on CookiesNotice link in Home Page")
+    public void i_try_to_click_on_cookies_notice_link_in_home_page() {
+        _home=new Home(_driver);
+        _driver=_home.NavCookiesNotice();
+    }
+    @Then("the page should redirect to CookiesNotice page from Home Page")
+    public void the_page_should_redirect_to_cookies_notice_page_from_home_page() {
+        Assert.assertTrue(_home.IsNavigateCookiesNotice(_driver));
+    }
 }

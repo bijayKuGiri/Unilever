@@ -78,6 +78,7 @@ public class Home {
     @FindBy(xpath = "//footer//div[@class='container responsivegrid'][1]")
     WebElement footerContainer;
 
+
     @FindBy(xpath = "//div[@class='container responsivegrid']//span[@class='cmp-list__item-title'][1]")
     WebElement contactUs;
 
@@ -472,8 +473,14 @@ public class Home {
         }
     }
 
-    public int getSearchCount() {
-        return driver.findElements(By.cssSelector(".search-result-card")).size();
+    public int getSearchCount() throws InterruptedException {
+        //driver.wait(3000);
+       // return driver.findElements(By.cssSelector(".search-result-card")).size();
+        return driver.findElements(By.cssSelector(".search-list-label")).size();
+    }
+
+    public int getErrorCount()  {
+        return driver.findElements(By.cssSelector(".no-results")).size();
     }
 
     public boolean IsNavigateToIfoodPage() throws InterruptedException {
@@ -498,5 +505,50 @@ public class Home {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.visibilityOf(lnkArticle)).click();
         return new Article(driver);
+    }
+
+    public RemoteWebDriver NavTermsUse(){
+        var element=footerContainer.findElements(By.tagName("li"));
+        Helper.scrollAndClick(driver, element.get(3).findElement(By.tagName("a")));
+        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        return driver;
+
+    }
+
+    public RemoteWebDriver NavCookiesNotice(){
+        var element=footerContainer.findElements(By.tagName("li"));
+        Helper.scrollAndClick(driver, element.get(4).findElement(By.tagName("a")));
+        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        return driver;
+
+    }
+
+    public RemoteWebDriver NavPrivacyNotice(){
+        var element=footerContainer.findElements(By.tagName("li"));
+        Helper.scrollAndClick(driver, element.get(6).findElement(By.tagName("a")));
+        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        return driver;
+
+    }
+
+    public boolean IsNavigateTermsOfUse(RemoteWebDriver driver) {
+        return driver.getCurrentUrl().contains("https://www.unilever.com.br/legal/");
+    }
+
+    public boolean IsNavigatePrivacyNotice(RemoteWebDriver driver) {
+        return driver.getCurrentUrl().contains("https://www.unilevernotices.com/brazil/portuguese/privacy-notice/notice.html");
+    }
+
+    public boolean IsNavigateCookiesNotice(RemoteWebDriver driver) {
+        return driver.getCurrentUrl().contains("https://www.unilevernotices.com/brazil/portuguese/cookie-notice/notice.html");
     }
 }

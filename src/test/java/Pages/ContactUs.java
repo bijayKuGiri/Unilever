@@ -213,13 +213,8 @@ public class ContactUs extends Helper {
         while (!element.isDisplayed()) {
             Helper.downKeyOnPage(driver, 1);
         }
-        Helper.click(driver, element);
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-        //Thread.sleep(2000);
+        Helper.scrollAndClick(driver, element);
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        /*driver.switchTo().window(tabs2.get(1));
-        return driver;*/
         if (tabs2.size()>1) {
             driver.switchTo().window(tabs2.get(1));
         }

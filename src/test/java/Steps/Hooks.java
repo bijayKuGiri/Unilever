@@ -39,6 +39,7 @@ public class Hooks extends BaseUtilities {
         }
         if(_driver!=null){
             _driver.quit();
+
         }
         System.out.println("Tear down process done");
     }

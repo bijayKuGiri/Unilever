@@ -40,4 +40,14 @@ public class VerifyPrivacyNoticeSteps extends BaseUtilities {
     public void thePageShouldRedirectToPrivacyNoticePage() {
         Assert.assertTrue(_contact.IsNavigatePrivacyNotice(_driver));
     }
+
+    @When("i try to click on PrivacyNotice link in home page")
+    public void i_try_to_click_on_privacy_notice_link_in_home_page() {
+        _home = new Home(_driver);
+        _driver = _home.NavPrivacyNotice();
+    }
+    @Then("the page should redirect to PrivacyNotice page from home page")
+    public void the_page_should_redirect_to_privacy_notice_page_from_home_page() {
+        Assert.assertTrue(_home.IsNavigatePrivacyNotice(_driver));
+    }
 }
