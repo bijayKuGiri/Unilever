@@ -26,6 +26,6 @@ public class BackToTopSteps extends BaseUtilities{
 
     @Then("the page should redirect to the top of the Home page")
     public void the_page_should_redirect_to_the_top_of_the_home_page() {
-        Assert.assertTrue( _home.isHeaderCrausalDisplay());
+        Assert.assertTrue( _home.isHeaderCausalDisplay());
     }
 }

@@ -23,7 +23,7 @@ import java.util.Objects;
 
 public class Hooks extends BaseUtilities {
 
-    private BaseUtilities utils;
+    private final BaseUtilities utils;
     private RemoteWebDriver _driver;
 
     public Hooks(BaseUtilities baseUtilities){
@@ -65,7 +65,7 @@ public class Hooks extends BaseUtilities {
             ChromeOptions options = new ChromeOptions();
             options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT_AND_NOTIFY);
             options.addArguments("enable-automation");
-            if(Objects.requireNonNull(Helper.getNodeValue(Helper.filePath, "headless")).toLowerCase().equals("yes"))
+            if(Objects.requireNonNull(Helper.getNodeValue(Helper.filePath, "headless")).equalsIgnoreCase("yes"))
                 options.addArguments("--headless");
             options.addArguments("--window-size=1920,1080");
             options.addArguments("--no-sandbox");

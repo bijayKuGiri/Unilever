@@ -168,12 +168,12 @@ public class Home {
         var tabElements = productTab.findElements(By.tagName("li"));
         Helper.scrollAndClick(driver,tabElements.get(0));
         System.out.println("There count of available tabs are " + tabElements.size());
-        for (int i = 0; i < tabElements.size(); i++) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElements.get(i));
-            System.out.println(tabElements.get(i).getAttribute("aria-selected"));
-            if (tabElements.get(i).getAttribute("aria-selected").toLowerCase().equals("false")) {
-                System.out.println(tabElements.get(i).getText()+" going to selected");
-                Helper.scrollAndClick(driver,tabElements.get(i));
+        for (WebElement tabElement : tabElements) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElement);
+            System.out.println(tabElement.getAttribute("aria-selected"));
+            if (tabElement.getAttribute("aria-selected").toLowerCase().equals("false")) {
+                System.out.println(tabElement.getText() + " going to selected");
+                Helper.scrollAndClick(driver, tabElement);
 
             }
 
@@ -183,7 +183,7 @@ public class Home {
     public void VerifyProductImages() throws InterruptedException {
         Thread.sleep(3000);
         productImgsAfter = getProductImages();
-        Assert.assertFalse(productImgsBefore.equals(productImgsAfter));
+        Assert.assertNotEquals(productImgsAfter, productImgsBefore);
     }
 
     public List<WebElement> getCarouselList() {
@@ -336,7 +336,8 @@ public class Home {
     }
 
     public void selectAnySite() {
-        List<WebElement> lstElements = driver.findElements(By.xpath("//div[@id='contentWrapperSection']//a[@class='cmp-list__item-link']"));
+        ////a[@class='cmp-list__item-link']
+        List<WebElement> lstElements = driver.findElements(By.xpath("//div[@id='contentWrapperSection']//a"));
         Random rand = new Random();
         int upperbound = lstElements.size() - 1;
         int int_random = rand.nextInt(upperbound);
@@ -412,13 +413,13 @@ public class Home {
 
     }
 
-    public boolean isHeaderCrausalDisplay() {
+    public boolean isHeaderCausalDisplay() {
         return carouselContent.isDisplayed();
     }
 
     public RemoteWebDriver navFacebook() throws InterruptedException {
         Helper.scrollAndClick(driver, lnkFacebook);
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        var tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size()>1) {
             driver.switchTo().window(tabs2.get(1));
         }
@@ -454,7 +455,8 @@ public class Home {
 
     public RemoteWebDriver navTwitter() throws InterruptedException {
         Helper.scrollAndClick(driver,lnkTwitter);
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+//        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
+        var tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size()>1) {
             driver.switchTo().window(tabs2.get(1));
         }
@@ -473,7 +475,7 @@ public class Home {
         }
     }
 
-    public int getSearchCount() throws InterruptedException {
+    public int getSearchCount()  {
         //driver.wait(3000);
        // return driver.findElements(By.cssSelector(".search-result-card")).size();
         return driver.findElements(By.cssSelector(".search-list-label")).size();
@@ -536,6 +538,19 @@ public class Home {
         if (tabs2.size()>1) {
             driver.switchTo().window(tabs2.get(1));
         }
+        return driver;
+
+    }
+
+    public RemoteWebDriver NavSignUp(){
+        var element=footerContainer.findElements(By.tagName("li"));
+        Helper.scrollAndClick(driver, element.get(1).findElement(By.tagName("a")));
+        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        if (tabs2.size()>1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        WebDriverWait wait = new WebDriverWait(driver, 10);
+        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='form-paragraph-info']")));
         return driver;
 
     }

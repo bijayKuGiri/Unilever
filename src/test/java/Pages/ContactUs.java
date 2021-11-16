@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class ContactUs extends Helper {
-    private RemoteWebDriver driver;
+    private final RemoteWebDriver driver;
     private boolean isValid = false;
 
     public ContactUs(RemoteWebDriver _driver) {
