@@ -8,6 +8,7 @@ import io.cucumber.testng.AbstractTestNGCucumberTests;
 import org.junit.runner.RunWith;
 
 
+//this is for thailand
 @RunWith(Cucumber.class)
 @CucumberOptions(
         features = "src/test/resources/Feature",
