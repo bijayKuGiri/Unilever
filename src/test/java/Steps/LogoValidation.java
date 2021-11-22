@@ -4,6 +4,7 @@ import Base.BaseUtilities;
 import Pages.Home;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
@@ -32,5 +33,15 @@ public class LogoValidation extends BaseUtilities {
         softAssert.assertTrue(_home.IsCopyRightExist());
         System.out.println(_home.logoText());
 
+    }
+
+    @When("verifying logo")
+    public void verifying_logo() {
+        System.out.println("Verifying the Element on the Page");
+        _home=new Home(base._driver);
+    }
+    @Then("Logo should be visible")
+    public void logo_should_be_visible() {
+        Assert.assertTrue(_home.IsLogoImageDisplayed());
     }
 }

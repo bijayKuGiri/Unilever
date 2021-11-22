@@ -41,9 +41,13 @@ public class Home {
     WebElement faqElement;
     List<String> productImgsBefore;
     List<String> productImgsAfter;
+    Boolean prdTabValidation = false;
 
     @FindBy(xpath = "//header")
     WebElement header;
+
+    @FindBy(css = "ul.cmp-navigation__group")
+    WebElement lstHeader;
 
     @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
@@ -79,17 +83,21 @@ public class Home {
     WebElement footerContainer;
 
 
-    @FindBy(xpath = "//div[@class='container responsivegrid']//span[@class='cmp-list__item-title'][1]")
+//    @FindBy(xpath = "//div[@class='container responsivegrid']//span[@class='cmp-list__item-title'][1]")
+
+    @FindBy(xpath ="//footer//li[contains(@data-cmp-data-layer,'contactUs') or contains(@data-cmp-data-layer,'contato')]")
     WebElement contactUs;
 
     @FindBy(css = "div.kr-right-review-area>a")
     WebElement lblWriteReview;
 
 
-    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'facebook')]")
+    //    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'facebook')]")
+    @FindBy(xpath = "//footer//a[contains(@href,'facebook')]")
     WebElement lnkFacebook;
 
-    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'twitter')]")
+    //    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'twitter')]")
+    @FindBy(xpath = "//footer//a[contains(@href,'twitter')]")
     WebElement lnkTwitter;
 
     @FindBy(css = "a.cmp-button")
@@ -118,7 +126,7 @@ public class Home {
     @FindBy(xpath = "//a[contains(@href,'country')]//span")
     WebElement lnkSelectCountry;
 
-    @FindBy(xpath = "//a[contains(@href,'frequentes')]//span")
+    @FindBy(xpath = "//a[contains(@href,'frequentes') or contains(@href,'FAQ')]//span")
     WebElement lnkFAQ;
 
     @FindBy(xpath = "//a[contains(@href,'sitemap')]//span")
@@ -150,7 +158,19 @@ public class Home {
     public List<String> getProductImages() {
         List<String> imgSrc = new ArrayList<>();
         var tabElements = productTabImages.findElements(By.xpath("//div[@class='container responsivegrid']//img"))
-                .stream().filter(ele ->ele.isDisplayed()).collect(Collectors.toList());
+                .stream().filter(ele -> ele.isDisplayed()).collect(Collectors.toList());
+        for (WebElement element : tabElements
+        ) {
+            imgSrc.add(element.getAttribute("src"));
+
+        }
+        return imgSrc;
+    }
+
+    public List<String> getProductImages(WebElement item) {
+        List<String> imgSrc = new ArrayList<>();
+        var tabElements = item.findElements(By.xpath("//parent::ol//parent::div//div[@class='container responsivegrid']//img"))
+                .stream().filter(ele -> ele.isDisplayed()).collect(Collectors.toList());
         for (WebElement element : tabElements
         ) {
             imgSrc.add(element.getAttribute("src"));
@@ -160,30 +180,69 @@ public class Home {
     }
 
     public void navigateProductTabs() {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", productTab);
+        var tabItems = driver.findElements(By.xpath("//ol[@role='tablist' and @class='cmp-tabs__tablist']"))
+                .stream().filter(ele -> ele.findElements(By.tagName("li")).size() > 1)
+                .collect(Collectors.toList());
+        /*if (productTab.findElements(By.tagName("li")).size() == 1)
+            return;*/
+        for (WebElement element : tabItems
+        ) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+        }
+        //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", productTab);
+
     }
 
-    public void selectProductTabs() {
-        productImgsBefore = getProductImages();
+    public void selectProductTabs() throws InterruptedException {
+        /*productImgsBefore = getProductImages();
         var tabElements = productTab.findElements(By.tagName("li"));
-        Helper.scrollAndClick(driver,tabElements.get(0));
+        Helper.scrollAndClick(driver, tabElements.get(0));
         System.out.println("There count of available tabs are " + tabElements.size());
         for (WebElement tabElement : tabElements) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElement);
             System.out.println(tabElement.getAttribute("aria-selected"));
-            if (tabElement.getAttribute("aria-selected").toLowerCase().equals("false")) {
+            if (tabElement.getAttribute("aria-selected").equalsIgnoreCase("false")) {
                 System.out.println(tabElement.getText() + " going to selected");
                 Helper.scrollAndClick(driver, tabElement);
 
+            }
+
+        }*/
+        var tabItems = driver.findElements(By.xpath("//ol[@role='tablist' and @class='cmp-tabs__tablist']"))
+                .stream().filter(ele -> ele.findElements(By.tagName("li")).size() > 1)
+                .collect(Collectors.toList());
+
+        for (var item : tabItems
+        ) {
+//            productImgsBefore = getProductImages(item);
+            var tabElements = item.findElements(By.tagName("li"));
+            Helper.scrollAndClick(driver, tabElements.get(0));
+
+            System.out.println("There count of available tabs are " + tabElements.size());
+            for (WebElement tabElement : tabElements) {
+                productImgsBefore = getProductImages(item);
+                ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElement);
+                System.out.println(tabElement.getAttribute("aria-selected"));
+                if (tabElement.getAttribute("aria-selected").equalsIgnoreCase("false")) {
+                    System.out.println(tabElement.getText() + " going to selected");
+                    Helper.scrollAndClick(driver, tabElement);
+                }
+                Thread.sleep(3000);
+                productImgsAfter = getProductImages();
+                if (productImgsAfter != productImgsBefore)
+                    prdTabValidation = true;
+                else
+                    prdTabValidation = false;
             }
 
         }
     }
 
     public void VerifyProductImages() throws InterruptedException {
-        Thread.sleep(3000);
+        /*Thread.sleep(3000);
         productImgsAfter = getProductImages();
-        Assert.assertNotEquals(productImgsAfter, productImgsBefore);
+        Assert.assertNotEquals(productImgsAfter, productImgsBefore);*/
+        Assert.assertTrue(prdTabValidation);
     }
 
     public List<WebElement> getCarouselList() {
@@ -227,7 +286,7 @@ public class Home {
 
     public void verifyProductCarouselRotation() throws InterruptedException {
 
-        while (prodCarousalPrev.isEnabled()){
+        while (prodCarousalPrev.isEnabled()) {
             Helper.scrollAndClick(driver, prodCarousalPrev);
         }
         var currentItems = getProductCarouselList();
@@ -237,7 +296,7 @@ public class Home {
             var newItems = getProductCarouselList();
             System.out.println(currentItems.size());
             System.out.println(newItems.size());
-            Assert.assertTrue(!(Objects.equals(currentItems, newItems)));
+            Assert.assertFalse(Objects.equals(currentItems, newItems));
         }
 
     }
@@ -269,11 +328,19 @@ public class Home {
 
     public List<String> getLinkText() {
         List<String> linkTxt = new ArrayList<>();
-        List<WebElement> links = header.findElements(By.tagName("li"));
+        List<WebElement> links = lstHeader.findElements(By.tagName("li"));
         for (WebElement var : links) {
             linkTxt.add(var.findElement(By.tagName("a")).getAttribute("href"));
         }
         return linkTxt;
+    }
+
+    public List<WebElement> getLink() {
+        return lstHeader.findElements(By.tagName("li"));
+    }
+
+    public List<WebElement> getFooterLink() {
+        return footerContainer.findElements(By.tagName("li"));
     }
 
     public List<String> getFooterLinkText() {
@@ -391,7 +458,7 @@ public class Home {
         selectedCountry = lstElements.get(int_random).getText();
         Helper.click(driver, lstElements.get(int_random));
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
@@ -420,7 +487,7 @@ public class Home {
     public RemoteWebDriver navFacebook() throws InterruptedException {
         Helper.scrollAndClick(driver, lnkFacebook);
         var tabs2 = new ArrayList<>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         return driver;
@@ -454,10 +521,10 @@ public class Home {
     }
 
     public RemoteWebDriver navTwitter() throws InterruptedException {
-        Helper.scrollAndClick(driver,lnkTwitter);
+        Helper.scrollAndClick(driver, lnkTwitter);
 //        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         var tabs2 = new ArrayList<>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         return driver;
@@ -475,13 +542,13 @@ public class Home {
         }
     }
 
-    public int getSearchCount()  {
+    public int getSearchCount() {
         //driver.wait(3000);
-       // return driver.findElements(By.cssSelector(".search-result-card")).size();
+        // return driver.findElements(By.cssSelector(".search-result-card")).size();
         return driver.findElements(By.cssSelector(".search-list-label")).size();
     }
 
-    public int getErrorCount()  {
+    public int getErrorCount() {
         return driver.findElements(By.cssSelector(".no-results")).size();
     }
 
@@ -509,44 +576,44 @@ public class Home {
         return new Article(driver);
     }
 
-    public RemoteWebDriver NavTermsUse(){
-        var element=footerContainer.findElements(By.tagName("li"));
+    public RemoteWebDriver NavTermsUse() {
+        var element = footerContainer.findElements(By.tagName("li"));
         Helper.scrollAndClick(driver, element.get(3).findElement(By.tagName("a")));
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        var tabs2 = new ArrayList<>(driver.getWindowHandles());
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         return driver;
 
     }
 
-    public RemoteWebDriver NavCookiesNotice(){
-        var element=footerContainer.findElements(By.tagName("li"));
-        Helper.scrollAndClick(driver, element.get(4).findElement(By.tagName("a")));
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+    public RemoteWebDriver NavCookiesNotice() {
+        var element = footerContainer.findElement(By.xpath("//li[contains(@data-cmp-data-layer,'cookie-notice')]"));
+        Helper.scrollAndClick(driver, element.findElement(By.tagName("a")));
+        var tabs2 = new ArrayList<>(driver.getWindowHandles());
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         return driver;
 
     }
 
-    public RemoteWebDriver NavPrivacyNotice(){
-        var element=footerContainer.findElements(By.tagName("li"));
-        Helper.scrollAndClick(driver, element.get(6).findElement(By.tagName("a")));
+    public RemoteWebDriver NavPrivacyNotice() {
+        var element = footerContainer.findElement(By.xpath("//li[contains(@data-cmp-data-layer,'privacy-notice')] "));
+        Helper.scrollAndClick(driver, element.findElement(By.tagName("a")));
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         return driver;
 
     }
 
-    public RemoteWebDriver NavSignUp(){
-        var element=footerContainer.findElements(By.tagName("li"));
+    public RemoteWebDriver NavSignUp() {
+        var element = footerContainer.findElements(By.tagName("li"));
         Helper.scrollAndClick(driver, element.get(1).findElement(By.tagName("a")));
         ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -560,10 +627,10 @@ public class Home {
     }
 
     public boolean IsNavigatePrivacyNotice(RemoteWebDriver driver) {
-        return driver.getCurrentUrl().contains("https://www.unilevernotices.com/brazil/portuguese/privacy-notice/notice.html");
+        return driver.getCurrentUrl().contains("privacy-notice");
     }
 
     public boolean IsNavigateCookiesNotice(RemoteWebDriver driver) {
-        return driver.getCurrentUrl().contains("https://www.unilevernotices.com/brazil/portuguese/cookie-notice/notice.html");
+        return driver.getCurrentUrl().contains("cookie-notice");
     }
 }

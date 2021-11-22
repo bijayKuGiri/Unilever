@@ -1,33 +1,31 @@
 package Utility;
 
-import jdk.jfr.Timespan;
+//import org.json.simple.JSONObject;
+//import org.json.simple.parser.JSONParser;
 import org.openqa.selenium.*;
-import org.openqa.selenium.interactions.Action;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.Wait;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import org.w3c.dom.*;
+import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
 
 import javax.management.InvalidApplicationException;
-import javax.swing.*;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeListener;
 import java.io.File;
+import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 public class Helper {
 
     public static String filePath = "src/test/resources/config.xml";
+    public static String jsonfilePath = "src/test/resources/environment.json";
 
-    public static String getNodeValue(String path, String nodeName) throws ParserConfigurationException, IOException, SAXException {
+    public static String getNodeValue(String path, String nodeName) {
         try {
             DocumentBuilderFactory dBfactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder builder = dBfactory.newDocumentBuilder();
@@ -42,20 +40,26 @@ public class Helper {
     }
 
     public static void NavigateToUAT(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
-        //_driver.navigate().to(getNodeValue(filePath,"uat"));
         _driver.navigate().to(getNodeValue(filePath, "uatcred"));
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-        //handleCookie(_driver);
-        if (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
+        handleCookie(_driver);
+        /*if (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
             WebElement webElement = _driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
             Actions actions = new Actions(_driver);
             actions.moveToElement(webElement);
             actions.click().perform();
             while (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
             }
-        }
+        }*/
 
+
+    }
+
+    public static void NavigateToApp(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
+        _driver.navigate().to(getNodeValue(filePath, "uatcred"));
+        _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
     }
 
     /*public boolean waitForJStoLoad() {
@@ -83,14 +87,14 @@ public class Helper {
         return wait.until(jQueryLoad) && wait.until(jsLoad);
     }*/
 
-    public static void scrollAndClick(RemoteWebDriver driver, WebElement element){
+    public static void scrollAndClick(RemoteWebDriver driver, WebElement element) {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         driver.executeScript("arguments[0].click();", element);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
     }
 
-    public static void selectFromDDn(RemoteWebDriver driver,String Value, WebElement element) {
+    public static void selectFromDDn(RemoteWebDriver driver, String Value, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(element));
         Select se = new Select(element);
@@ -101,17 +105,19 @@ public class Helper {
         try {
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.visibilityOf(element));
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
             Actions action = new Actions(driver);
             action.moveToElement(element).click().perform();
         } catch (ElementClickInterceptedException ex) {
-            if (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
+            /*if (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
                 WebElement webElement = driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
                 Actions actions = new Actions(driver);
                 actions.moveToElement(webElement);
                 actions.click().perform();
                 while (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
                 }
-            }
+            }*/
+            handleCookie(driver);
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.visibilityOf(element));
             Actions action = new Actions(driver);
@@ -119,9 +125,24 @@ public class Helper {
         }
     }
 
-    public static void handleCookie(RemoteWebDriver driver) {
-        if (driver.findElements(By.xpath("//div[@id='onetrust-banner-sdk']")).size() > 0)
-            driver.findElement(By.xpath("//button[@id='onetrust-accept-btn-handler']")).submit();
+    public static Boolean isCookieDispaly(RemoteWebDriver driver) {
+        //WaitForPageLoad(driver,60);
+        if (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed())
+            return true;
+        else
+            return false;
+    }
+
+    public static void handleCookie(RemoteWebDriver _driver) {
+        if (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
+            WebElement webElement = _driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
+            Actions actions = new Actions(_driver);
+            actions.moveToElement(webElement);
+            actions.click().perform();
+            while (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
+                //System.out.println("waiting for popup to disable");
+            }
+        }
     }
 
     public static void EnterText(RemoteWebDriver driver, WebElement element, String value) {
@@ -131,14 +152,15 @@ public class Helper {
             wait.until(ExpectedConditions.visibilityOf(element));
             element.sendKeys(value);
         } catch (ElementClickInterceptedException ex) {
-            if (driver.findElement(By.cssSelector("button[id='onetrust-accept-btn-handler']")).isDisplayed()) {
+            /*if (driver.findElement(By.cssSelector("button[id='onetrust-accept-btn-handler']")).isDisplayed()) {
                 WebElement webElement = driver.findElement(By.cssSelector("button[id='onetrust-accept-btn-handler']>font>font"));
                 Actions actions = new Actions(driver);
                 actions.moveToElement(webElement);
                 actions.click().perform();
                 while (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
                 }
-            }
+            }*/
+            handleCookie(driver);
 
             click(driver, element);
             element.sendKeys(value);
@@ -189,16 +211,28 @@ public class Helper {
         }
     }
 
-    public static WebElement findElementIfExist(RemoteWebDriver _driver,By by){
-        var elements=_driver.findElements(by);
-        return (elements.size()>=1)?elements.get(1):null;
+    public static WebElement findElementIfExist(RemoteWebDriver _driver, By by) {
+        var elements = _driver.findElements(by);
+        return (elements.size() >= 1) ? elements.get(1) : null;
     }
 
-    public static WebElement findElement(RemoteWebDriver _driver,By by,int timeOutInSec){
-        if(timeOutInSec<=0)return _driver.findElement(by);
+    public static WebElement findElement(RemoteWebDriver _driver, By by, int timeOutInSec) {
+        if (timeOutInSec <= 0) return _driver.findElement(by);
         var wait = new WebDriverWait(_driver, timeOutInSec);
-        return wait.until(drv ->drv.findElement(by));
+        return wait.until(drv -> drv.findElement(by));
     }
 
+    /*public static String getUrl(String environmentDetails) {
 
+        JSONParser parser = new JSONParser();
+        try {
+            Object obj = parser.parse(new FileReader(jsonfilePath));
+            JSONObject jsonObject = (JSONObject) obj;
+            return (String) jsonObject.get(environmentDetails);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+
+    }*/
 }

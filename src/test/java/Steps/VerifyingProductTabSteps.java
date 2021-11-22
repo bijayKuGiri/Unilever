@@ -27,7 +27,7 @@ public class VerifyingProductTabSteps extends BaseUtilities {
 
     }
     @When("try to click on Product next tab")
-    public void try_to_click_on_product_next_tab() {
+    public void try_to_click_on_product_next_tab() throws InterruptedException {
         _home.selectProductTabs();
     }
     @Then("it should be switched to Next Product tab")
