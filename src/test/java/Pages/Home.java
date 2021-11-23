@@ -22,6 +22,8 @@ import ru.yandex.qatools.ashot.Screenshot;
 import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import java.util.concurrent.TimeUnit;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 
@@ -51,6 +53,9 @@ public class Home {
 
     @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
+
+    @FindBy(xpath ="//div[@class='search-list-label']")
+    WebElement searchResult;
 
     @FindBy(css = "img[title='Magnum Logo']")
     WebElement logo;
@@ -85,7 +90,7 @@ public class Home {
 
 //    @FindBy(xpath = "//div[@class='container responsivegrid']//span[@class='cmp-list__item-title'][1]")
 
-    @FindBy(xpath ="//footer//li[contains(@data-cmp-data-layer,'contactUs') or contains(@data-cmp-data-layer,'contato')]")
+    @FindBy(xpath = "//footer//li[contains(@data-cmp-data-layer,'contactUs') or contains(@data-cmp-data-layer,'contato')]")
     WebElement contactUs;
 
     @FindBy(css = "div.kr-right-review-area>a")
@@ -290,6 +295,11 @@ public class Home {
             Helper.scrollAndClick(driver, prodCarousalPrev);
         }
         var currentItems = getProductCarouselList();
+        if (currentItems.size() == driver.findElements(By.xpath("//div[@class='productcarousel__cardscontainer']//div[contains(@id,'productcarousel')]")).size()){
+            System.out.println("Total number of products in carousel is same as total number displayed");
+            return;
+        }
+
         while (prodCarousalNext.isEnabled()) {
             Helper.scrollAndClick(driver, prodCarousalNext);
             Thread.sleep(5000);
@@ -435,7 +445,7 @@ public class Home {
     }
 
     public boolean isAnswerDisplay() {
-        return faqElement.findElement(By.xpath("parent::button/parent::h2/following-sibling::div")).isDisplayed();
+        return faqElement.findElement(By.xpath("parent::button/parent::*[self::h1 or self::h2 or self::h3]/following-sibling::div")).isDisplayed();
     }
 
     public void clickCrossMark() {
@@ -538,14 +548,20 @@ public class Home {
         Helper.click(driver, icnSearch);
         Helper.EnterText(driver, txtSearch, productName);
         Helper.click(driver, lblSearch);
-        while (driver.findElements(By.cssSelector(".search-list-label")).size() != 1) {
-        }
+        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
     }
 
-    public int getSearchCount() {
-        //driver.wait(3000);
-        // return driver.findElements(By.cssSelector(".search-result-card")).size();
-        return driver.findElements(By.cssSelector(".search-list-label")).size();
+    public int getSearchCount()  {
+        WebDriverWait wait = new WebDriverWait(driver, 120);
+        wait.until(ExpectedConditions.visibilityOf(searchResult));
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(driver.findElement(By.xpath("//div[@class='search-list-label']")).getText());
+        if(m.find())
+
+        System.out.println( m.group(0));
+        return Integer.parseInt( m.group(0));
+        //return driver.findElements(By.cssSelector(".search-list-label")).size();
     }
 
     public int getErrorCount() {

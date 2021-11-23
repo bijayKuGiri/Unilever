@@ -1,7 +1,9 @@
 package Utility;
 
-//import org.json.simple.JSONObject;
-//import org.json.simple.parser.JSONParser;
+
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -20,6 +22,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
+
 public class Helper {
 
     public static String filePath = "src/test/resources/config.xml";
@@ -33,31 +36,23 @@ public class Helper {
             document.getDocumentElement().normalize();
             return document.getElementsByTagName(nodeName).item(0).getTextContent();
         } catch (Exception ex) {
-            System.out.println(ex.toString());
+            System.out.println(ex);
             return null;
         }
 
     }
 
     public static void NavigateToUAT(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
-        _driver.navigate().to(getNodeValue(filePath, "uatcred"));
+//        _driver.navigate().to(getNodeValue(filePath, "uatcred"));
+        _driver.navigate().to(getUrl( getNodeValue(filePath, "environment")));
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         handleCookie(_driver);
-        /*if (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
-            WebElement webElement = _driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
-            Actions actions = new Actions(_driver);
-            actions.moveToElement(webElement);
-            actions.click().perform();
-            while (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
-            }
-        }*/
-
-
     }
 
     public static void NavigateToApp(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
-        _driver.navigate().to(getNodeValue(filePath, "uatcred"));
+//        _driver.navigate().to(getNodeValue(filePath, "uatcred"));
+        _driver.navigate().to(getUrl( getNodeValue(filePath, "environment")));
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
     }
@@ -109,14 +104,6 @@ public class Helper {
             Actions action = new Actions(driver);
             action.moveToElement(element).click().perform();
         } catch (ElementClickInterceptedException ex) {
-            /*if (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
-                WebElement webElement = driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
-                Actions actions = new Actions(driver);
-                actions.moveToElement(webElement);
-                actions.click().perform();
-                while (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
-                }
-            }*/
             handleCookie(driver);
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.visibilityOf(element));
@@ -127,22 +114,21 @@ public class Helper {
 
     public static Boolean isCookieDispaly(RemoteWebDriver driver) {
         //WaitForPageLoad(driver,60);
-        if (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed())
-            return true;
-        else
-            return false;
+        return driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed();
     }
 
     public static void handleCookie(RemoteWebDriver _driver) {
-        if (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
-            WebElement webElement = _driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
-            Actions actions = new Actions(_driver);
-            actions.moveToElement(webElement);
-            actions.click().perform();
-            while (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
-                //System.out.println("waiting for popup to disable");
-            }
+        if (_driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size() <= 0)
+            return;
+        if (!_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed())
+            return;
+        WebElement webElement = _driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
+        Actions actions = new Actions(_driver);
+        actions.moveToElement(webElement);
+        actions.click().perform();
+        while (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
         }
+
     }
 
     public static void EnterText(RemoteWebDriver driver, WebElement element, String value) {
@@ -152,16 +138,7 @@ public class Helper {
             wait.until(ExpectedConditions.visibilityOf(element));
             element.sendKeys(value);
         } catch (ElementClickInterceptedException ex) {
-            /*if (driver.findElement(By.cssSelector("button[id='onetrust-accept-btn-handler']")).isDisplayed()) {
-                WebElement webElement = driver.findElement(By.cssSelector("button[id='onetrust-accept-btn-handler']>font>font"));
-                Actions actions = new Actions(driver);
-                actions.moveToElement(webElement);
-                actions.click().perform();
-                while (driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
-                }
-            }*/
             handleCookie(driver);
-
             click(driver, element);
             element.sendKeys(value);
         }
@@ -200,7 +177,7 @@ public class Helper {
                 .executeScript("return document.readyState").equals("complete"));
     }
 
-    public static void WaitForElementToExistAndVisible(RemoteWebDriver _driver, WebElement element) throws InterruptedException, InvalidApplicationException {
+    public static void WaitForElementToExistAndVisible( WebElement element) throws InterruptedException, InvalidApplicationException {
         var ct = 0;
         do {
             ++ct;
@@ -222,17 +199,17 @@ public class Helper {
         return wait.until(drv -> drv.findElement(by));
     }
 
-    /*public static String getUrl(String environmentDetails) {
+    public static String getUrl(String environmentDetails) {
 
         JSONParser parser = new JSONParser();
         try {
             Object obj = parser.parse(new FileReader(jsonfilePath));
             JSONObject jsonObject = (JSONObject) obj;
             return (String) jsonObject.get(environmentDetails);
-        } catch (Exception e) {
+        } catch (IOException | ParseException e) {
             e.printStackTrace();
             return "";
         }
 
-    }*/
+    }
 }

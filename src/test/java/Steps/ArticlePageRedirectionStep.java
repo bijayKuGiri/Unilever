@@ -4,8 +4,10 @@ import Base.BaseUtilities;
 import Pages.Home;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.Assert;
+
+import static org.junit.Assert.assertTrue;
 
 public class ArticlePageRedirectionStep extends BaseUtilities {
 
@@ -24,6 +26,6 @@ public class ArticlePageRedirectionStep extends BaseUtilities {
     }
     @Then("the page should redirect to Article page")
     public void the_page_should_redirect_to_article_page() {
-        Assert.assertTrue(_home.IsUrlContainArtigos());
+        Assert.assertTrue("Expected page should redirect to Article Page",_home.IsUrlContainArtigos());
     }
 }

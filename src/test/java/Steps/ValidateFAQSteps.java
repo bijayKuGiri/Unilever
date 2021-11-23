@@ -32,7 +32,7 @@ public class ValidateFAQSteps extends BaseUtilities {
 
     @Then("the answer should be visible")
     public void the_answer_should_be_visible() {
-        Assert.assertTrue(_home.isAnswerDisplay());
+        org.junit.Assert.assertTrue(_home.isAnswerDisplay());
     }
 
     @When("i try to click on cross * icon")
@@ -42,6 +42,6 @@ public class ValidateFAQSteps extends BaseUtilities {
 
     @Then("the answer should be hidden again")
     public void the_answer_should_be_hidden_again() {
-        Assert.assertFalse(_home.isAnswerDisplay());
+        org.junit.Assert.assertFalse(_home.isAnswerDisplay());
     }
 }
