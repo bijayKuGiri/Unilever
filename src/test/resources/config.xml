@@ -3,7 +3,7 @@
 <!--    <uatcred>https://unileveraemcs:Un1l2v2r@A3mcs@magnumicecream-com-uat-aemcs.unileversolutions.com/br/home.html</uatcred>>-->
 <!--    <uatcred>https://www.magnumicecream.com/br/home.html</uatcred>-->
     <uatcred>https://magnumicecream-com-uat-aemcs.unileversolutions.com/th/en/home.html</uatcred>
-    <environment>th_th_uat</environment>
+    <environment>th_en_uat</environment>
     <headless>no</headless>
     <browser></browser>
 </settings>

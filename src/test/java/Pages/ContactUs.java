@@ -45,8 +45,8 @@ public class ContactUs extends Helper {
     @FindBy(css = "#submitButton[type='submit']")
     WebElement btnSubmit;
 
-    @FindBy(css = "svg#star.loadingIcon")
-    WebElement lblLoading;
+ /*   @FindBy(css = "svg#star.loadingIcon")
+    WebElement lblLoading;*/
 
     @FindBy(css = "div.clearfix.component.formElementV2")
     WebElement lblConform;
@@ -70,14 +70,6 @@ public class ContactUs extends Helper {
     @FindBy(css = "#legalAgeConfirmation_Err>p")
     WebElement legalConfErr;
 
-    @FindBy(xpath = "//p[@class='small']/a[2]")
-    WebElement lnkTermsOfUse;
-
-    @FindBy(xpath = "//p[@class='small']/a[1]")
-    WebElement lnkPrivacyNotice;
-
-    @FindBy(xpath = "//p[@class='small']/a[3]")
-    WebElement lnkCookiesNotice;
 
     @FindBy(css = "p.small")
     WebElement lblBottom;
@@ -86,9 +78,9 @@ public class ContactUs extends Helper {
         isValid = valid;
     }
 
-    public boolean isValid() {
+    /*public boolean isValid() {
         return isValid;
-    }
+    }*/
 
     public boolean isNameErrorDisplay() {
         return lblfirstnameErr.isDisplayed();
@@ -194,7 +186,7 @@ public class ContactUs extends Helper {
         Helper.click(driver, element);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size()>1) {
             driver.switchTo().window(tabs2.get(1));
         }
@@ -202,9 +194,7 @@ public class ContactUs extends Helper {
     }
 
     public boolean IsNavigatePrivacyNotice(RemoteWebDriver driver) {
-        System.out.println(driver.getCurrentUrl());
-        System.out.println("https://www.unilevernotices.com/brazil/portuguese/privacy-notice/notice.html");
-        return driver.getCurrentUrl().contains("https://www.unilevernotices.com/brazil/portuguese/privacy-notice/notice.html");
+        return driver.getCurrentUrl().contains("privacy-notice");
     }
 
     public RemoteWebDriver navCookiesNotice() throws InterruptedException {

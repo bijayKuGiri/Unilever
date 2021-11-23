@@ -61,7 +61,7 @@ public class MagnumTowel {
 
     private List<WebElement> getImageList() {
         return driver
-                .findElements(By.xpath("//picture//img")).stream().filter(el -> el.isDisplayed())
+                .findElements(By.xpath("//picture//img")).stream().filter(WebElement::isDisplayed)
                 .collect(Collectors.toList());
 
     }

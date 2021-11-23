@@ -129,7 +129,7 @@ public class Review {
         chkStar.findElements(By.tagName("input")).get(int_random).click();
     }
 
-    public void enterReview() {
+    /*public void enterReview() {
         fillStar();
         Helper.EnterText(driver, txtReviewTitle, "Review Testing");
         Helper.EnterText(driver, txtYourReview, "Customer reviews build something known as social proof, a phenomenon that" +
@@ -140,7 +140,7 @@ public class Review {
         Helper.EnterText(driver, txtNickName, "Automatic");
         Helper.EnterText(driver, txtEmail, "Test@test.com");
         Helper.click(driver, chkTermCondition);
-    }
+    }*/
 
     public void enterReviewDetails() {
         if (isRatingRequired)

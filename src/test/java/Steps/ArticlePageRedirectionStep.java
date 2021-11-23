@@ -7,15 +7,12 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-import static org.junit.Assert.assertTrue;
 
 public class ArticlePageRedirectionStep extends BaseUtilities {
 
-    private BaseUtilities base;
     private Home _home;
-    private RemoteWebDriver _driver;
+    private final RemoteWebDriver _driver;
     public ArticlePageRedirectionStep(BaseUtilities base) {
-        this.base = base;
         _driver= base._driver;
     }
 

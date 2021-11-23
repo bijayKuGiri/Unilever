@@ -11,15 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
-
-import javax.imageio.ImageIO;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
-
-import ru.yandex.qatools.ashot.AShot;
-import ru.yandex.qatools.ashot.Screenshot;
-import ru.yandex.qatools.ashot.shooting.ShootingStrategies;
 
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
@@ -45,8 +37,6 @@ public class Home {
     List<String> productImgsAfter;
     Boolean prdTabValidation = false;
 
-    @FindBy(xpath = "//header")
-    WebElement header;
 
     @FindBy(css = "ul.cmp-navigation__group")
     WebElement lstHeader;
@@ -78,17 +68,12 @@ public class Home {
     @FindBy(css = "button.cmp-carousel__action.cmp-carousel__action--next>span.cmp-carousel__action-icon")
     WebElement carouselNavigateNext;
 
-//    @FindBy(xpath = "//button[@class='productcarousel__btn productcarousel__btn--next']")
-//    WebElement prCarouselNavigateNext;
 
     @FindBy(css = "div.cmp-carousel__content")
     WebElement carouselContent;
 
     @FindBy(xpath = "//footer//div[@class='container responsivegrid'][1]")
     WebElement footerContainer;
-
-
-//    @FindBy(xpath = "//div[@class='container responsivegrid']//span[@class='cmp-list__item-title'][1]")
 
     @FindBy(xpath = "//footer//li[contains(@data-cmp-data-layer,'contactUs') or contains(@data-cmp-data-layer,'contato')]")
     WebElement contactUs;
@@ -101,12 +86,8 @@ public class Home {
     @FindBy(xpath = "//footer//a[contains(@href,'facebook')]")
     WebElement lnkFacebook;
 
-    //    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'twitter')]")
     @FindBy(xpath = "//footer//a[contains(@href,'twitter')]")
     WebElement lnkTwitter;
-
-    @FindBy(css = "a.cmp-button")
-    WebElement products;
 
     @FindBy(xpath = "//a[normalize-space()='Magnum Oversized Towels']")
     WebElement lnkMagnumOverSizedTowel;
@@ -114,11 +95,6 @@ public class Home {
     @FindBy(xpath = "//a[normalize-space()='Artigos']")
     WebElement lnkArticle;
 
-
-    @FindBy(css = "div.no-results")
-    WebElement noResults;
-
-    //@FindBy(xpath = "//img[@alt='From bean to bite']")
     @FindBy(xpath = "//li//div[@class='cmp-teaser__image']//img")
     WebElement imgArticle;
 
@@ -149,21 +125,14 @@ public class Home {
     @FindBy(xpath = "//div[@data-cmp-hook-accordion='panel']//div[@class='container responsivegrid']")
     WebElement nutritionDetails;
 
-    @FindBy(xpath = "//ol[@role='tablist' and @class='cmp-tabs__tablist']")
-    WebElement productTab;
-
     @FindBy(xpath = "//ol[@role='tablist' and @class='cmp-tabs__tablist']//parent::div")
     WebElement productTabImages;
 
 
-    public boolean isNoResultDisplay() {
-        return noResults.isDisplayed();
-    }
-
     public List<String> getProductImages() {
         List<String> imgSrc = new ArrayList<>();
         var tabElements = productTabImages.findElements(By.xpath("//div[@class='container responsivegrid']//img"))
-                .stream().filter(ele -> ele.isDisplayed()).collect(Collectors.toList());
+                .stream().filter(WebElement::isDisplayed).collect(Collectors.toList());
         for (WebElement element : tabElements
         ) {
             imgSrc.add(element.getAttribute("src"));
@@ -175,7 +144,7 @@ public class Home {
     public List<String> getProductImages(WebElement item) {
         List<String> imgSrc = new ArrayList<>();
         var tabElements = item.findElements(By.xpath("//parent::ol//parent::div//div[@class='container responsivegrid']//img"))
-                .stream().filter(ele -> ele.isDisplayed()).collect(Collectors.toList());
+                .stream().filter(WebElement::isDisplayed).collect(Collectors.toList());
         for (WebElement element : tabElements
         ) {
             imgSrc.add(element.getAttribute("src"));
@@ -188,38 +157,20 @@ public class Home {
         var tabItems = driver.findElements(By.xpath("//ol[@role='tablist' and @class='cmp-tabs__tablist']"))
                 .stream().filter(ele -> ele.findElements(By.tagName("li")).size() > 1)
                 .collect(Collectors.toList());
-        /*if (productTab.findElements(By.tagName("li")).size() == 1)
-            return;*/
         for (WebElement element : tabItems
         ) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         }
-        //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", productTab);
 
     }
 
     public void selectProductTabs() throws InterruptedException {
-        /*productImgsBefore = getProductImages();
-        var tabElements = productTab.findElements(By.tagName("li"));
-        Helper.scrollAndClick(driver, tabElements.get(0));
-        System.out.println("There count of available tabs are " + tabElements.size());
-        for (WebElement tabElement : tabElements) {
-            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", tabElement);
-            System.out.println(tabElement.getAttribute("aria-selected"));
-            if (tabElement.getAttribute("aria-selected").equalsIgnoreCase("false")) {
-                System.out.println(tabElement.getText() + " going to selected");
-                Helper.scrollAndClick(driver, tabElement);
-
-            }
-
-        }*/
         var tabItems = driver.findElements(By.xpath("//ol[@role='tablist' and @class='cmp-tabs__tablist']"))
                 .stream().filter(ele -> ele.findElements(By.tagName("li")).size() > 1)
                 .collect(Collectors.toList());
 
         for (var item : tabItems
         ) {
-//            productImgsBefore = getProductImages(item);
             var tabElements = item.findElements(By.tagName("li"));
             Helper.scrollAndClick(driver, tabElements.get(0));
 
@@ -234,19 +185,13 @@ public class Home {
                 }
                 Thread.sleep(3000);
                 productImgsAfter = getProductImages();
-                if (productImgsAfter != productImgsBefore)
-                    prdTabValidation = true;
-                else
-                    prdTabValidation = false;
+                prdTabValidation = productImgsAfter != productImgsBefore;
             }
 
         }
     }
 
-    public void VerifyProductImages() throws InterruptedException {
-        /*Thread.sleep(3000);
-        productImgsAfter = getProductImages();
-        Assert.assertNotEquals(productImgsAfter, productImgsBefore);*/
+    public void VerifyProductImages() {
         Assert.assertTrue(prdTabValidation);
     }
 
@@ -295,10 +240,9 @@ public class Home {
             Helper.scrollAndClick(driver, prodCarousalPrev);
         }
         var currentItems = getProductCarouselList();
-        if (currentItems.size() == driver.findElements(By.xpath("//div[@class='productcarousel__cardscontainer']//div[contains(@id,'productcarousel')]")).size()){
-            System.out.println("Total number of products in carousel is same as total number displayed");
+        if (currentItems.size() == driver.findElements(By.xpath("//div[@class='productcarousel__cardscontainer']//div[contains(@id,'productcarousel')]")).size())
             return;
-        }
+
 
         while (prodCarousalNext.isEnabled()) {
             Helper.scrollAndClick(driver, prodCarousalNext);
@@ -306,7 +250,7 @@ public class Home {
             var newItems = getProductCarouselList();
             System.out.println(currentItems.size());
             System.out.println(newItems.size());
-            Assert.assertFalse(Objects.equals(currentItems, newItems));
+            Assert.assertNotEquals(newItems, currentItems);
         }
 
     }
@@ -326,24 +270,18 @@ public class Home {
 
     }
 
-    public void clickLogo() {
-
-        Helper.click(driver, logo);
-        //logo.click();
-    }
-
     public List<WebElement> getProducts() {
         return driver.findElements(By.xpath("//div[contains(@class,'button button--primary') or contains(@class,'button button--secondary')]//a"));
     }
 
-    public List<String> getLinkText() {
+   /* public List<String> getLinkText() {
         List<String> linkTxt = new ArrayList<>();
         List<WebElement> links = lstHeader.findElements(By.tagName("li"));
         for (WebElement var : links) {
             linkTxt.add(var.findElement(By.tagName("a")).getAttribute("href"));
         }
         return linkTxt;
-    }
+    }*/
 
     public List<WebElement> getLink() {
         return lstHeader.findElements(By.tagName("li"));
@@ -353,14 +291,14 @@ public class Home {
         return footerContainer.findElements(By.tagName("li"));
     }
 
-    public List<String> getFooterLinkText() {
+   /* public List<String> getFooterLinkText() {
         List<String> linkTxt = new ArrayList<>();
         List<WebElement> links = footerContainer.findElements(By.tagName("li"));
         for (WebElement var : links) {
             linkTxt.add(var.findElement(By.tagName("a")).getAttribute("href"));
         }
         return linkTxt;
-    }
+    }*/
 
     public String getHeader() {
         return driver.getTitle();
@@ -385,12 +323,12 @@ public class Home {
     }
 
 
-    public void getScreenShot() throws InterruptedException, IOException {
+   /* public void getScreenShot() throws InterruptedException, IOException {
         System.out.println(logo.getAttribute("src"));
         Screenshot screenshot = new AShot().shootingStrategy(ShootingStrategies.viewportPasting(100)).takeScreenshot(driver, logo);
         ImageIO.write(screenshot.getImage(), "PNG", new File(System.getProperty("user.dir") + "Logo.png"));
         Thread.sleep(2000);
-    }
+    }*/
 
     public ContactUs navContactUs() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", contactUs);
@@ -433,13 +371,11 @@ public class Home {
 
 
     public void selectFAQAns() {
-        /*WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.cssSelector("span.cmp-accordion__icon")));*/
         List<WebElement> lstElements = driver.findElements(By.cssSelector("span.cmp-accordion__icon"));
         Random rand = new Random();
         int upperbound = lstElements.size() - 1;
         int int_random = rand.nextInt(upperbound);
-        faqElement = lstElements.get(3);
+        faqElement = lstElements.get(int_random);
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", faqElement);
         driver.executeScript("arguments[0].click();", faqElement);
     }
@@ -494,7 +430,7 @@ public class Home {
         return carouselContent.isDisplayed();
     }
 
-    public RemoteWebDriver navFacebook() throws InterruptedException {
+    public RemoteWebDriver navFacebook(){
         Helper.scrollAndClick(driver, lnkFacebook);
         var tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size() > 1) {
@@ -530,9 +466,8 @@ public class Home {
         return review;
     }
 
-    public RemoteWebDriver navTwitter() throws InterruptedException {
+    public RemoteWebDriver navTwitter() {
         Helper.scrollAndClick(driver, lnkTwitter);
-//        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         var tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
@@ -564,9 +499,6 @@ public class Home {
         //return driver.findElements(By.cssSelector(".search-list-label")).size();
     }
 
-    public int getErrorCount() {
-        return driver.findElements(By.cssSelector(".no-results")).size();
-    }
 
     public boolean IsNavigateToIfoodPage() throws InterruptedException {
         Thread.sleep(2000);
@@ -617,7 +549,7 @@ public class Home {
     public RemoteWebDriver NavPrivacyNotice() {
         var element = footerContainer.findElement(By.xpath("//li[contains(@data-cmp-data-layer,'privacy-notice')] "));
         Helper.scrollAndClick(driver, element.findElement(By.tagName("a")));
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
@@ -628,7 +560,7 @@ public class Home {
     public RemoteWebDriver NavSignUp() {
         var element = footerContainer.findElements(By.tagName("li"));
         Helper.scrollAndClick(driver, element.get(1).findElement(By.tagName("a")));
-        ArrayList<String> tabs2 = new ArrayList<String>(driver.getWindowHandles());
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }

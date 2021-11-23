@@ -58,9 +58,9 @@ public class SignUp {
     @FindBy(xpath = "//li[normalize-space()='Por favor insira o seu CEP']")
     WebElement errZipCode;
 
-    public Boolean isConfirmOkDisplay(){
+    public void isConfirmOkDisplay(){
         Helper.WaitForPageLoad(driver,60);
-        return btnConfirm.isDisplayed();
+        btnConfirm.isDisplayed();
     }
 
     public void clickOkBtn(){
@@ -94,6 +94,7 @@ public class SignUp {
         txtName.sendKeys(firstName);
         txtLastName.sendKeys(lastName);
         txtEmail.sendKeys(email);
+        txtTelePhone.sendKeys(telephone);
         txtDOB.sendKeys(DOB);
         txtZipCode.sendKeys(ZipCode);
         if (IsAgree) {
