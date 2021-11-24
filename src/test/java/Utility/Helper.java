@@ -42,26 +42,29 @@ public class Helper {
 
     }
 
-    private static String getEnv(){
-        return getUrl( getNodeValue(filePath, "environment"));
+    private static String getEnv() {
+        return getUrl(getNodeValue(filePath, "environment"));
     }
 
     public static void NavigateToUAT(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
-//        _driver.navigate().to(getNodeValue(filePath, "uatcred"));
-        String url=getEnv();
-        if(url=="_testEnv"){
+        String url = getEnv();
+        if (url == "_testEnv") {
             System.out.println("Please set the env value in Config file");
             return;
         }
-        _driver.navigate().to(getUrl( getNodeValue(filePath, "environment")));
+        _driver.navigate().to(url);
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         handleCookie(_driver);
     }
 
     public static void NavigateToApp(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
-//        _driver.navigate().to(getNodeValue(filePath, "uatcred"));
-        _driver.navigate().to(getUrl( getNodeValue(filePath, "environment")));
+       String url = getEnv();
+        if (url == "_testEnv") {
+            System.out.println("Please set the env value in Config file");
+            return;
+        }
+        _driver.navigate().to(url);
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
     }
@@ -186,7 +189,7 @@ public class Helper {
                 .executeScript("return document.readyState").equals("complete"));
     }
 
-    public static void WaitForElementToExistAndVisible( WebElement element) throws InterruptedException, InvalidApplicationException {
+    public static void WaitForElementToExistAndVisible(WebElement element) throws InterruptedException, InvalidApplicationException {
         var ct = 0;
         do {
             ++ct;
