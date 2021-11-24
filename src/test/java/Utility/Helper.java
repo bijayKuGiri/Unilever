@@ -42,8 +42,17 @@ public class Helper {
 
     }
 
+    private static String getEnv(){
+        return getUrl( getNodeValue(filePath, "environment"));
+    }
+
     public static void NavigateToUAT(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
 //        _driver.navigate().to(getNodeValue(filePath, "uatcred"));
+        String url=getEnv();
+        if(url=="_testEnv"){
+            System.out.println("Please set the env value in Config file");
+            return;
+        }
         _driver.navigate().to(getUrl( getNodeValue(filePath, "environment")));
         _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
