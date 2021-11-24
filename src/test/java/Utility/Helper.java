@@ -20,6 +20,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 
@@ -48,7 +49,7 @@ public class Helper {
 
     public static void NavigateToUAT(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
         String url = getEnv();
-        if (url == "_testEnv") {
+        if (Objects.equals(url, "_testEnv")) {
             System.out.println("Please set the env value in Config file");
             return;
         }
@@ -60,7 +61,7 @@ public class Helper {
 
     public static void NavigateToApp(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
        String url = getEnv();
-        if (url == "_testEnv") {
+        if (Objects.equals(url, "_testEnv")) {
             System.out.println("Please set the env value in Config file");
             return;
         }
@@ -156,14 +157,14 @@ public class Helper {
         }
     }
 
-    public static void scrollUpPage(RemoteWebDriver driver, int timesToScroll) throws InterruptedException {
+   /* public static void scrollUpPage(RemoteWebDriver driver, int timesToScroll) throws InterruptedException {
         Actions action = new Actions(driver);
         action.sendKeys(Keys.PAGE_UP);
         for (int i = 0; i < timesToScroll; i++) {
             action.perform();
             Thread.sleep(1000);
         }
-    }
+    }*/
 
     public static void scrollDownPage(RemoteWebDriver driver, int timesToScroll) throws InterruptedException {
         Actions action = new Actions(driver);
