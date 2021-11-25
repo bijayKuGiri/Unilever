@@ -34,7 +34,7 @@ public class CookiesSteps extends BaseUtilities {
     }
     @Then("it should be visible once the page got loaded")
     public void it_should_be_visible_once_the_page_got_loaded() {
-        Assert.assertTrue(Helper.isCookieDispaly(_driver));
+        Assert.assertTrue(Helper.isCookieDisplay(_driver));
     }
     @Given("The site is Up")
     public void the_site_is_up() throws ParserConfigurationException, IOException, SAXException {
@@ -43,7 +43,7 @@ public class CookiesSteps extends BaseUtilities {
 
     @Given("the cookie popup is visible")
     public void the_cookie_popup_is_visible() {
-        Assert.assertTrue(Helper.isCookieDispaly(_driver));
+        Assert.assertTrue(Helper.isCookieDisplay(_driver));
     }
     @When("click on the accept all button")
     public void click_on_the_accept_all_button() {
@@ -51,6 +51,6 @@ public class CookiesSteps extends BaseUtilities {
     }
     @Then("the popup should disable")
     public void the_popup_should_disable() {
-        Assert.assertFalse(Helper.isCookieDispaly(_driver));
+        Assert.assertFalse(Helper.isCookieDisplay(_driver));
     }
 }

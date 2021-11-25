@@ -36,7 +36,7 @@ public class ValidateProductDetailsSteps extends BaseUtilities {
         Random rand = new Random();
         int upperbound = lstProducts.size();
         int int_random = rand.nextInt(upperbound);
-        Helper.click(_driver,lstProducts.get(int_random));
+        Helper.scrollAndClick(_driver,lstProducts.get(int_random));
         Assert.assertTrue(_home.IsSummeryExist());
 
     }

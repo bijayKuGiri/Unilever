@@ -25,7 +25,7 @@ public class NutritionDetailsSteps extends BaseUtilities {
         _home=new Home(base._driver);
         var lstProducts= _home.getProducts();
         Assert.assertTrue(lstProducts.size()>0,"Expected more than 0 products should be available on the page");
-        Helper.click(base._driver, lstProducts.get(1));
+        Helper.scrollAndClick(base._driver, lstProducts.get(1));
         Assert.assertTrue(_home.IsSummeryExist());
     }
     @When("i try to click on nutrition details")

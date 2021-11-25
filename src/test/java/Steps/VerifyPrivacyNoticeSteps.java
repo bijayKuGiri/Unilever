@@ -25,8 +25,6 @@ public class VerifyPrivacyNoticeSteps extends BaseUtilities {
     public void iTryToClickOnPrivacyNoticeLink() throws InterruptedException {
         _contact.SelectReason("Question");
         _contact.SelectSubject("Business");
-        //Thread.sleep(2000);
-        //Helper.scrollDownPage(_driver,3);
         _driver=_contact.navPrivacyNotice();
     }
 

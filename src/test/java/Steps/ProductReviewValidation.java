@@ -7,8 +7,10 @@ import Utility.Helper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 
@@ -35,8 +37,8 @@ public class ProductReviewValidation extends BaseUtilities {
         Random rand = new Random();
         int upperbound = lstProducts.size()-1;
         int int_random = rand.nextInt(upperbound);
-        Helper.click(_driver,lstProducts.get(int_random));
-        //lstProducts.get(int_random).click();
+        Helper.scrollAndClick(_driver,lstProducts.get(int_random));
+
         review=_home.navReview();
 
     }

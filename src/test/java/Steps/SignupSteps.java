@@ -28,7 +28,7 @@ public class SignupSteps extends BaseUtilities {
     public void enter_all_the_details_and_submit() {
         signUp=new SignUp(_driver);
         signUp.SignUpWithDetails("test","lat Test","test@test.com",
-                "11051980","9000000043","56990-123",true);
+                "11051980","","56990-123",true);
     }
     @Then("it should submit and redirect to confirmation page.")
     public void it_should_submit_and_redirect_to_confirmation_page() {

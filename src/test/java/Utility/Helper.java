@@ -11,12 +11,10 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
 
 import javax.management.InvalidApplicationException;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
@@ -47,7 +45,7 @@ public class Helper {
         return getUrl(getNodeValue(filePath, "environment"));
     }
 
-    public static void NavigateToUAT(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
+    public static void NavigateToUAT(RemoteWebDriver _driver) {
         String url = getEnv();
         if (Objects.equals(url, "_testEnv")) {
             System.out.println("Please set the env value in Config file");
@@ -59,7 +57,7 @@ public class Helper {
         handleCookie(_driver);
     }
 
-    public static void NavigateToApp(RemoteWebDriver _driver) throws ParserConfigurationException, IOException, SAXException {
+    public static void NavigateToApp(RemoteWebDriver _driver){
        String url = getEnv();
         if (Objects.equals(url, "_testEnv")) {
             System.out.println("Please set the env value in Config file");
@@ -125,17 +123,19 @@ public class Helper {
         }
     }
 
-    public static Boolean isCookieDispaly(RemoteWebDriver driver) {
+    public static Boolean isCookieDisplay(RemoteWebDriver driver) {
         //WaitForPageLoad(driver,60);
-        return driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed();
+       return driver.findElement(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler")).isDisplayed();
+        /*var item= Helper.findElementIfExist(driver,By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler"));
+        return item != null;*/
     }
 
     public static void handleCookie(RemoteWebDriver _driver) {
-        if (_driver.findElements(By.cssSelector("div#onetrust-button-group-parent")).size() <= 0)
+        if (_driver.findElements(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler")).size() <= 0)
             return;
-        if (!_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed())
+        if (!_driver.findElement(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler")).isDisplayed())
             return;
-        WebElement webElement = _driver.findElement(By.cssSelector("div#onetrust-button-group-parent"));
+        WebElement webElement = _driver.findElement(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler"));
         Actions actions = new Actions(_driver);
         actions.moveToElement(webElement);
         actions.click().perform();

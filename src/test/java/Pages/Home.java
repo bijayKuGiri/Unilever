@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
+
 import java.util.*;
 
 import java.util.concurrent.TimeUnit;
@@ -29,7 +30,8 @@ public class Home {
         driver = _driver;
     }
 
-    String active_carousel = "//div[@class='cmp-carousel__content']/div[@class='cmp-carousel__item cmp-carousel__item--active']";
+    //String active_carousel = "//div[@class='cmp-carousel__content']/div[@class='cmp-carousel__item cmp-carousel__item--active']";
+    String active_carousel = "//div[@class='cmp-carousel__content']/div[@class='cmp-carousel__item cmp-carousel__item--active']//div[@data-cmp-is='image']";
     String selectedCountry = "";
     String getSiteText = "";
     WebElement faqElement;
@@ -44,7 +46,7 @@ public class Home {
     @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
 
-    @FindBy(xpath ="//div[@class='search-list-label']")
+    @FindBy(xpath = "//div[@class='search-list-label']")
     WebElement searchResult;
 
     @FindBy(css = "img[title='Magnum Logo']")
@@ -62,7 +64,7 @@ public class Home {
     @FindBy(css = ".search-bar-btn")
     WebElement lblSearch;
 
-    @FindBy(css = "section.kr-summary-section")
+    @FindBy(css = "section.kr-summary-section>div")
     WebElement summarySection;
 
     @FindBy(css = "button.cmp-carousel__action.cmp-carousel__action--next>span.cmp-carousel__action-icon")
@@ -75,7 +77,7 @@ public class Home {
     @FindBy(xpath = "//footer//div[@class='container responsivegrid'][1]")
     WebElement footerContainer;
 
-    @FindBy(xpath = "//footer//li[contains(@data-cmp-data-layer,'contactUs') or contains(@data-cmp-data-layer,'contato')]")
+    @FindBy(xpath = "//footer//li[contains(@data-cmp-data-layer,'ContactUs') or contains(@data-cmp-data-layer,'contato')]")
     WebElement contactUs;
 
     @FindBy(css = "div.kr-right-review-area>a")
@@ -202,7 +204,7 @@ public class Home {
     }
 
     public void clickOnNutritionLnk() {
-        Helper.click(driver, lnkNutritionDetails);
+        Helper.scrollAndClick(driver, lnkNutritionDetails);
     }
 
     public void VerifyTheNutritionDetails() {
@@ -225,11 +227,10 @@ public class Home {
 
     public void verifyRotation(List<WebElement> elements) throws InterruptedException {
         for (int i = 0; i < elements.size(); i++) {
-            WebElement itemSelected = carouselContent.findElement(By.xpath(active_carousel));
-            //carouselNavigateNext.click();
-            Helper.click(driver, carouselNavigateNext);
+            var itemSelected = carouselContent.findElement(By.xpath(active_carousel)).getAttribute("data-cmp-src");
+            Helper.scrollAndClick(driver, carouselNavigateNext);
             Thread.sleep(2000);
-            WebElement itemSelected_Current = carouselContent.findElement(By.xpath(active_carousel));
+            var itemSelected_Current = carouselContent.findElement(By.xpath(active_carousel)).getAttribute("data-cmp-src");
             Assert.assertNotEquals(itemSelected, itemSelected_Current);
         }
     }
@@ -272,6 +273,7 @@ public class Home {
 
     public List<WebElement> getProducts() {
         return driver.findElements(By.xpath("//div[contains(@class,'button button--primary') or contains(@class,'button button--secondary')]//a"));
+        ////a[@class='cmp-button' and not(@target)]//span[@class='cmp-button__text']
     }
 
    /* public List<String> getLinkText() {
@@ -390,11 +392,7 @@ public class Home {
     }
 
     public RemoteWebDriver selectCountry() {
-        JavascriptExecutor js;
-        js = driver;
-        js.executeScript("arguments[0].scrollIntoView();", lnkSelectCountry);
-        lnkSelectCountry.click();
-        //Helper.click(driver, lnkSelectCountry);
+        Helper.scrollAndClick(driver, lnkSelectCountry);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         List<WebElement> lstElements = driver.findElements(By.xpath("//a[@class='cmp-languagenavigation__item-link']"));
@@ -402,7 +400,7 @@ public class Home {
         int upperbound = lstElements.size() - 1;
         int int_random = rand.nextInt(upperbound);
         selectedCountry = lstElements.get(int_random).getText();
-        Helper.click(driver, lstElements.get(int_random));
+        Helper.scrollAndClick(driver, lstElements.get(int_random));
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
@@ -430,7 +428,7 @@ public class Home {
         return carouselContent.isDisplayed();
     }
 
-    public RemoteWebDriver navFacebook(){
+    public RemoteWebDriver navFacebook() {
         Helper.scrollAndClick(driver, lnkFacebook);
         var tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size() > 1) {
@@ -445,7 +443,7 @@ public class Home {
         Helper.scrollAndClick(driver, imgArticle);
     }
 
-    public boolean IsUrlContainArtigos() {
+    public boolean IsUrlContainArgos() {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(lnkFeatureProduct));
         return driver.getCurrentUrl().contains("artigos");
@@ -456,11 +454,10 @@ public class Home {
     }
 
     public Review navReview() {
-        WebDriverWait wait = new WebDriverWait(driver, 20);
+        WebDriverWait wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section")));
-
-        Helper.click(driver, summarySection);
-        Helper.click(driver, lblWriteReview);
+        summarySection.click();
+        Helper.scrollAndClick(driver, lblWriteReview);
         Review review = new Review(driver);
         review.WaitForReviewPageToLoad(15);
         return review;
@@ -487,15 +484,15 @@ public class Home {
         driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
     }
 
-    public int getSearchCount()  {
+    public int getSearchCount() {
         WebDriverWait wait = new WebDriverWait(driver, 120);
         wait.until(ExpectedConditions.visibilityOf(searchResult));
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(driver.findElement(By.xpath("//div[@class='search-list-label']")).getText());
-        if(m.find())
+        if (m.find())
 
-        System.out.println( m.group(0));
-        return Integer.parseInt( m.group(0));
+            System.out.println(m.group(0));
+        return Integer.parseInt(m.group(0));
         //return driver.findElements(By.cssSelector(".search-list-label")).size();
     }
 

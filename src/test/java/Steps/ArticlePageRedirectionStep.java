@@ -23,6 +23,6 @@ public class ArticlePageRedirectionStep extends BaseUtilities {
     }
     @Then("the page should redirect to Article page")
     public void the_page_should_redirect_to_article_page() {
-        Assert.assertTrue("Expected page should redirect to Article Page",_home.IsUrlContainArtigos());
+        Assert.assertTrue("Expected page should redirect to Article Page",_home.IsUrlContainArgos());
     }
 }

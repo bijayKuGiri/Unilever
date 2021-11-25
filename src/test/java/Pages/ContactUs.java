@@ -24,10 +24,15 @@ public class ContactUs extends Helper {
 
     }
 
-    @FindBy(css = "#contactUs-inquiryType[name='enquirySubj']")
+   /* @FindBy(css = "#contactUs-inquiryType[name='enquirySubj']")
+    WebElement selectSubject;*/
+
+    @FindBy(xpath = "//select[@name='enquirySubj']")
     WebElement selectSubject;
 
-    @FindBy(css = "#contactUs-inquiryType[name='enquiryType']")
+    /*@FindBy(css = "#contactUs-inquiryType[name='enquiryType']")
+    WebElement selectReason;*/
+    @FindBy(xpath = "//select[@name='enquiryType']")
     WebElement selectReason;
 
     @FindBy(css = "#givenNameContainer")
@@ -179,11 +184,8 @@ public class ContactUs extends Helper {
 
     public RemoteWebDriver navPrivacyNotice() throws InterruptedException {
         Helper.scrollDownPage(driver, 3);
-        WebElement element = lblBottom.findElement(By.xpath("//a[@class='optInLinks'][1]"));
-        while (!element.isDisplayed()) {
-            Helper.downKeyOnPage(driver, 2);
-        }
-        Helper.click(driver, element);
+        WebElement element = lblBottom.findElement(By.xpath("//a[contains(@href,'privacy-notice')]"));
+        Helper.scrollAndClick(driver,element);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
@@ -212,8 +214,6 @@ public class ContactUs extends Helper {
     }
 
     public boolean IsNavigateCookiesNotice(RemoteWebDriver driver) {
-        System.out.println(driver.getCurrentUrl());
-        System.out.println("https://www.unilevernotices.com/brazil/portuguese/cookie-notice/notice.html");
-        return driver.getCurrentUrl().contains("https://www.unilevernotices.com/brazil/portuguese/cookie-notice/notice.html");
+        return driver.getCurrentUrl().contains("cookie-notice");
     }
 }
