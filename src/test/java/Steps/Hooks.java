@@ -5,6 +5,7 @@ import Utility.Helper;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.PageLoadStrategy;
@@ -14,11 +15,8 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.util.Objects;
 
 public class Hooks extends BaseUtilities {
@@ -45,23 +43,24 @@ public class Hooks extends BaseUtilities {
     }
 
     @Before
-    public void Initialize() throws ParserConfigurationException, IOException, SAXException {
+    public void Initialize() {
         System.out.println("Initialise process Start");
         String OS = System.getProperty("os.name").toLowerCase();
         SelectBrowser(Browsertype.CHROME,OS);
         utils._driver=_driver;
     }
 
-    public void SelectBrowser(Browsertype browser,String OS) throws ParserConfigurationException, IOException, SAXException {
+    public void SelectBrowser(Browsertype browser,String OS) {
 
         if(browser==Browsertype.CHROME) {
-            System.setProperty("webdriver.chrome.silentOutput","true");
+            /*System.setProperty("webdriver.chrome.silentOutput","true");
             if (OS.contains("win"))
                 System.setProperty("webdriver.chrome.driver", ".\\src\\main\\resources\\ChromeDriver\\windows.exe");
             else if(OS.contains("mac"))
                 System.setProperty("webdriver.chrome.driver", ".//src//main//resources//ChromeDriver//mac64m1");
             else if(OS.contains("nix") || OS.contains("nux") || OS.contains("aix"))
-                System.setProperty("webdriver.chrome.driver", ".//src//main//resources//ChromeDriver//linux");
+                System.setProperty("webdriver.chrome.driver", ".//src//main//resources//ChromeDriver//linux");*/
+            WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT_AND_NOTIFY);
             options.addArguments("enable-automation");
@@ -75,6 +74,7 @@ public class Hooks extends BaseUtilities {
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             _driver = new ChromeDriver(options);
             _driver.manage().deleteAllCookies();
+            Helper.WaitForPageLoad(_driver,60);
             //_driver.manage().window().maximize();
         }
         else if(browser==Browsertype.EDGE) {

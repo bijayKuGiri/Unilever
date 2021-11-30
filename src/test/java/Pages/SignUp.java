@@ -11,7 +11,7 @@ public class SignUp {
     private final RemoteWebDriver driver;
 
     public SignUp(RemoteWebDriver _driver) {
-
+        Helper.WaitForPageLoad(_driver,60);
         PageFactory.initElements(_driver, this);
         driver = _driver;
     }

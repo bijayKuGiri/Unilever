@@ -18,7 +18,7 @@ public class ContactUs extends Helper {
     private boolean isValid = false;
 
     public ContactUs(RemoteWebDriver _driver) {
-
+        Helper.WaitForPageLoad(_driver, 60);
         PageFactory.initElements(_driver, this);
         driver = _driver;
 
@@ -108,34 +108,34 @@ public class ContactUs extends Helper {
     }
 
     public void SelectReason(String reason) {
-        Helper.selectFromDDn(driver,reason , selectReason);
+        Helper.selectFromDDn(driver, reason, selectReason);
     }
 
     public void SelectSubject(String subject) {
-        Helper.selectFromDDn(driver,subject, selectSubject);
+        Helper.selectFromDDn(driver, subject, selectSubject);
     }
 
     public void enterNameEmailAndComments(String name, String lastName, String email, String Comments) throws InterruptedException {
         Helper.scrollDownPage(driver, 1);
-        Helper.EnterText(driver,txtName.findElement(By.tagName("input")),name);
-        Helper.EnterText(driver,txtLastName.findElement(By.tagName("input")),lastName);
-        Helper.EnterText(driver,txtEmail.findElement(By.tagName("input")),email);
+        Helper.EnterText(driver, txtName.findElement(By.tagName("input")), name);
+        Helper.EnterText(driver, txtLastName.findElement(By.tagName("input")), lastName);
+        Helper.EnterText(driver, txtEmail.findElement(By.tagName("input")), email);
         if (!Comments.trim().isEmpty())
-            Helper.EnterText(driver,txtComments.findElement(By.tagName("textarea")),Comments);
+            Helper.EnterText(driver, txtComments.findElement(By.tagName("textarea")), Comments);
 
         if (!Comments.trim().isEmpty()) {
 
-            Helper.click(driver,chkAgeConfirm);
+            Helper.click(driver, chkAgeConfirm);
         }
 
     }
 
     public void enterDetailsWithoutAgeConfirm(String name, String lastName, String email, String Comments) throws InterruptedException {
         Helper.scrollDownPage(driver, 1);
-        Helper.EnterText(driver,txtName.findElement(By.tagName("input")),name);
-        Helper.EnterText(driver,txtLastName.findElement(By.tagName("input")),lastName);
-        Helper.EnterText(driver,txtEmail.findElement(By.tagName("input")),email);
-        Helper.EnterText(driver,txtComments.findElement(By.tagName("textarea")),Comments);
+        Helper.EnterText(driver, txtName.findElement(By.tagName("input")), name);
+        Helper.EnterText(driver, txtLastName.findElement(By.tagName("input")), lastName);
+        Helper.EnterText(driver, txtEmail.findElement(By.tagName("input")), email);
+        Helper.EnterText(driver, txtComments.findElement(By.tagName("textarea")), Comments);
     }
 
     public void hitSubmit() {
@@ -170,7 +170,7 @@ public class ContactUs extends Helper {
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         //Thread.sleep(5000);
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         return driver;
@@ -185,11 +185,11 @@ public class ContactUs extends Helper {
     public RemoteWebDriver navPrivacyNotice() throws InterruptedException {
         Helper.scrollDownPage(driver, 3);
         WebElement element = lblBottom.findElement(By.xpath("//a[contains(@href,'privacy-notice')]"));
-        Helper.scrollAndClick(driver,element);
+        Helper.scrollAndClick(driver, element);
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         return driver;
@@ -207,7 +207,7 @@ public class ContactUs extends Helper {
         }
         Helper.scrollAndClick(driver, element);
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
-        if (tabs2.size()>1) {
+        if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
         return driver;

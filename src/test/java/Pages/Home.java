@@ -10,6 +10,7 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import static  org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import org.testng.Assert;
 
 import java.util.*;
@@ -25,7 +26,7 @@ public class Home {
     private final RemoteWebDriver driver;
 
     public Home(RemoteWebDriver _driver) {
-
+        //Helper.WaitForPageLoad(_driver,60);
         PageFactory.initElements(_driver, this);
         driver = _driver;
     }
@@ -458,7 +459,7 @@ public class Home {
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section")));
         summarySection.click();
         Helper.scrollAndClick(driver, lblWriteReview);
-        Review review = new Review(driver);
+        var review = new Review(driver);
         review.WaitForReviewPageToLoad(15);
         return review;
     }
@@ -480,17 +481,22 @@ public class Home {
         Helper.click(driver, icnSearch);
         Helper.EnterText(driver, txtSearch, productName);
         Helper.click(driver, lblSearch);
-        driver.manage().timeouts().implicitlyWait(60, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(60, TimeUnit.SECONDS);
+//        WebDriverWait wait = new WebDriverWait(driver, 120);
+//        //wait.until(ExpectedConditions.visibilityOf(searchResult));
+//        wait.until(presenceOfElementLocated(By.xpath("//div[@class='search-list-label']")));
+        var item=Helper.FindElement(driver,By.xpath("//div[@class='search-list-label']"),120);
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(item));
+        Assert.assertTrue(item.isDisplayed());
+
     }
 
     public int getSearchCount() {
-        WebDriverWait wait = new WebDriverWait(driver, 120);
-        wait.until(ExpectedConditions.visibilityOf(searchResult));
-        Pattern p = Pattern.compile("\\d+");
-        Matcher m = p.matcher(driver.findElement(By.xpath("//div[@class='search-list-label']")).getText());
-        if (m.find())
 
+        var item=Helper.findElement(driver,By.xpath("//div[@class='search-list-label']"),60);
+        Pattern p = Pattern.compile("\\d+");
+        Matcher m = p.matcher(item.getText());
+        if (m.find())
             System.out.println(m.group(0));
         return Integer.parseInt(m.group(0));
         //return driver.findElements(By.cssSelector(".search-list-label")).size();

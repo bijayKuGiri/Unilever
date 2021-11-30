@@ -16,7 +16,7 @@ public class Article {
     private final RemoteWebDriver driver;
 
     public Article(RemoteWebDriver _driver) {
-
+        Helper.WaitForPageLoad(_driver,60);
         PageFactory.initElements(_driver, this);
         driver = _driver;
     }

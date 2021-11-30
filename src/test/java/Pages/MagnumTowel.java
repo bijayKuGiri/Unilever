@@ -1,5 +1,6 @@
 package Pages;
 
+import Utility.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -19,7 +20,7 @@ public class MagnumTowel {
     private List<WebElement> items;
 
     public MagnumTowel(RemoteWebDriver _driver) {
-
+        Helper.WaitForPageLoad(_driver,60);
         PageFactory.initElements(_driver, this);
         driver = _driver;
     }

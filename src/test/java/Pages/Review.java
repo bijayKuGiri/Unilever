@@ -21,6 +21,11 @@ public class Review {
     private String email = "";
     private boolean termAndCondition = true;
 
+    public Review(RemoteWebDriver _driver) {
+        Helper.WaitForPageLoad(_driver,60);
+        PageFactory.initElements(_driver, this);
+        driver = _driver;
+    }
 
     @FindBy(css = "#kr-reviewTitle.kr-text-field")
     WebElement txtReviewTitle;
@@ -64,13 +69,11 @@ public class Review {
     @FindBy(css = "li.kr-thanks-message>span")
     WebElement lblMsg;
 
-
     @FindBy(css = "#kr-comment-max-error")
     WebElement divUrCommentMaxError;
 
     @FindBy(css = "#kr-comment-min-error")
     WebElement divUrCommentMinError;
-
 
     @FindBy(css = "#kr-content")
     WebElement reviewContent;
@@ -104,7 +107,6 @@ public class Review {
         this.termAndCondition = termAndCondition;
     }
 
-
     public boolean isValid() {
         return isValid;
     }
@@ -112,13 +114,6 @@ public class Review {
     public void setValid(boolean valid) {
         isValid = valid;
     }
-
-    public Review(RemoteWebDriver _driver) {
-
-        PageFactory.initElements(_driver, this);
-        driver = _driver;
-    }
-
 
     private void fillStar() {
         WebDriverWait wait = new WebDriverWait(driver, 10);
@@ -153,15 +148,12 @@ public class Review {
             Helper.click(driver, chkTermCondition);
     }
 
-
     public void submit() {
         Helper.click(driver, btnSubmit);
         if (isValid()) {
             WebDriverWait wait = new WebDriverWait(driver, 30);
             wait.until(ExpectedConditions.visibilityOf(lblThanksMsg));
         }
-
-
     }
 
     public boolean isThanksMsgDisplay() {
@@ -171,7 +163,6 @@ public class Review {
     }
 
     public boolean isRatingMsgDisplay() {
-
         return chkStarMsg.isDisplayed();
     }
 

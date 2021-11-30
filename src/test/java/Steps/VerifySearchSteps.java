@@ -9,13 +9,10 @@ import org.testng.Assert;
 
 public class VerifySearchSteps extends BaseUtilities {
 
-    private BaseUtilities base;
     private Home _home;
     private RemoteWebDriver _driver;
 
     public VerifySearchSteps(BaseUtilities base) {
-
-        this.base = base;
         _driver = base._driver;
     }
 
@@ -26,7 +23,7 @@ public class VerifySearchSteps extends BaseUtilities {
     }
 
     @Then("it should shows the products in Results")
-    public void it_should_shows_the_products_in_results() throws InterruptedException {
+    public void it_should_shows_the_products_in_results()  {
         Assert.assertTrue(_home.getSearchCount()>0,"Expected search result should show one or more products");
         //Assert.assertTrue(_home.getErrorCount()==0,"Expected no error message should display");
     }
@@ -39,7 +36,7 @@ public class VerifySearchSteps extends BaseUtilities {
 
     @Then("it should not shows any products in Results")
     public void itShouldNotShowsAnyProductsInResults() {
-        Assert.assertTrue(_home.getSearchCount()==0,"Expected search result should show one or more products");
+        Assert.assertEquals(_home.getSearchCount(), 0, "Expected search result should show one or more products");
 
         //Assert.assertTrue(_home.isNoResultDisplay());
     }
