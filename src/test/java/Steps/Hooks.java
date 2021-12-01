@@ -17,6 +17,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.io.ByteArrayInputStream;
+import java.util.Collections;
 import java.util.Objects;
 
 public class Hooks extends BaseUtilities {
@@ -46,11 +47,11 @@ public class Hooks extends BaseUtilities {
     public void Initialize() {
         System.out.println("Initialise process Start");
         String OS = System.getProperty("os.name").toLowerCase();
-        SelectBrowser(Browsertype.CHROME,OS);
+        SelectBrowser(Browsertype.CHROME);
         utils._driver=_driver;
     }
 
-    public void SelectBrowser(Browsertype browser,String OS) {
+    public void SelectBrowser(Browsertype browser) {
 
         if(browser==Browsertype.CHROME) {
             /*System.setProperty("webdriver.chrome.silentOutput","true");
@@ -71,6 +72,8 @@ public class Hooks extends BaseUtilities {
             options.addArguments("--disable-extensions");
             options.addArguments("--dns-prefetch-disable");
             options.addArguments("--disable-gpu");
+            options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+            //options.setExperimentalOption("useAutomationExtension", false);
             options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
             _driver = new ChromeDriver(options);
             _driver.manage().deleteAllCookies();

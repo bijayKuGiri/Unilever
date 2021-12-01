@@ -13,6 +13,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 import static  org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 import org.testng.Assert;
 
+import java.time.Duration;
 import java.util.*;
 
 import java.util.concurrent.TimeUnit;
@@ -67,6 +68,9 @@ public class Home {
 
     @FindBy(css = "section.kr-summary-section>div")
     WebElement summarySection;
+
+   /* @FindBy(css = "kr-aggregateRating kr-Stars")
+    WebElement summarySection;*/
 
     @FindBy(css = "button.cmp-carousel__action.cmp-carousel__action--next>span.cmp-carousel__action-icon")
     WebElement carouselNavigateNext;
@@ -219,7 +223,7 @@ public class Home {
         }
     }
 
-    private List<WebElement> getProductCarouselList() {
+    public List<WebElement> getProductCarouselList() {
         return prodCarousal
                 .findElements(By.xpath("//div[@class='productcarousel__cardscontainer']//h3")).stream().filter(WebElement::isDisplayed)
                 .collect(Collectors.toList());
@@ -347,10 +351,11 @@ public class Home {
     }
 
     public void selectFAQ() throws InterruptedException {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFAQ);
-        Helper.click(driver, lnkFAQ);
+//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkFAQ);
+//        Helper.click(driver, lnkFAQ);
+        Helper.scrollAndClick(driver, lnkFAQ);
         Thread.sleep(5000);
-
+        Helper.WaitForPageLoad(driver,60);
     }
 
     public void selectAnySite() {
@@ -379,8 +384,9 @@ public class Home {
         int upperbound = lstElements.size() - 1;
         int int_random = rand.nextInt(upperbound);
         faqElement = lstElements.get(int_random);
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", faqElement);
-        driver.executeScript("arguments[0].click();", faqElement);
+        /*((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", faqElement);
+        driver.executeScript("arguments[0].click();", faqElement);*/
+        Helper.scrollAndClick(driver,faqElement);
     }
 
     public boolean isAnswerDisplay() {
@@ -455,9 +461,11 @@ public class Home {
     }
 
     public Review navReview() {
-        WebDriverWait wait = new WebDriverWait(driver, 60);
+        WebDriverWait wait = new WebDriverWait(driver, 120);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section")));
-        summarySection.click();
+        Helper.clickItem(driver,summarySection);
+        //summarySection.click();
+        //driver.executeScript("arguments[0].click();",summarySection);
         Helper.scrollAndClick(driver, lblWriteReview);
         var review = new Review(driver);
         review.WaitForReviewPageToLoad(15);
@@ -484,8 +492,8 @@ public class Home {
 //        WebDriverWait wait = new WebDriverWait(driver, 120);
 //        //wait.until(ExpectedConditions.visibilityOf(searchResult));
 //        wait.until(presenceOfElementLocated(By.xpath("//div[@class='search-list-label']")));
-        var item=Helper.FindElement(driver,By.xpath("//div[@class='search-list-label']"),120);
-        WebDriverWait wait = new WebDriverWait(driver, 30);
+        var item=Helper.FindElement(driver,By.xpath("//div[@class='search-list-label']"), 60);
+        WebDriverWait wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.visibilityOf(item));
         Assert.assertTrue(item.isDisplayed());
 
@@ -511,6 +519,8 @@ public class Home {
     }
 
     public void isProductCarousalDisplayed() {
+        WebDriverWait wait = new WebDriverWait(driver, 20);
+        wait.until(ExpectedConditions.visibilityOf(prodCarousal));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", prodCarousal);
         Assert.assertTrue(prodCarousal.isDisplayed(), "Expected Product Carousal should displayed");
     }

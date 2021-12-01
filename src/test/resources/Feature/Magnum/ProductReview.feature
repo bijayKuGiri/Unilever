@@ -1,5 +1,6 @@
 Feature: Validate the Product Review
 
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section
@@ -8,6 +9,7 @@ Feature: Validate the Product Review
     And Fill the Details
     Then it should navigate to Product Review Page
 
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section without Rating
@@ -16,6 +18,7 @@ Feature: Validate the Product Review
     And Fill the details without Rating
     Then it should display validation message for Rating
 
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section without Review Title
@@ -24,6 +27,7 @@ Feature: Validate the Product Review
     And Fill the details without Review Title
     Then it should display validation message for Review Title
 
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section without Nick Name
@@ -33,6 +37,7 @@ Feature: Validate the Product Review
     Then it should display validation message for Nick Name
 
 
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section without Email
@@ -41,6 +46,7 @@ Feature: Validate the Product Review
     And Fill the details without Email
     Then it should display validation message for Email
 
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section with wrong Email
@@ -49,7 +55,7 @@ Feature: Validate the Product Review
     And Fill the details with wrong email
     Then it should display validation message for Email
 
-
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section without Agreement
@@ -58,6 +64,7 @@ Feature: Validate the Product Review
     And Fill the details without agreement
     Then it should display validation message for agreement
 
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section without your Review
@@ -66,7 +73,7 @@ Feature: Validate the Product Review
     And Fill the details without your Review
     Then it should display validation message for minimum Your Review
 
-
+  @thailand
   @brazil
   @magnum
   Scenario: Verifying Product Review section with your Review more than 500 character

@@ -8,6 +8,7 @@ import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.w3c.dom.Document;
@@ -20,6 +21,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
+import java.util.function.Function;
 
 
 public class Helper {
@@ -57,8 +59,8 @@ public class Helper {
         handleCookie(_driver);
     }
 
-    public static void NavigateToApp(RemoteWebDriver _driver){
-       String url = getEnv();
+    public static void NavigateToApp(RemoteWebDriver _driver) {
+        String url = getEnv();
         if (Objects.equals(url, "_testEnv")) {
             System.out.println("Please set the env value in Config file");
             return;
@@ -68,25 +70,17 @@ public class Helper {
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
     }
 
-    public static WebElement FindElement(WebDriver webDriver, By by, int timeout)
-    {
+    public static WebElement FindElement(WebDriver webDriver, By by, int timeout) {
         int iSleepTime = 1000;
-        for(int i=0; i<timeout; i+=iSleepTime)
-        {
+        for (int i = 0; i < timeout; i += iSleepTime) {
             var oWebElements = webDriver.findElements(by);
-            if(oWebElements.size()>0)
-            {
+            if (oWebElements.size() > 0) {
                 return oWebElements.get(0);
-            }
-            else
-            {
-                try
-                {
+            } else {
+                try {
                     Thread.sleep(iSleepTime);
-                    System.out.println(String.format("%s: Waited for %d milliseconds.[%s]", new java.util.Date().toString(), i+iSleepTime, by));
-                }
-                catch(InterruptedException ex)
-                {
+                    System.out.println(String.format("%s: Waited for %d milliseconds.[%s]", new java.util.Date().toString(), i + iSleepTime, by));
+                } catch (InterruptedException ex) {
                     throw new RuntimeException(ex);
                 }
             }
@@ -152,9 +146,16 @@ public class Helper {
         }
     }
 
+    public static void clickItem(RemoteWebDriver driver, WebElement element){
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(element));
+        Actions action = new Actions(driver);
+        action.moveToElement(element).click().perform();
+    }
+
     public static Boolean isCookieDisplay(RemoteWebDriver driver) {
         //WaitForPageLoad(driver,60);
-       return driver.findElement(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler")).isDisplayed();
+        return driver.findElement(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler")).isDisplayed();
         /*var item= Helper.findElementIfExist(driver,By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler"));
         return item != null;*/
     }
@@ -254,4 +255,6 @@ public class Helper {
         }
 
     }
+
+
 }
