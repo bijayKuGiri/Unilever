@@ -10,7 +10,9 @@ import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-import static  org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+
+import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
+
 import org.testng.Assert;
 
 import java.time.Duration;
@@ -355,7 +357,7 @@ public class Home {
 //        Helper.click(driver, lnkFAQ);
         Helper.scrollAndClick(driver, lnkFAQ);
         Thread.sleep(5000);
-        Helper.WaitForPageLoad(driver,60);
+        Helper.WaitForPageLoad(driver, 60);
     }
 
     public void selectAnySite() {
@@ -386,7 +388,7 @@ public class Home {
         faqElement = lstElements.get(int_random);
         /*((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", faqElement);
         driver.executeScript("arguments[0].click();", faqElement);*/
-        Helper.scrollAndClick(driver,faqElement);
+        Helper.scrollAndClick(driver, faqElement);
     }
 
     public boolean isAnswerDisplay() {
@@ -463,7 +465,7 @@ public class Home {
     public Review navReview() {
         WebDriverWait wait = new WebDriverWait(driver, 120);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.cssSelector("section.kr-summary-section")));
-        Helper.clickItem(driver,summarySection);
+        Helper.clickItem(driver, summarySection);
         //summarySection.click();
         //driver.executeScript("arguments[0].click();",summarySection);
         Helper.scrollAndClick(driver, lblWriteReview);
@@ -485,14 +487,12 @@ public class Home {
         return driver.getCurrentUrl().contains("twitter.com");
     }
 
-    public void search(String productName) {
+    public void search(String productName) throws InterruptedException {
         Helper.click(driver, icnSearch);
         Helper.EnterText(driver, txtSearch, productName);
         Helper.click(driver, lblSearch);
-//        WebDriverWait wait = new WebDriverWait(driver, 120);
-//        //wait.until(ExpectedConditions.visibilityOf(searchResult));
-//        wait.until(presenceOfElementLocated(By.xpath("//div[@class='search-list-label']")));
-        var item=Helper.FindElement(driver,By.xpath("//div[@class='search-list-label']"), 60);
+        Thread.sleep(5000);
+        var item = Helper.FindElement(driver, By.xpath("//div[@class='search-list-label']"), 120);
         WebDriverWait wait = new WebDriverWait(driver, 60);
         wait.until(ExpectedConditions.visibilityOf(item));
         Assert.assertTrue(item.isDisplayed());
@@ -501,7 +501,7 @@ public class Home {
 
     public int getSearchCount() {
 
-        var item=Helper.findElement(driver,By.xpath("//div[@class='search-list-label']"),60);
+        var item = Helper.findElement(driver, By.xpath("//div[@class='search-list-label']"), 60);
         Pattern p = Pattern.compile("\\d+");
         Matcher m = p.matcher(item.getText());
         if (m.find())

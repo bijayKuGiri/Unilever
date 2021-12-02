@@ -17,7 +17,7 @@ public class VerifySearchSteps extends BaseUtilities {
     }
 
     @When("i navigate to search page and search for a product")
-    public void i_navigate_to_search_page_and_search_for_a_product() {
+    public void i_navigate_to_search_page_and_search_for_a_product() throws InterruptedException {
         _home = new Home(_driver);
         _home.search("Magnum");
     }
@@ -29,7 +29,7 @@ public class VerifySearchSteps extends BaseUtilities {
     }
 
     @When("i navigate to search page and search for a  wrong product")
-    public void iNavigateToSearchPageAndSearchForAWrongProduct() {
+    public void iNavigateToSearchPageAndSearchForAWrongProduct() throws InterruptedException {
         _home = new Home(_driver);
         _home.search("invalidbhhsbhddh");
     }
