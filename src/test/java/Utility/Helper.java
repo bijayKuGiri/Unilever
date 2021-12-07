@@ -166,9 +166,10 @@ public class Helper {
         if (!_driver.findElement(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler")).isDisplayed())
             return;
         WebElement webElement = _driver.findElement(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler"));
-        Actions actions = new Actions(_driver);
+        /*Actions actions = new Actions(_driver);
         actions.moveToElement(webElement);
-        actions.click().perform();
+        actions.click().perform();*/
+        clickItem(_driver,webElement);
         while (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
         }
 

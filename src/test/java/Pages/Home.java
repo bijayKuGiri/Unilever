@@ -84,7 +84,7 @@ public class Home {
     @FindBy(xpath = "//footer//div[@class='container responsivegrid'][1]")
     WebElement footerContainer;
 
-    @FindBy(xpath = "//footer//li[contains(@data-cmp-data-layer,'ContactUs') or contains(@data-cmp-data-layer,'contato')]")
+    @FindBy(xpath = "//footer//li[contains(@data-cmp-data-layer,'ContactUs') or contains(@data-cmp-data-layer,'Contact Us') or contains(@data-cmp-data-layer,'contato')]")
     WebElement contactUs;
 
     @FindBy(css = "div.kr-right-review-area>a")
