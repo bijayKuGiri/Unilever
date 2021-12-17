@@ -1,6 +1,7 @@
 Feature: Verifying Back To Start functionality
 
   @P0
+  @buttonNavigation
   @brazil
   @magnum
   Scenario: Verifying Article page redirection

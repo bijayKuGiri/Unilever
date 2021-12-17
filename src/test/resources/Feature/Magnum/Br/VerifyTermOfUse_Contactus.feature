@@ -1,5 +1,6 @@
 Feature: Validate the TermOfUse link in Contact Us
 
+  @footer
   @brazil
   @magnum
   Scenario: Verifying TermsOfUse link navigation in Contact us page

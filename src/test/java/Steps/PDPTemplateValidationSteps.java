@@ -3,13 +3,9 @@ package Steps;
 import Base.BaseUtilities;
 import Pages.Home;
 import Pages.PDP;
-import Pages.Review;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
-import java.util.List;
 
 public class PDPTemplateValidationSteps extends BaseUtilities {
 

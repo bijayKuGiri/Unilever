@@ -1,5 +1,6 @@
 Feature: Validate the Home Page
 
+  @header
   @brazil
   @magnum
   Scenario: Verifying landing page

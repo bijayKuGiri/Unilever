@@ -1,5 +1,6 @@
 Feature: Validate the CookiesNotice link in ContactUs Page
 
+  @footer
   @brazil
   @magnum
   Scenario: Verifying CookiesNotice link navigation in Contact Us Page

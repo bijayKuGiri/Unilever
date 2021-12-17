@@ -1,5 +1,6 @@
 Feature: Validate the Product Review
 
+  @productDetails
   @thailand
   @brazil
   @magnum
@@ -9,6 +10,7 @@ Feature: Validate the Product Review
     And Fill the Details
     Then it should navigate to Product Review Page
 
+  @productDetails
   @thailand
   @brazil
   @magnum
@@ -18,6 +20,7 @@ Feature: Validate the Product Review
     And Fill the details without Rating
     Then it should display validation message for Rating
 
+  @productDetails
   @thailand
   @brazil
   @magnum
@@ -27,6 +30,7 @@ Feature: Validate the Product Review
     And Fill the details without Review Title
     Then it should display validation message for Review Title
 
+  @productDetails
   @thailand
   @brazil
   @magnum
@@ -36,7 +40,7 @@ Feature: Validate the Product Review
     And Fill the details without Nick Name
     Then it should display validation message for Nick Name
 
-
+  @productDetails
   @thailand
   @brazil
   @magnum
@@ -46,6 +50,7 @@ Feature: Validate the Product Review
     And Fill the details without Email
     Then it should display validation message for Email
 
+  @productDetails
   @thailand
   @brazil
   @magnum
@@ -55,6 +60,7 @@ Feature: Validate the Product Review
     And Fill the details with wrong email
     Then it should display validation message for Email
 
+  @productDetails
   @thailand
   @brazil
   @magnum
@@ -64,6 +70,7 @@ Feature: Validate the Product Review
     And Fill the details without agreement
     Then it should display validation message for agreement
 
+  @productDetails
   @thailand
   @brazil
   @magnum
@@ -73,6 +80,7 @@ Feature: Validate the Product Review
     And Fill the details without your Review
     Then it should display validation message for minimum Your Review
 
+  @productDetails
   @thailand
   @brazil
   @magnum

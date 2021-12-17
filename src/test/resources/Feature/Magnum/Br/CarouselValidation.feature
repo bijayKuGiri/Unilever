@@ -1,5 +1,6 @@
 Feature: Validate the carousel
 
+  @carousel
   @brazil
   @magnum
   Scenario: Verifying carousel available

@@ -1,5 +1,6 @@
 Feature: Validate the TermOfUse link
 
+  @footer
   @brazil
   @magnum
   Scenario: Verifying TermsOfUse link navigation

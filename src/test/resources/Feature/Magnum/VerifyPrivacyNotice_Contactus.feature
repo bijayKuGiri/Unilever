@@ -1,5 +1,6 @@
 Feature: Validate the PrivacyNotice link in contact Us page
 
+  @footer
   @thailand
   @brazil
   @magnum

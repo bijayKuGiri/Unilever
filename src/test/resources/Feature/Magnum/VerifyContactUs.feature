@@ -1,6 +1,7 @@
 Feature: Validate Contact Us
 
-  @magnum
+  @footer
+    @magnum
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page
@@ -13,7 +14,8 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment             | Criteria |
       | Test | Testing  | test@test.com | For Testing Purpose | Valid    |
 
-  @magnum
+  @footer
+    @magnum
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page for Empty FirstName
@@ -26,7 +28,8 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment             | Criteria    |
       |      | Testing  | test@test.com | For Testing Purpose | NameMissing |
 
-  @magnum
+  @footer
+    @magnum
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page Empty Last Name
@@ -39,7 +42,8 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment             | Criteria        |
       | Test |          | test@test.com | For Testing Purpose | lastnameMissing |
 
-  @magnum
+  @footer
+    @magnum
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page Empty Email
@@ -53,7 +57,8 @@ Feature: Validate Contact Us
       | Test | Testing  |       | For Testing Purpose | emailMissing |
 
 
-  @magnum
+  @footer
+    @magnum
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page for Empty Comment
@@ -66,8 +71,8 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment | Criteria       |
       | Test | Testing  | test@test.com |         | commentMissing |
 
-
-  @magnum
+  @footer
+    @magnum
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page for wrong Email
@@ -80,8 +85,8 @@ Feature: Validate Contact Us
       | name | lastname | email        | comment             | Criteria     |
       | Test | Testing  | testtest.com | For Testing Purpose | inValidEmail |
 
-
-  @magnum
+  @footer
+    @magnum
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page without age confirm

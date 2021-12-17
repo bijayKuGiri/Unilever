@@ -1,6 +1,7 @@
 Feature: Validate the Campaign Gallery
 
   @P0
+  @imageNavigation
   @brazil
   @magnum
   Scenario: Verifying load more for gallery

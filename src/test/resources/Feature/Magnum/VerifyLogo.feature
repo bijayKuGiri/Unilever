@@ -1,5 +1,6 @@
 Feature: Validate logo the Home Page
 
+  @header
   @brazil
   @magnum
   @thailand

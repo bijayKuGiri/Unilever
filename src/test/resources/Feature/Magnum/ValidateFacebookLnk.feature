@@ -1,5 +1,6 @@
 Feature: Validate the facebook link
 
+  @social
   @brazil
   @magnum
   @thailand

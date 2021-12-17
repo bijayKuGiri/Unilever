@@ -1,6 +1,7 @@
 Feature: Verify FAQ page
 
   @P0
+  @footer
   @brazil
   @magnum
   @thailand

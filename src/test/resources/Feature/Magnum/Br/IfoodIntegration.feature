@@ -1,5 +1,6 @@
 Feature: Validate the ifood on carousel
 
+  @embedded
   @brazil
   @magnum
   Scenario: Verifying ifood link available in carousel

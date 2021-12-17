@@ -1,5 +1,6 @@
 Feature: Validate the Product Details
 
+  @imageNavigation
   @brazil
   @magnum
   Scenario: Verifying Product details available

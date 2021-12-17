@@ -1,5 +1,6 @@
 Feature: Validate the Sign Up
 
+  @footer
   @brazil
   @magnum
   Scenario: Verifying signup functionality
@@ -8,7 +9,7 @@ Feature: Validate the Sign Up
     When enter all the details and submit
     Then it should submit and redirect to confirmation page.
 
-
+  @footer
   @brazil
   @magnum
   Scenario: Verifying signup functionality without name
@@ -17,6 +18,7 @@ Feature: Validate the Sign Up
     When enter all the details without name and submit
     Then it should display validation message with respect to name
 
+  @footer
   @brazil
   @magnum
   Scenario: Verifying signup functionality without lastname
@@ -25,6 +27,7 @@ Feature: Validate the Sign Up
     When enter all the details without lastname and submit
     Then it should display validation message with respect to lastname
 
+  @footer
   @brazil
   @magnum
   Scenario: Verifying signup functionality without Email
@@ -34,6 +37,7 @@ Feature: Validate the Sign Up
     Then it should display validation message with respect to email
 
 
+  @footer
   @brazil
   @magnum
   Scenario: Verifying signup functionality without DOB
@@ -42,7 +46,7 @@ Feature: Validate the Sign Up
     When enter all the details without DOB and submit
     Then it should display validation message with respect to DOB
 
-
+  @footer
   @brazil
   @magnum
   Scenario: Verifying signup functionality without name
