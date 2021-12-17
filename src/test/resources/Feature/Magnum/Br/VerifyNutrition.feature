@@ -1,5 +1,6 @@
 Feature: Validate the product nutrition
 
+  @P0
   @brazil
   @magnum
   Scenario: Verifying product nutrition details

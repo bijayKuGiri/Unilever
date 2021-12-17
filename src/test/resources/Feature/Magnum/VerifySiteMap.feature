@@ -1,5 +1,6 @@
 Feature: Verify SiteMap Page
 
+  @P0
   @brazil
   @magnum
   @thailand

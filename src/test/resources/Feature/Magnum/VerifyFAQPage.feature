@@ -1,6 +1,6 @@
 Feature: Verify FAQ page
 
-
+  @P0
   @brazil
   @magnum
   @thailand

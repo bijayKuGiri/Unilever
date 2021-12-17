@@ -50,7 +50,7 @@ public class Home {
     @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
 
-    @FindBy(xpath = "//div[@class='search-list-label']")
+    @FindBy(css = "div.search-list-label")
     WebElement searchResult;
 
     @FindBy(css = "img[title='Magnum Logo']")
@@ -166,11 +166,9 @@ public class Home {
         var tabItems = driver.findElements(By.xpath("//ol[@role='tablist' and @class='cmp-tabs__tablist']"))
                 .stream().filter(ele -> ele.findElements(By.tagName("li")).size() > 1)
                 .collect(Collectors.toList());
-        for (WebElement element : tabItems
-        ) {
+        for (WebElement element : tabItems) {
             ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
         }
-
     }
 
     public void selectProductTabs() throws InterruptedException {
@@ -178,11 +176,9 @@ public class Home {
                 .stream().filter(ele -> ele.findElements(By.tagName("li")).size() > 1)
                 .collect(Collectors.toList());
 
-        for (var item : tabItems
-        ) {
+        for (var item : tabItems) {
             var tabElements = item.findElements(By.tagName("li"));
             Helper.scrollAndClick(driver, tabElements.get(0));
-
             System.out.println("There count of available tabs are " + tabElements.size());
             for (WebElement tabElement : tabElements) {
                 productImgsBefore = getProductImages(item);
@@ -593,5 +589,14 @@ public class Home {
 
     public boolean IsNavigateCookiesNotice(RemoteWebDriver driver) {
         return driver.getCurrentUrl().contains("cookie-notice");
+    }
+
+    public PDP GoToPDPPage(RemoteWebDriver _driver){
+        var lstProducts= getProductCarouselList();
+        Random rand = new Random();
+        int upperbound = lstProducts.size()-1;
+        int int_random = rand.nextInt(upperbound);
+        Helper.scrollAndClick(_driver,lstProducts.get(int_random));
+        return new PDP(_driver);
     }
 }

@@ -1,5 +1,6 @@
 Feature: Validate the video element
 
+  @P0
   @brazil
   @magnum
   Scenario: Verifying Video element in the Application

@@ -1,5 +1,6 @@
 Feature: Verify Country selector
 
+  @P0
   @brazil
   @magnum
   Scenario:Verify Country selector

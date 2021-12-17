@@ -1,5 +1,6 @@
 Feature: Verifying Article page redirection
 
+  @P0
   @brazil
   @magnum
   Scenario: Verifying Article page redirection
