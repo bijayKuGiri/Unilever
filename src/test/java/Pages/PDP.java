@@ -19,7 +19,7 @@ public class PDP {
         PageFactory.initElements(_driver, this);
         driver = _driver;
     }
-
+    //@FindBy
     @FindBy(css = "div.product-media-gallary")
     WebElement ProductImage;
 
