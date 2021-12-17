@@ -30,6 +30,10 @@ public class PDPTemplateValidationSteps extends BaseUtilities {
         _pdp.validatePageNavigationToProductReviewRatingSection();
         _pdp.validatePageNavigationToProductDescription();
         _pdp.validatePageNavigationToProductName();
+        _pdp.validatePageNavigationToProductNutritionalInformationSection();
+        _pdp.validatePageNavigationToProductPageListComponent();
+        _pdp.validatePageNavigationToProductReadReviewPanelHeader();
+        _pdp.validatePageNavigationToProductReadReviewPanelReviews();
     }
 
 
