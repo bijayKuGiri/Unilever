@@ -26,10 +26,6 @@ public class PDP {
     @FindBy(css = "div.product-info-item-wrapper>h1")
     WebElement ProductName;
 
-//    @FindBy(css = "div.product-info-item-wrapper[1]")
-   /* @FindBy(css = "div.product-info-item__item")
-    WebElement ProductDescription;*/
-
     @FindBy(css = "div.rr-widget-container.kr-star-percentage.kr-has-rp.kr-inline-widget.kr-star-widget")
     WebElement ReviewRatingSection;
 
