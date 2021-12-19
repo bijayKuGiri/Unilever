@@ -6,6 +6,7 @@ import Pages.Home;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.xml.sax.SAXException;
@@ -23,7 +24,6 @@ public class HeaderLinksValidation extends BaseUtilities {
 
     private BaseUtilities base;
     private Home _home;
-    //private RemoteWebDriver _driver;
     private List<String> linkTxt=new ArrayList<String>();
     private int links=0;
     public HeaderLinksValidation(BaseUtilities base) {
@@ -42,7 +42,7 @@ public class HeaderLinksValidation extends BaseUtilities {
     @When("i try to get the header links")
     public void i_try_to_get_the_header_links() {
         System.out.println("When");
-        //linkTxt=_home.getLinkText();
+        linkTxt=_home.getLinkText();
         links=_home.getLink().size();
     }
     @Then("All the header link should load within {int} second")
@@ -69,7 +69,11 @@ public class HeaderLinksValidation extends BaseUtilities {
             Helper.WaitForPageLoad(_driver,60);
             long finish = System.currentTimeMillis();
             long totalTime = finish - start;
-            //System.out.println("The Url is "+var);
+            softAssert.assertTrue(_driver.getCurrentUrl().contains(linkTxt.get(i)),
+                    "Expected link should contain the text");
+           /* System.out.println("The Url is "+_driver.getCurrentUrl());
+            System.out.println("================");
+            System.out.println("The expected Url is "+linkTxt.get(i));*/
             softAssert.assertTrue((0.001*totalTime) <= timeSecond,"Page should load within " +timeSecond);
             System.out.println("Loading time is ..."+(0.001*totalTime));
         }

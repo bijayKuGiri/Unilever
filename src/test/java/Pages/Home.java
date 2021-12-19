@@ -2,6 +2,8 @@ package Pages;
 
 
 import Utility.Helper;
+import org.apache.commons.lang3.tuple.Pair;
+import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebElement;
@@ -11,11 +13,6 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
-
-import org.testng.Assert;
-
-import java.time.Duration;
 import java.util.*;
 
 import java.util.concurrent.TimeUnit;
@@ -50,8 +47,8 @@ public class Home {
     @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
 
-    @FindBy(css = "div.search-list-label")
-    WebElement searchResult;
+   /* @FindBy(css = "div.search-list-label")
+    WebElement searchResult;*/
 
     @FindBy(css = "img[title='Magnum Logo']")
     WebElement logo;
@@ -90,10 +87,14 @@ public class Home {
     @FindBy(css = "div.kr-right-review-area>a")
     WebElement lblWriteReview;
 
+    @FindBy(css = ".container.responsivegrid.cmp-container--language-selector")
+    WebElement languageSelector;
 
-    //    @FindBy(xpath = "//footer//a[@class='cmp-button' and contains(@href,'facebook')]")
     @FindBy(xpath = "//footer//a[contains(@href,'facebook')]")
     WebElement lnkFacebook;
+
+    @FindBy(xpath = "//footer//a[contains(@href,'instagram')]")
+    WebElement lnkInstagram;
 
     @FindBy(xpath = "//footer//a[contains(@href,'twitter')]")
     WebElement lnkTwitter;
@@ -137,6 +138,22 @@ public class Home {
     @FindBy(xpath = "//ol[@role='tablist' and @class='cmp-tabs__tablist']//parent::div")
     WebElement productTabImages;
 
+    public List<Boolean> selectLanguage() {
+        ArrayList<Boolean> results = new ArrayList<>();
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", languageSelector);
+        var langItems = languageSelector.findElements(By.cssSelector(".cmp-button"));
+        for (int i=0;i<langItems.size();i++) {
+            var Items = languageSelector.findElements(By.cssSelector(".cmp-button"));
+            String url = Items.get(i).getAttribute("href");
+            WebElement parent = Items.get(i).findElement(By.xpath(".."));
+            if (parent.getAttribute("class").contains("selector"))
+                continue;
+            Helper.scrollAndClick(driver, Items.get(i));
+            results.add(driver.getCurrentUrl().contains(url));
+
+        }
+        return results;
+    }
 
     public List<String> getProductImages() {
         List<String> imgSrc = new ArrayList<>();
@@ -211,7 +228,7 @@ public class Home {
     }
 
     public void VerifyTheNutritionDetails() {
-        Assert.assertTrue(nutritionDetails.isDisplayed(), "Expected nutrition Details should display");
+        Assert.assertTrue("Expected nutrition Details should display", nutritionDetails.isDisplayed());
         var elements = nutritionDetails.findElements(By.xpath("//div[contains(@class,'productInfoItem')]" +
                 "//*[contains(@class,'product-info-item')][not(descendant::*)]"));
         for (WebElement item :
@@ -279,14 +296,14 @@ public class Home {
         ////a[@class='cmp-button' and not(@target)]//span[@class='cmp-button__text']
     }
 
-   /* public List<String> getLinkText() {
+    public List<String> getLinkText() {
         List<String> linkTxt = new ArrayList<>();
         List<WebElement> links = lstHeader.findElements(By.tagName("li"));
         for (WebElement var : links) {
             linkTxt.add(var.findElement(By.tagName("a")).getAttribute("href"));
         }
         return linkTxt;
-    }*/
+    }
 
     public List<WebElement> getLink() {
         return lstHeader.findElements(By.tagName("li"));
@@ -296,14 +313,14 @@ public class Home {
         return footerContainer.findElements(By.tagName("li"));
     }
 
-   /* public List<String> getFooterLinkText() {
+    public List<String> getFooterLinkText() {
         List<String> linkTxt = new ArrayList<>();
         List<WebElement> links = footerContainer.findElements(By.tagName("li"));
         for (WebElement var : links) {
             linkTxt.add(var.findElement(By.tagName("a")).getAttribute("href"));
         }
         return linkTxt;
-    }*/
+    }
 
     public String getHeader() {
         return driver.getTitle();
@@ -442,6 +459,16 @@ public class Home {
         return driver;
     }
 
+    public RemoteWebDriver navSocialSite(String siteName) {
+
+        Helper.scrollAndClick(driver, driver.findElement(By.xpath("//footer//a[contains(@href,'"+siteName+"')]")));
+        var tabs2 = new ArrayList<>(driver.getWindowHandles());
+        if (tabs2.size() > 1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        return driver;
+    }
+
     public void navArticlePageByImg() {
         /*((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", imgArticle);
         Helper.click(driver, imgArticle);*/
@@ -518,7 +545,7 @@ public class Home {
         WebDriverWait wait = new WebDriverWait(driver, 20);
         wait.until(ExpectedConditions.visibilityOf(prodCarousal));
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", prodCarousal);
-        Assert.assertTrue(prodCarousal.isDisplayed(), "Expected Product Carousal should displayed");
+        Assert.assertTrue("Expected Product Carousal should displayed", prodCarousal.isDisplayed());
     }
 
     public MagnumTowel navMagnumOversizeTowel() {
@@ -591,12 +618,12 @@ public class Home {
         return driver.getCurrentUrl().contains("cookie-notice");
     }
 
-    public PDP GoToPDPPage(RemoteWebDriver _driver){
-        var lstProducts= getProductCarouselList();
+    public PDP GoToPDPPage(RemoteWebDriver _driver) {
+        var lstProducts = getProductCarouselList();
         Random rand = new Random();
-        int upperbound = lstProducts.size()-1;
+        int upperbound = lstProducts.size() - 1;
         int int_random = rand.nextInt(upperbound);
-        Helper.scrollAndClick(_driver,lstProducts.get(int_random));
+        Helper.scrollAndClick(_driver, lstProducts.get(int_random));
         return new PDP(_driver);
     }
 }

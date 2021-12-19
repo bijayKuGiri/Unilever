@@ -43,7 +43,7 @@ public class FooterLinkLoadValidation extends BaseUtilities {
     @When("i try to get the footer links")
     public void i_try_to_get_the_footer_links() {
         System.out.println("When");
-        //linkTxt=_home.getFooterLinkText();
+        linkTxt=_home.getFooterLinkText();
         footerLinks = _home.getFooterLink().size();
     }
 
@@ -59,6 +59,8 @@ public class FooterLinkLoadValidation extends BaseUtilities {
             long totalTime = finish - start;
             softAssert.assertTrue((0.001 * totalTime) <= timeSecond, "Page should load within " + timeSecond);
             System.out.println("Loading time is ..." + (0.001 * totalTime));
+            softAssert.assertTrue(_driver.getCurrentUrl().contains(linkTxt.get(i)),
+                    "Expected link should contain the text");
             var tabs2 = new ArrayList<>(_driver.getWindowHandles());
             if (tabs2.size() > 1) {
                 _driver.switchTo().window(tabs2.get(1));
