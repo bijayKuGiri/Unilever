@@ -1,6 +1,8 @@
 # Compiled class file
 *.class
 
+.idea/*
+allure-results/*
 # Log file
 *.log
 
