@@ -40,9 +40,32 @@ public class Home {
     List<String> productImgsAfter;
     Boolean prdTabValidation = false;
 
+    @FindBy(css = "div.cmp-experiencefragment.cmp-experiencefragment--header")
+    WebElement Header;
 
     @FindBy(css = "ul.cmp-navigation__group")
-    WebElement lstHeader;
+    WebElement HeaderNavigationItems;
+
+    @FindBy(css = "div.searchbar-button")
+    WebElement SearchBarButton;
+
+    @FindBy(css = "div.cmp-tabs>ol.cmp-tabs__tablist")
+    WebElement TabSwitch;
+
+    @FindBy(css = "div.cmp-tabs__tabpanel.cmp-tabs__tabpanel--active")
+    WebElement TabPanel;
+
+    @FindBy(css = "div.pagelist.list")
+    WebElement PageList;
+
+    @FindBy(css = "div.productcarousel.carousel")
+    WebElement ProductCarousel;
+
+    @FindBy(css = "div.cmp-experiencefragment--footer")
+    WebElement Footer;
+
+    @FindBy(css = "div.ot-sdk-row")
+    WebElement CookieConsentBanner;
 
     @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
@@ -51,7 +74,7 @@ public class Home {
     WebElement searchResult;*/
 
     @FindBy(css = "img[title='Magnum Logo']")
-    WebElement logo;
+    WebElement Magnumlogo;
 
     @FindBy(css = ".cmp-accordion__title")
     WebElement lnkNutritionDetails;
@@ -137,6 +160,45 @@ public class Home {
 
     @FindBy(xpath = "//ol[@role='tablist' and @class='cmp-tabs__tablist']//parent::div")
     WebElement productTabImages;
+
+
+    public void IsHeaderDisplayed() {
+        Assert.assertTrue("Header is displayed",Header.isDisplayed());
+    }
+
+    public void IsSearchButtonDisplayed() {
+        Assert.assertTrue("Search is displayed",SearchBarButton.isDisplayed());
+    }
+
+    public void IsHeaderNavigationItemsDisplayed() {
+        Assert.assertTrue("HeaderNavigationItems are displayed",HeaderNavigationItems.isDisplayed());
+    }
+
+    public void IsTabSwitchDisplayed() {
+        Assert.assertTrue("TabSwitch is displayed",TabSwitch.isDisplayed());
+    }
+
+    public void IsTabPanelDisplayed() {
+        Assert.assertTrue("TabPanel is displayed",TabPanel.isDisplayed());
+    }
+
+    public void IsPageListDisplayed() {
+        Assert.assertTrue("pageList is displayed",PageList.isDisplayed());
+    }
+
+    public void IsProductCarouselDisplayed() {
+        Assert.assertTrue("ProductCarousel is displayed",ProductCarousel.isDisplayed());
+    }
+
+    public void IsFooterDisplayed() {
+        Assert.assertTrue("Footer is displayed",Footer.isDisplayed());
+    }
+
+    //public void IsCookieConsentBannerDisplayed() {
+        //Assert.assertTrue("CookieConsentBanner is displayed",CookieConsentBanner.isDisplayed());
+        //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", CookieConsentBanner);
+        //Assert.assertTrue("Cookie Consent Banner should displayed",CookieConsentBanner.isDisplayed());
+    //}
 
     public List<Boolean> selectLanguage() {
         ArrayList<Boolean> results = new ArrayList<>();
@@ -298,7 +360,7 @@ public class Home {
 
     public List<String> getLinkText() {
         List<String> linkTxt = new ArrayList<>();
-        List<WebElement> links = lstHeader.findElements(By.tagName("li"));
+        List<WebElement> links = HeaderNavigationItems.findElements(By.tagName("li"));
         for (WebElement var : links) {
             linkTxt.add(var.findElement(By.tagName("a")).getAttribute("href"));
         }
@@ -306,7 +368,7 @@ public class Home {
     }
 
     public List<WebElement> getLink() {
-        return lstHeader.findElements(By.tagName("li"));
+        return HeaderNavigationItems.findElements(By.tagName("li"));
     }
 
     public List<WebElement> getFooterLink() {
@@ -337,11 +399,11 @@ public class Home {
     }
 
     public boolean IsLogoImageDisplayed() {
-        return logo.isDisplayed();
+        return Magnumlogo.isDisplayed();
     }
 
     public String logoText() {
-        return logo.getAttribute("alt");
+        return Magnumlogo.getAttribute("alt");
     }
 
 
