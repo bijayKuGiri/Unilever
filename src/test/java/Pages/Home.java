@@ -165,48 +165,48 @@ public class Home {
 
 
     public void IsHeaderDisplayed() {
-        Assert.assertTrue("Header is displayed",Header.isDisplayed());
+        Assert.assertTrue("Header is displayed", Header.isDisplayed());
     }
 
     public void IsSearchButtonDisplayed() {
-        Assert.assertTrue("Search is displayed",SearchBarButton.isDisplayed());
+        Assert.assertTrue("Search is displayed", SearchBarButton.isDisplayed());
     }
 
     public void IsHeaderNavigationItemsDisplayed() {
-        Assert.assertTrue("HeaderNavigationItems are displayed",HeaderNavigationItems.isDisplayed());
+        Assert.assertTrue("HeaderNavigationItems are displayed", HeaderNavigationItems.isDisplayed());
     }
 
     public void IsTabSwitchDisplayed() {
-        Assert.assertTrue("TabSwitch is displayed",TabSwitch.isDisplayed());
+        Assert.assertTrue("TabSwitch is displayed", TabSwitch.isDisplayed());
     }
 
     public void IsTabPanelDisplayed() {
-        Assert.assertTrue("TabPanel is displayed",TabPanel.isDisplayed());
+        Assert.assertTrue("TabPanel is displayed", TabPanel.isDisplayed());
     }
 
     public void IsPageListDisplayed() {
-        Assert.assertTrue("pageList is displayed",PageList.isDisplayed());
+        Assert.assertTrue("pageList is displayed", PageList.isDisplayed());
     }
 
     public void IsProductCarouselDisplayed() {
-        Assert.assertTrue("ProductCarousel is displayed",ProductCarousel.isDisplayed());
+        Assert.assertTrue("ProductCarousel is displayed", ProductCarousel.isDisplayed());
     }
 
     public void IsFooterDisplayed() {
-        Assert.assertTrue("Footer is displayed",Footer.isDisplayed());
+        Assert.assertTrue("Footer is displayed", Footer.isDisplayed());
     }
 
     //public void IsCookieConsentBannerDisplayed() {
-        //Assert.assertTrue("CookieConsentBanner is displayed",CookieConsentBanner.isDisplayed());
-        //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", CookieConsentBanner);
-        //Assert.assertTrue("Cookie Consent Banner should displayed",CookieConsentBanner.isDisplayed());
+    //Assert.assertTrue("CookieConsentBanner is displayed",CookieConsentBanner.isDisplayed());
+    //((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", CookieConsentBanner);
+    //Assert.assertTrue("Cookie Consent Banner should displayed",CookieConsentBanner.isDisplayed());
     //}
 
     public List<Boolean> selectLanguage() {
         ArrayList<Boolean> results = new ArrayList<>();
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", languageSelector);
         var langItems = languageSelector.findElements(By.cssSelector(".cmp-button"));
-        for (int i=0;i<langItems.size();i++) {
+        for (int i = 0; i < langItems.size(); i++) {
             var Items = languageSelector.findElements(By.cssSelector(".cmp-button"));
             String url = Items.get(i).getAttribute("href");
             WebElement parent = Items.get(i).findElement(By.xpath(".."));
@@ -282,8 +282,13 @@ public class Home {
     }
 
     public List<WebElement> getCarouselList() {
-        return carouselContent
-                .findElements(By.xpath("//div[@class='cmp-carousel__content']/div[contains(@id,'carousel')]"));
+        if (driver.findElements(By.cssSelector("div.cmp-carousel__content")).size() == 0) {
+            return new ArrayList<>();
+        } else {
+
+            return carouselContent
+                    .findElements(By.xpath("//div[@class='cmp-carousel__content']/div[contains(@id,'carousel')]"));
+        }
 
     }
 
@@ -525,7 +530,7 @@ public class Home {
 
     public RemoteWebDriver navSocialSite(String siteName) {
 
-        Helper.scrollAndClick(driver, driver.findElement(By.xpath("//footer//a[contains(@href,'"+siteName+"')]")));
+        Helper.scrollAndClick(driver, driver.findElement(By.xpath("//footer//a[contains(@href,'" + siteName + "')]")));
         var tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
@@ -664,15 +669,16 @@ public class Home {
         if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
-        Helper.clickItem(driver,driver.findElement(By.xpath("//div[@class='cmp-text']//h1[text()='Inscreva-se']")));
-        Helper.downKeyOnPage(driver,20);
+        Helper.clickItem(driver, driver.findElement(By.xpath("//div[@class='cmp-text']//h1[text()='Inscreva-se']")));
+        Helper.downKeyOnPage(driver, 20);
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='form-paragraph-info']")));
         return driver;
 
     }
-    public static void PressDownKey(RemoteWebDriver driver){
-        while(driver.findElements(By.xpath("//div[@class='cmp-text']//h1")).size()>0){
+
+    public static void PressDownKey(RemoteWebDriver driver) {
+        while (driver.findElements(By.xpath("//div[@class='cmp-text']//h1")).size() > 0) {
             driver.findElement(By.cssSelector("div#Content")).sendKeys(Keys.ARROW_DOWN);
 
         }
