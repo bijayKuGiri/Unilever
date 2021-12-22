@@ -1,5 +1,6 @@
 Feature: Validate the CookiesNotice link in ContactUs Page
 
+  @P1
   @footer
   @brazil
   @magnum

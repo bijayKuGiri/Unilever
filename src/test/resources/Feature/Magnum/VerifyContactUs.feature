@@ -1,6 +1,7 @@
 Feature: Validate Contact Us
 
-  @footer
+    @P1
+    @footer
     @magnum
     @brazil
     @thailand

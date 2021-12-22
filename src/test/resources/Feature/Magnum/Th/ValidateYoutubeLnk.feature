@@ -1,5 +1,6 @@
 Feature: Validate the Youtube link
 
+  @P1
   @social
   @magnum
   @thailand

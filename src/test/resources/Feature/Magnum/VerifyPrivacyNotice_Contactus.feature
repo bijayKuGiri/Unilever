@@ -1,5 +1,6 @@
 Feature: Validate the PrivacyNotice link in contact Us page
 
+  @P1
   @footer
   @thailand
   @brazil

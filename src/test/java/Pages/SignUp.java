@@ -1,17 +1,21 @@
 package Pages;
 
 import Utility.Helper;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class SignUp {
 
     private final RemoteWebDriver driver;
 
     public SignUp(RemoteWebDriver _driver) {
-        Helper.WaitForPageLoad(_driver,60);
+        Helper.WaitForPageLoad(_driver,120);
         PageFactory.initElements(_driver, this);
         driver = _driver;
     }
@@ -89,7 +93,9 @@ public class SignUp {
     }
 
     public void SignUpWithDetails(String firstName, String lastName, String email, String DOB, String telephone,
-                                  String ZipCode, Boolean IsAgree) {
+                                  String ZipCode, Boolean IsAgree)  {
+        WebDriverWait wait = new WebDriverWait(driver, 30);
+        wait.until(ExpectedConditions.visibilityOf(txtName));
         Helper.scrollAndClick(driver, txtName);
         txtName.sendKeys(firstName);
         txtLastName.sendKeys(lastName);

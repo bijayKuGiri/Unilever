@@ -6,8 +6,10 @@ import org.apache.commons.lang3.tuple.Pair;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
+import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -655,17 +657,25 @@ public class Home {
 
     }
 
-    public RemoteWebDriver NavSignUp() {
-        var element = footerContainer.findElements(By.tagName("li"));
-        Helper.scrollAndClick(driver, element.get(1).findElement(By.tagName("a")));
+    public RemoteWebDriver NavSignUp() throws InterruptedException {
+        var element = driver.findElements(By.xpath("//footer//a[contains(@href,'inscreva-se')]"));
+        Helper.scrollAndClick(driver, element.get(0));
         ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
         if (tabs2.size() > 1) {
             driver.switchTo().window(tabs2.get(1));
         }
+        Helper.clickItem(driver,driver.findElement(By.xpath("//div[@class='cmp-text']//h1[text()='Inscreva-se']")));
+        Helper.downKeyOnPage(driver,20);
         WebDriverWait wait = new WebDriverWait(driver, 10);
         wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//div[@class='form-paragraph-info']")));
         return driver;
 
+    }
+    public static void PressDownKey(RemoteWebDriver driver){
+        while(driver.findElements(By.xpath("//div[@class='cmp-text']//h1")).size()>0){
+            driver.findElement(By.cssSelector("div#Content")).sendKeys(Keys.ARROW_DOWN);
+
+        }
     }
 
     public boolean IsNavigateTermsOfUse(RemoteWebDriver driver) {
@@ -687,5 +697,19 @@ public class Home {
         int int_random = rand.nextInt(upperbound);
         Helper.scrollAndClick(_driver, lstProducts.get(int_random));
         return new PDP(_driver);
+    }
+
+    public ProductListing GoToProductListingPage(RemoteWebDriver _driver) {
+        List<String> linkTxt = new ArrayList<>();
+        List<WebElement> links = HeaderNavigationItems.findElements(By.tagName("li"));
+        for (WebElement item : links) {
+            linkTxt.add(item.findElement(By.tagName("a")).getAttribute("href"));
+            if (item.findElement(By.tagName("a")).getAttribute("href").contains("products")
+                    | item.findElement(By.tagName("a")).getAttribute("href").contains("produtos")) {
+                item.click();
+                break;
+            }
+        }
+        return new ProductListing(_driver);
     }
 }

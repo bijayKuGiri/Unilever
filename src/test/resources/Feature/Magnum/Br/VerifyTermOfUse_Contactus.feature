@@ -1,5 +1,6 @@
 Feature: Validate the TermOfUse link in Contact Us
 
+  @P1
   @footer
   @brazil
   @magnum

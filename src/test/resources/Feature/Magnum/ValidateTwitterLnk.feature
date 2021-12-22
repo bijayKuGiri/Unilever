@@ -1,5 +1,6 @@
 Feature: Validate the Twitter link
 
+  @P1
   @social
   @brazil
   @magnum

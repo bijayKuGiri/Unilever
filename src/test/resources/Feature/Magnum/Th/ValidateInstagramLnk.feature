@@ -1,5 +1,6 @@
 Feature: Validate the Instagram link
 
+  @P1
   @social
   @magnum
   @thailand

@@ -1,6 +1,6 @@
 Feature: Validate the Home Page template
 
-
+  @P1
   @thailand
   @brazil
   @magnum

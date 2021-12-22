@@ -211,7 +211,7 @@ public class Helper {
         action.sendKeys(Keys.ARROW_DOWN);
         for (int i = 0; i < timesToScroll; i++) {
             action.perform();
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
         }
     }
 

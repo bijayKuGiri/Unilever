@@ -11,7 +11,6 @@ import org.testng.Assert;
 
 public class SignupSteps extends BaseUtilities {
 
-    private Home _home;
     private SignUp signUp;
     private RemoteWebDriver _driver;
     public SignupSteps(BaseUtilities base) {
@@ -20,9 +19,9 @@ public class SignupSteps extends BaseUtilities {
     }
 
     @And("navigate to signup page")
-    public void navigate_to_signup_page() {
-        _home=new Home(_driver);
-        _driver=_home.NavSignUp();
+    public void navigate_to_signup_page() throws InterruptedException {
+        Home _home = new Home(_driver);
+        _driver= _home.NavSignUp();
     }
     @When("enter all the details and submit")
     public void enter_all_the_details_and_submit() {

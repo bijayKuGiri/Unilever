@@ -1,5 +1,6 @@
 Feature: Validate the Product Details
 
+  @P0
   @imageNavigation
   @brazil
   @magnum

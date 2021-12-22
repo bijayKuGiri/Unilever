@@ -1,5 +1,6 @@
 Feature: Validate the Search
 
+  @P1
   @search
   @brazil
   @magnum
@@ -9,6 +10,7 @@ Feature: Validate the Search
     When i navigate to search page and search for a product
     Then it should shows the products in Results
 
+  @P1
   @search
   @brazil
   @magnum

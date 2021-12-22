@@ -1,5 +1,6 @@
 Feature: Validate the Cookie consent
 
+  @P1
   @popup
   @thailand
   @magnum
@@ -9,6 +10,7 @@ Feature: Validate the Cookie consent
     When verify the bottom for cookie popup
     Then it should be visible once the page got loaded
 
+  @P1
   @popup
   @thailand
   @magnum
