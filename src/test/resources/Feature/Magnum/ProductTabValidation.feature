@@ -1,6 +1,6 @@
 Feature: Validate the product tab
 
-  @P1
+  @P0
   @tab
   @brazil
   @magnum

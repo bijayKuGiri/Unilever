@@ -1,6 +1,6 @@
 Feature: Validate the hyperlink validation
 
-  @P1
+  @P0
   @header
   @brazil
   @magnum

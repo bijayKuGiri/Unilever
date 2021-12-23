@@ -1,7 +1,7 @@
 Feature: Validate the BuyNow Option
 
 
-  @P1
+  @P0
   @footer
   @thailand
   @magnum

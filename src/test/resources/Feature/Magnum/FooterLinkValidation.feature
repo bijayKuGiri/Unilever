@@ -1,6 +1,6 @@
 Feature: Validate the footer hyperlink validation
 
-  @P1
+  @P0
   @footer
   @brazil
   @magnum

@@ -1,6 +1,6 @@
 Feature: Validate Contact Us
 
-    @P1
+    @P0
     @footer
     @magnum
     @brazil

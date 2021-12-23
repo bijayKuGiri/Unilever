@@ -1,6 +1,6 @@
 Feature: Validate the product carousel
 
-  @P1
+  @P0
   @carousel
   @brazil
   @magnum

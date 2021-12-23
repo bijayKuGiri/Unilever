@@ -1,6 +1,6 @@
 Feature: Validate the Product Review
 
-  @P1
+  @P0
   @productDetails
   @thailand
   @brazil

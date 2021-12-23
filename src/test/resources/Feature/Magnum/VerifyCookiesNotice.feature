@@ -1,6 +1,6 @@
 Feature: Validate the CookiesNotice link in Home Page
 
-  @P1
+  @P0
   @footer
   @brazil
   @magnum

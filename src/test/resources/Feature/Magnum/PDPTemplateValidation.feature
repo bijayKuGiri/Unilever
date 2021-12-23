@@ -1,5 +1,6 @@
 Feature: Validate the PDP Page template
 
+  @template
   @P1
   @imageNavigation
   @thailand

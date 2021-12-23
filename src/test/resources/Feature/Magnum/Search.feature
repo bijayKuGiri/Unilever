@@ -1,6 +1,6 @@
 Feature: Validate the Search
 
-  @P1
+  @P0
   @search
   @brazil
   @magnum

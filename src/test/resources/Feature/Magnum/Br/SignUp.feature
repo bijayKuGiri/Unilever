@@ -1,6 +1,6 @@
 Feature: Validate the Sign Up
 
-  @P1
+  @P0
   @footer
   @brazil
   @magnum
@@ -10,7 +10,7 @@ Feature: Validate the Sign Up
     When enter all the details and submit
     Then it should submit and redirect to confirmation page.
 
-    @P1
+  @P1
   @footer
   @brazil
   @magnum
