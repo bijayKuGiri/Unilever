@@ -123,6 +123,13 @@ public class Helper {
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
     }
 
+    public static void scrollClick(RemoteWebDriver driver, WebElement element) {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+        element.click();
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+    }
+
     public static void selectFromDDn(RemoteWebDriver driver, String Value, WebElement element) {
         WebDriverWait wait = new WebDriverWait(driver, 30);
         wait.until(ExpectedConditions.visibilityOf(element));

@@ -718,4 +718,21 @@ public class Home {
         }
         return new ProductListing(_driver);
     }
+
+    public void ClickOnBuynow(RemoteWebDriver _driver) {
+        var buyItems = _driver.findElements(By.cssSelector("button.cartwire.btn-primary"));
+        Random rand = new Random();
+        int upperbound = buyItems.size() - 2;
+        int int_random = rand.nextInt(upperbound);
+        Helper.scrollClick(_driver,buyItems.get(int_random));
+        //buyItems.get(int_random).click();
+    }
+
+    public Boolean verifyBuyNowpopup(RemoteWebDriver _driver) {
+
+        if (_driver.findElements(By.cssSelector("h2.cw_product_title")).size() > 0)
+            return true;
+        else
+            return false;
+    }
 }
