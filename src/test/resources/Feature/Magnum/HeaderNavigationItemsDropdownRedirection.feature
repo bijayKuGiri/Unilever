@@ -15,6 +15,7 @@ Feature: Validate the Header Navigation Dropdowns redirection
   @Turkey
   @UnitedKingdom
   @Indonesia
+  @needToUpdate
 
   Scenario: Verify Header Navigation Dropdown values redirection
     Given The site is Up and Running

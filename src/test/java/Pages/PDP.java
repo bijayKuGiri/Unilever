@@ -9,6 +9,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
+import java.util.ArrayList;
 import java.util.stream.Collectors;
 
 public class PDP {
@@ -40,6 +41,12 @@ public class PDP {
 
     @FindBy(css = "div.kr-readpanel-reviews.kr-panel")
     WebElement ReviewReadPanelReviews;
+
+    @FindBy(css = "img.frisco-logo")
+    WebElement FriscoLogo;
+
+    @FindBy(css = "img.uber-logo")
+    WebElement UberEatsLogo;
 
     public void validatePageNavigationToProductImage() {
         Assert.assertTrue("Product Image is displayed",ProductImage.isDisplayed());
@@ -78,5 +85,41 @@ public class PDP {
     public void validatePageNavigationToProductReadReviewPanelReviews() {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", ReviewReadPanelReviews);
         Assert.assertTrue("Product Read Review Panel Reviews should displayed",ReviewReadPanelReviews.isDisplayed());
+    }
+
+    public void validatePageNavigationToFriscologo() {
+        Assert.assertTrue("Frisco Logo should displayed",FriscoLogo.isDisplayed());
+    }
+
+    public RemoteWebDriver ClickOnFriscologo() {
+        Helper.click(driver, FriscoLogo);
+        var tabs2 = new ArrayList<>(driver.getWindowHandles());
+        if (tabs2.size() > 1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        return driver;
+
+    }
+
+    public boolean IsNavigateToFriscoplPage(RemoteWebDriver driver) {
+        return driver.getCurrentUrl().contains("frisco.pl");
+    }
+
+    public void validatePageNavigationToUberEatslogo() {
+        Assert.assertTrue("Frisco Logo should displayed",UberEatsLogo.isDisplayed());
+    }
+
+    public RemoteWebDriver ClickOnUberEatslogo() {
+        Helper.click(driver, UberEatsLogo);
+        var tabs2 = new ArrayList<>(driver.getWindowHandles());
+        if (tabs2.size() > 1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        return driver;
+
+    }
+
+    public boolean IsNavigateToUberEatsPage(RemoteWebDriver driver) {
+        return driver.getCurrentUrl().contains("bit.ly");
     }
 }

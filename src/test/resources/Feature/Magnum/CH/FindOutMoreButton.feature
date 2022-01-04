@@ -1,6 +1,7 @@
 Feature: Validate Find out More button functionality
 
   @P0
+  @needToUpdate
 
   Scenario: Verify Find Out More button functionality
     Given The site is Up and Running

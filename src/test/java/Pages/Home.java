@@ -118,6 +118,9 @@ public class Home {
     @FindBy(xpath = "//footer//a[contains(@href,'facebook')]")
     WebElement lnkFacebook;
 
+    @FindBy(xpath = "//footer//a[contains(@href,'vk')]")
+    WebElement lnkVK;
+
     @FindBy(xpath = "//footer//a[contains(@href,'instagram')]")
     WebElement lnkInstagram;
 
@@ -528,6 +531,15 @@ public class Home {
         return driver;
     }
 
+    public RemoteWebDriver navVK() {
+        Helper.scrollAndClick(driver, lnkVK);
+        var tabs2 = new ArrayList<>(driver.getWindowHandles());
+        if (tabs2.size() > 1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        return driver;
+    }
+
     public RemoteWebDriver navSocialSite(String siteName) {
 
         Helper.scrollAndClick(driver, driver.findElement(By.xpath("//footer//a[contains(@href,'" + siteName + "')]")));
@@ -552,6 +564,10 @@ public class Home {
 
     public boolean IsNavigateFacebook(RemoteWebDriver driver) {
         return driver.getCurrentUrl().contains("facebook.com");
+    }
+
+    public boolean IsNavigateVK(RemoteWebDriver driver) {
+        return driver.getCurrentUrl().contains("vk.com");
     }
 
     public Review navReview() {
@@ -717,6 +733,19 @@ public class Home {
             }
         }
         return new ProductListing(_driver);
+    }
+
+    public MagnumDelivery GoToMagnumDeliveryPage(RemoteWebDriver _driver) {
+        List<String> linkTxt = new ArrayList<>();
+        List<WebElement> links = HeaderNavigationItems.findElements(By.tagName("li"));
+        for (WebElement item : links) {
+            linkTxt.add(item.findElement(By.tagName("a")).getAttribute("href"));
+            if (item.findElement(By.tagName("a")).getAttribute("href").contains("magnum-delivery")) {
+                item.click();
+                break;
+            }
+        }
+        return new MagnumDelivery(_driver);
     }
 
     public void ClickOnBuynow(RemoteWebDriver _driver) {

@@ -1,6 +1,7 @@
 Feature: Validate Product Quick View button functionality
 
   @P0
+  @needToUpdate
 
   Scenario: Verify Product Quick View button functionality
     Given The site is Up and Running
