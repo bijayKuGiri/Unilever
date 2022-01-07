@@ -5,7 +5,7 @@ Feature: Validate the carousel
   @brazil
   @thailand
   @magnum
-  @All
+
   Scenario: Verifying carousel available
     Given The site is Up and Running
     When verifying the carousel rotation
