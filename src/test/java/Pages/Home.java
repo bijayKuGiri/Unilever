@@ -8,6 +8,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
@@ -38,9 +39,14 @@ public class Home {
     String selectedCountry = "";
     String getSiteText = "";
     WebElement faqElement;
+    WebElement ProdDropdownElement;
+
     List<String> productImgsBefore;
     List<String> productImgsAfter;
     Boolean prdTabValidation = false;
+
+    @FindBy(css = "ul.o-navbar-dropdown-menu")
+    WebElement HeaderNavigationProduct;
 
     @FindBy(css = "div.cmp-experiencefragment.cmp-experiencefragment--header")
     WebElement Header;
@@ -68,6 +74,9 @@ public class Home {
 
     @FindBy(css = "div.ot-sdk-row")
     WebElement CookieConsentBanner;
+
+    @FindBy(css = "button.closeButton.acceptButton")
+    WebElement CookieAcceptButtonInCH;
 
     @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
@@ -518,6 +527,11 @@ public class Home {
 
     }
 
+    public void CookieAcceptClick() {
+        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", CookieAcceptButtonInCH);
+        Helper.click(driver, CookieAcceptButtonInCH);
+
+    }
     public boolean isHeaderCausalDisplay() {
         return carouselContent.isDisplayed();
     }
@@ -733,6 +747,22 @@ public class Home {
             }
         }
         return new ProductListing(_driver);
+    }
+
+    public ProductListing GotoRandomProductListingPage(RemoteWebDriver _driver) {
+        Actions actions = new Actions(_driver);
+        //WebElement HeaderNavigationProduct =  _driver.findElement(By.cssSelector("ul.o-navbar-dropdown-menu");
+        actions.moveToElement(HeaderNavigationProduct).perform();
+        List<WebElement> lstElements = driver.findElements(By.cssSelector("li.o-navbar-item.o-navbar-tier2-item"));
+        Random rand = new Random();
+        int upperbound = lstElements.size() - 1;
+        int int_random = rand.nextInt(upperbound);
+        ProdDropdownElement = lstElements.get(int_random);
+        /*((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", ProdDropdownElement);
+        driver.executeScript("arguments[0].click();", ProdDropdownElement);*/
+        Helper.click(driver, ProdDropdownElement);
+        return new ProductListing(_driver);
+
     }
 
     public MagnumDelivery GoToMagnumDeliveryPage(RemoteWebDriver _driver) {

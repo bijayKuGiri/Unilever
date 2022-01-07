@@ -1,6 +1,7 @@
 Feature: Validate the Header Navigation Dropdowns redirection
 
   @P0
+  @All
   @UnitedStates
   @Austria
   @France

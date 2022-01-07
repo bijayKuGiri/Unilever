@@ -4,6 +4,7 @@ Feature: Validate the Twitter link
   @social
   @brazil
   @magnum
+  @All
   @thailand
   Scenario: Verifying Twitter link navigation
     Given The site is Up and Running

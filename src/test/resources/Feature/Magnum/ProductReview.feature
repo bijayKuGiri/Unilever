@@ -4,6 +4,7 @@ Feature: Validate the Product Review
   @productDetails
   @thailand
   @brazil
+  @All
   @magnum
   Scenario: Verifying Product Review section
     Given The site is Up and Running
@@ -15,6 +16,7 @@ Feature: Validate the Product Review
   @productDetails
   @thailand
   @brazil
+  @All
   @magnum
   Scenario: Verifying Product Review section without Rating
     Given The site is Up and Running
@@ -25,6 +27,7 @@ Feature: Validate the Product Review
   @P1
   @productDetails
   @thailand
+  @All
   @brazil
   @magnum
   Scenario: Verifying Product Review section without Review Title
@@ -37,6 +40,7 @@ Feature: Validate the Product Review
   @productDetails
   @thailand
   @brazil
+  @All
   @magnum
   Scenario: Verifying Product Review section without Nick Name
     Given The site is Up and Running
@@ -46,6 +50,7 @@ Feature: Validate the Product Review
 
   @P1
   @productDetails
+  @All
   @thailand
   @brazil
   @magnum
@@ -59,6 +64,7 @@ Feature: Validate the Product Review
   @productDetails
   @thailand
   @brazil
+  @All
   @magnum
   Scenario: Verifying Product Review section with wrong Email
     Given The site is Up and Running
@@ -69,6 +75,7 @@ Feature: Validate the Product Review
   @P1
   @productDetails
   @thailand
+  @All
   @brazil
   @magnum
   Scenario: Verifying Product Review section without Agreement
@@ -78,6 +85,7 @@ Feature: Validate the Product Review
     Then it should display validation message for agreement
 
   @P1
+  @All
   @productDetails
   @thailand
   @brazil
@@ -91,6 +99,7 @@ Feature: Validate the Product Review
   @P1
   @productDetails
   @thailand
+  @All
   @brazil
   @magnum
   Scenario: Verifying Product Review section with your Review more than 500 character

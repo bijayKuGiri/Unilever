@@ -5,6 +5,7 @@ Feature: Validate logo the Home Page
   @brazil
   @magnum
   @thailand
+  @All
   Scenario: Verifying landing page for logo
     Given The site is Up and Running
     When verifying logo

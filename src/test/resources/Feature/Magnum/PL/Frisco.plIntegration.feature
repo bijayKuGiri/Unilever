@@ -1,6 +1,7 @@
 Feature: Validate the Frisco.pl link navigation is working
 
   @P1
+  @All
   @Poland
   @needToUpdate
   Scenario: Verify Frisco.pl link navigation is working

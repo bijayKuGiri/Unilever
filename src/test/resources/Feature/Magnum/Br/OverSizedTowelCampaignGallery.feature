@@ -4,6 +4,7 @@ Feature: Validate the Campaign Gallery
   @imageNavigation
   @brazil
   @magnum
+  @All
   Scenario: Verifying load more for gallery
     Given The site is Up and Running
     And navigate to the video contain tab

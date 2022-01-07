@@ -1,6 +1,7 @@
 Feature: Verifying Back To Start functionality
 
   @P0
+  @All
   @buttonNavigation
   @brazil
   @magnum

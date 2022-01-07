@@ -21,12 +21,6 @@ public class UberEatsPageNavigationSteps extends BaseUtilities {
         this.base = base;
     }
 
-    @And("user redirected to PDP page")
-    public void i_navigate_to_a_pdp_page() {
-        Home _home=new Home(_driver);
-        _pdp= _home.GoToPDPPage(_driver);
-
-    }
 
     @When("click on Uber Eats link")
     public void i_try_to_click_on_UberEats_link() throws InterruptedException {

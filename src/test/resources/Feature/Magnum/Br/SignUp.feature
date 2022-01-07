@@ -4,6 +4,7 @@ Feature: Validate the Sign Up
   @footer
   @brazil
   @magnum
+  @All
   Scenario: Verifying signup functionality
     Given The site is Up and Running
     And navigate to signup page
@@ -14,6 +15,7 @@ Feature: Validate the Sign Up
   @footer
   @brazil
   @magnum
+  @All
   Scenario: Verifying signup functionality without name
     Given The site is Up and Running
     And navigate to signup page
@@ -24,6 +26,7 @@ Feature: Validate the Sign Up
   @footer
   @brazil
   @magnum
+  @All
   Scenario: Verifying signup functionality without lastname
     Given The site is Up and Running
     And navigate to signup page
@@ -31,6 +34,7 @@ Feature: Validate the Sign Up
     Then it should display validation message with respect to lastname
 
   @P1
+  @All
   @footer
   @brazil
   @magnum
@@ -41,6 +45,7 @@ Feature: Validate the Sign Up
     Then it should display validation message with respect to email
 
   @P1
+  @All
   @footer
   @brazil
   @magnum
@@ -54,6 +59,7 @@ Feature: Validate the Sign Up
   @footer
   @brazil
   @magnum
+  @All
   Scenario: Verifying signup functionality without name
     Given The site is Up and Running
     And navigate to signup page

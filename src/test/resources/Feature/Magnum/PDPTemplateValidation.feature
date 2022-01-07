@@ -2,6 +2,7 @@ Feature: Validate the PDP Page template
 
   @template
   @P1
+  @All
   @imageNavigation
   @thailand
   @brazil

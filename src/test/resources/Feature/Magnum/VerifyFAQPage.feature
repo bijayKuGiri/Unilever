@@ -5,6 +5,7 @@ Feature: Verify FAQ page
   @brazil
   @magnum
   @thailand
+  @All
   Scenario: Verifying FAQ page navigation and functionality
     Given The site is Up and Running
     And navigate to FAQ page

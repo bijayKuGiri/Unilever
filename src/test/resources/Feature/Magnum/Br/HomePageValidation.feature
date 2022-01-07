@@ -1,6 +1,7 @@
 Feature: Validate the Home Page
 
   @P1
+  @All
   @header
   @brazil
   @magnum

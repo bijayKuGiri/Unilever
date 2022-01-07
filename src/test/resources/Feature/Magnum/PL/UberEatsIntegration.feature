@@ -2,6 +2,7 @@ Feature: Validate the UberEats link navigation is working
 
   @P1
   @Poland
+  @All
   @needToUpdate
   Scenario: Verify UberEats link navigation is working
     Given The site is Up and Running

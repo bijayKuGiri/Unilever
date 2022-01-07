@@ -4,6 +4,7 @@ Feature: Validate the CookiesNotice link in ContactUs Page
   @footer
   @brazil
   @magnum
+  @All
   Scenario: Verifying CookiesNotice link navigation in Contact Us Page
     Given The site is Up and Running
     And Navigate to Contactus Page

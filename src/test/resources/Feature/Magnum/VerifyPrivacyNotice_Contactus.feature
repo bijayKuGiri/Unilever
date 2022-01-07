@@ -5,6 +5,7 @@ Feature: Validate the PrivacyNotice link in contact Us page
   @thailand
   @brazil
   @magnum
+  @All
   Scenario: Verifying PrivacyNotice link navigation in contactus page
     Given The site is Up and Running
     And Navigate to ContactUS Page

@@ -4,6 +4,7 @@ Feature: Validate the video element
   @video
   @brazil
   @magnum
+  @All
   Scenario: Verifying Video element in the Application
     Given The site is Up and Running
     And navigate to the video contain tab

@@ -1,6 +1,7 @@
 Feature: Validate the ifood on carousel
 
   @P1
+  @All
   @embedded
   @brazil
   @magnum

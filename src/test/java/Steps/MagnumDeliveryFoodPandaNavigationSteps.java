@@ -24,12 +24,12 @@ public class MagnumDeliveryFoodPandaNavigationSteps extends BaseUtilities {
         _driver = base._driver;
     }
 
-    @And("user redirected to MagnumDelivery page")
-    public void i_navigate_to_a_magnum_delivery_page() {
-        Home _home = new Home(_driver);
-        _magnumdelivery = _home.GoToMagnumDeliveryPage(_driver);
+    //@And("user redirected to Magnum Delivery page")
+    //public void i_navigate_to_a_magnum_delivery_page() {
+      //  Home _home = new Home(_driver);
+        //_magnumdelivery = _home.GoToMagnumDeliveryPage(_driver);
 
-    }
+    //}
 
     @When("user click on Foodpanda image")
     public void i_try_to_click_on_foodpanda_icon() throws InterruptedException {
@@ -43,4 +43,5 @@ public class MagnumDeliveryFoodPandaNavigationSteps extends BaseUtilities {
         Assert.assertTrue(_magnumdelivery.IsNavigateToFoodpandaPage(_driver));
 
     }
+
 }

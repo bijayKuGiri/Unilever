@@ -4,6 +4,7 @@ Feature: Validate the Product Details
   @imageNavigation
   @brazil
   @magnum
+  @All
   Scenario: Verifying Product details available
     Given The site is Up and Running
     When verifying the Products

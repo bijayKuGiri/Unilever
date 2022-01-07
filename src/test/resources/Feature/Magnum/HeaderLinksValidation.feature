@@ -1,6 +1,7 @@
 Feature: Validate the hyperlink validation
 
   @P0
+  @All
   @header
   @brazil
   @magnum

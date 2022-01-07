@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.util.Random;
 import java.util.stream.Collectors;
 
 public class ProductListing {
@@ -21,6 +22,12 @@ public class ProductListing {
         PageFactory.initElements(_driver, this);
         driver = _driver;
     }
+
+    @FindBy(xpath = "//li[@class='o-quick-panel c-product-listing-v2-quickview clearfix active']/div/div/div[2]/div[3]/a")
+    WebElement FindOutMoreButton;
+
+    @FindBy(css = "li.o-quick-panel.c-product-listing-v2-quickview.clearfix.active")
+    WebElement QuickViewPopup;
 
     @FindBy(css = "div.teaser")
     WebElement HeroSection;
@@ -66,4 +73,20 @@ public class ProductListing {
         Assert.assertTrue("Buttons is displayed",Buttons.isDisplayed());
     }
 
+    public void ClickOnQuickView(RemoteWebDriver _driver) {
+        var quickview = _driver.findElements(By.cssSelector("button.quick-view-btn"));
+        Random rand = new Random();
+        int upperbound = quickview.size() - 2;
+        int int_random = rand.nextInt(upperbound);
+        Helper.scrollClick(_driver,quickview.get(int_random));
+        //buyItems.get(int_random).click();
+    }
+
+    public void IsDisplayedQuickViewPopup(){Assert.assertTrue("QuickViewPopup is displayed",QuickViewPopup.isDisplayed());}
+
+    public PDP ClickOnFindOutMoreButton(RemoteWebDriver _driver) {
+        Helper.click(driver, FindOutMoreButton);
+        return new PDP(_driver);
+
+    }
 }

@@ -3,6 +3,7 @@ Feature: Validate the facebook link
   @P1
   @social
   @brazil
+  @All
   @magnum
   @thailand
   Scenario: Verifying facebook link navigation

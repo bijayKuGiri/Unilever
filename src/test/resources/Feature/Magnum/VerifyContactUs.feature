@@ -3,6 +3,7 @@ Feature: Validate Contact Us
     @P0
     @footer
     @magnum
+    @All
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page
@@ -18,6 +19,7 @@ Feature: Validate Contact Us
   @footer
     @magnum
     @brazil
+    @All
     @thailand
   Scenario Outline: Verifying contact us page for Empty FirstName
     Given The site is Up and Running
@@ -32,6 +34,7 @@ Feature: Validate Contact Us
   @footer
     @magnum
     @brazil
+    @All
     @thailand
   Scenario Outline: Verifying contact us page Empty Last Name
     Given The site is Up and Running
@@ -45,6 +48,7 @@ Feature: Validate Contact Us
 
   @footer
     @magnum
+    @All
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page Empty Email
@@ -60,6 +64,7 @@ Feature: Validate Contact Us
 
   @footer
     @magnum
+    @All
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page for Empty Comment
@@ -74,6 +79,7 @@ Feature: Validate Contact Us
 
   @footer
     @magnum
+    @All
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page for wrong Email
@@ -88,6 +94,7 @@ Feature: Validate Contact Us
 
   @footer
     @magnum
+    @All
     @brazil
     @thailand
   Scenario Outline: Verifying contact us page without age confirm

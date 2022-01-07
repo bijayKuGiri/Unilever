@@ -3,6 +3,7 @@ Feature: Validate the Search
   @P0
   @search
   @brazil
+  @All
   @magnum
   @thailand
   Scenario: Verifying Product search
@@ -11,6 +12,7 @@ Feature: Validate the Search
     Then it should shows the products in Results
 
   @P1
+  @All
   @search
   @brazil
   @magnum

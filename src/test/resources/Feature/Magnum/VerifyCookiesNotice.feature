@@ -4,6 +4,7 @@ Feature: Validate the CookiesNotice link in Home Page
   @footer
   @brazil
   @magnum
+  @All
   @thailand
   Scenario: Verifying CookiesNotice link navigation in Home Page
     Given The site is Up and Running

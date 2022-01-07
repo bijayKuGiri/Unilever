@@ -1,6 +1,7 @@
 Feature: Validate the Cookie consent
 
   @P0
+  @All
   @popup
   @thailand
   @magnum
@@ -11,6 +12,7 @@ Feature: Validate the Cookie consent
     Then it should be visible once the page got loaded
 
   @P0
+  @All
   @popup
   @thailand
   @magnum

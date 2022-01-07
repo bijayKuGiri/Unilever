@@ -1,6 +1,7 @@
 Feature: Validate the VK link
 
   @P1
+  @All
   @social
   @russia
   @needToUpdate

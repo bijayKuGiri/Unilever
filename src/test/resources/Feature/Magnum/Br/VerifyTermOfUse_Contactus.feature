@@ -4,6 +4,7 @@ Feature: Validate the TermOfUse link in Contact Us
   @footer
   @brazil
   @magnum
+  @All
   Scenario: Verifying TermsOfUse link navigation in Contact us page
     Given The site is Up and Running
     And Navigate to Contact US Page

@@ -1,6 +1,7 @@
 Feature: Validate the Grabmart image redirection
 
   @P1
+  @All
   @singapore
   @needToUpdate
   Scenario: Verify Grabmart navigation is working

@@ -1,6 +1,7 @@
 Feature: Validate the foodpanda image redirection
 
   @P1
+  @All
   @singapore
   @needToUpdate
   Scenario: Verify foodpanda navigation is working
