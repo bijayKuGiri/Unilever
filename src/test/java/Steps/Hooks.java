@@ -2,6 +2,7 @@ package Steps;
 
 import Base.BaseUtilities;
 import Utility.Helper;
+import com.opencsv.CSVWriter;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
@@ -16,9 +17,8 @@ import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
-import java.io.ByteArrayInputStream;
-import java.util.Collections;
-import java.util.Objects;
+import java.io.*;
+import java.util.*;
 
 public class Hooks extends BaseUtilities {
 
@@ -30,7 +30,11 @@ public class Hooks extends BaseUtilities {
     }
 
     @After
-    public void TearDown(Scenario scenario){
+    public void TearDown(Scenario scenario) throws IOException {
+        writeCSV(scenario.getName(),scenario.getStatus().toString());
+        System.out.println(scenario.getName());
+        System.out.println(scenario.getStatus());
+        System.out.println(scenario.getSourceTagNames());
         if(scenario.isFailed()){
             Allure.addAttachment(scenario.getName(),
                     new ByteArrayInputStream(((TakesScreenshot)_driver)
@@ -44,11 +48,15 @@ public class Hooks extends BaseUtilities {
     }
 
     @Before
-    public void Initialize() {
+    public void Initialize() throws IOException {
         System.out.println("Initialise process Start");
         String OS = System.getProperty("os.name").toLowerCase();
         SelectBrowser(Browsertype.CHROME);
         utils._driver=_driver;
+        File file=new File("TestCases.csv");
+        if(!file.exists()){
+            createCSV();
+        }
     }
 
     public void SelectBrowser(Browsertype browser) {
@@ -90,6 +98,26 @@ public class Hooks extends BaseUtilities {
             Assert.fail("Please Select a Browser");
         }
 
+    }
+
+
+    public void createCSV() throws IOException{
+        String csvFile = "TestCases.csv";
+        CSVWriter cw = new CSVWriter(new FileWriter(csvFile));
+        String[] line = {"TestCase","Status"};
+        //Writing data to the csv file
+        cw.writeNext(line);
+        cw.close();
+    }
+
+    public  void writeCSV(String testCaseName, String Status) throws IOException{
+        String csvFile = "TestCases.csv";
+        CSVWriter cw = new CSVWriter(new FileWriter(csvFile,true));
+        String[] line = {testCaseName,Status};
+        //Writing data to the csv file
+        cw.writeNext(line);
+        //close the file
+        cw.close();
     }
 
 

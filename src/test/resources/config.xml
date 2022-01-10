@@ -1,6 +1,6 @@
 <?xml version="1.0"?>
 <settings>
-    <environment>br_prod</environment>
+    <environment>_testEnv</environment>
     <headless>no</headless>
     <browser>chrome</browser>
 </settings>
