@@ -4,6 +4,8 @@
 /.idea/*
 /allure-results/*
 /target/*
+
+*.csv
 # Log file
 *.log
 
