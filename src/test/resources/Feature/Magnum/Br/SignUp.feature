@@ -59,7 +59,7 @@ Feature: Validate the Sign Up
     And navigate to signup page
     When enter all the details without DOB and submit
     Then it should display validation message with respect to DOB
-\
+
   @SignUp
   @P1
   @footer
