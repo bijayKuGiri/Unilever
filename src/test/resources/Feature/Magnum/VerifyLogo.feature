@@ -1,5 +1,6 @@
 Feature: Validate logo the Home Page
 
+  @UnileverLogo
   @P0
   @header
   @brazil

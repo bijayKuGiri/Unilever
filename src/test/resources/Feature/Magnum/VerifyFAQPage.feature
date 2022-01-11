@@ -1,5 +1,6 @@
 Feature: Verify FAQ page
 
+  @FAQ
   @P1
   @footer
   @brazil

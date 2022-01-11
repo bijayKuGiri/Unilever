@@ -1,5 +1,5 @@
 Feature: Validate the PrivacyNotice link
-
+  @PrivacyNotice
   @P1
   @footer
   @brazil

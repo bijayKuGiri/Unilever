@@ -1,5 +1,6 @@
 Feature: Verify Country selector
 
+  @CountrySelector
   @P0
   @footer
   @brazil

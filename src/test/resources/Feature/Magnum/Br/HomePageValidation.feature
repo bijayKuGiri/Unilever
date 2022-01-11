@@ -1,8 +1,7 @@
 Feature: Validate the Home Page
-
+  @MagnumLogo
   @P1
   @All
-  @header
   @brazil
   @magnum
   Scenario: Verifying landing page

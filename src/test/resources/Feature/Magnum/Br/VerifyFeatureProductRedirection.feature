@@ -1,7 +1,7 @@
 Feature: Validate the Article Page Redirection
 
+  @Pagelist
   @P0
-  @imageNavigation
   @brazil
   @magnum
   @All

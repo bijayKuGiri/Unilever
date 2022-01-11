@@ -1,7 +1,7 @@
 Feature: Validate the facebook link
 
+  @SocialShare
   @P1
-  @social
   @brazil
   @All
   @magnum

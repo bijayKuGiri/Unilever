@@ -1,5 +1,6 @@
 Feature: Validate the CookiesNotice link in ContactUs Page
 
+  @ContactUs
   @P1
   @footer
   @brazil

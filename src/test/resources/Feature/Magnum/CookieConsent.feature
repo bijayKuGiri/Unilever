@@ -1,5 +1,5 @@
 Feature: Validate the Cookie consent
-
+  @CookieConsent
   @P0
   @All
   @popup
@@ -11,6 +11,7 @@ Feature: Validate the Cookie consent
     When verify the bottom for cookie popup
     Then it should be visible once the page got loaded
 
+  @CookieConsent
   @P0
   @All
   @popup

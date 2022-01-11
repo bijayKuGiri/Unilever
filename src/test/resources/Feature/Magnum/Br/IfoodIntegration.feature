@@ -1,8 +1,7 @@
 Feature: Validate the ifood on carousel
-
+  @HeroImageCarousel
   @P1
   @All
-  @embedded
   @brazil
   @magnum
   Scenario: Verifying ifood link available in carousel

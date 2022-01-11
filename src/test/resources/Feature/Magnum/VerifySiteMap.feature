@@ -1,5 +1,6 @@
 Feature: Verify SiteMap Page
 
+  @Sitemap
   @P0
   @footer
   @brazil

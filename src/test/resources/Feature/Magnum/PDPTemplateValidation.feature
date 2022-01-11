@@ -1,6 +1,6 @@
 Feature: Validate the PDP Page template
 
-  @template
+  @Template
   @P1
   @All
   @imageNavigation

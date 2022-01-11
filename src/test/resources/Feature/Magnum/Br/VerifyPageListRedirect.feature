@@ -1,7 +1,6 @@
 Feature: Verifying PageList  redirection
-
+  @Pagelist
   @P0
-  @imageNavigation
   @brazil
   @magnum
   @All

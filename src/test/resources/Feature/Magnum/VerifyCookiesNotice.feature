@@ -1,5 +1,6 @@
 Feature: Validate the CookiesNotice link in Home Page
 
+  @CookiesNotice
   @P0
   @footer
   @brazil

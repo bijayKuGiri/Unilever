@@ -1,7 +1,7 @@
 Feature: Validate the video element
 
+  @Video
   @P0
-  @video
   @brazil
   @magnum
   @All

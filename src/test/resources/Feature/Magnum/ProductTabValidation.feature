@@ -1,7 +1,7 @@
 Feature: Validate the product tab
 
+  @Tablist
   @P0
-  @tab
   @brazil
   @magnum
   @thailand

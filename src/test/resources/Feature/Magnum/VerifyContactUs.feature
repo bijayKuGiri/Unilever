@@ -1,5 +1,6 @@
 Feature: Validate Contact Us
 
+    @ContactUs
     @P0
     @footer
     @magnum
@@ -16,7 +17,8 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment             | Criteria |
       | Test | Testing  | test@test.com | For Testing Purpose | Valid    |
 
-  @footer
+    @ContactUs
+    @footer
     @magnum
     @brazil
     @All
@@ -31,6 +33,7 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment             | Criteria    |
       |      | Testing  | test@test.com | For Testing Purpose | NameMissing |
 
+  @ContactUs
   @footer
     @magnum
     @brazil
@@ -46,6 +49,7 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment             | Criteria        |
       | Test |          | test@test.com | For Testing Purpose | lastnameMissing |
 
+  @ContactUs
   @footer
     @magnum
     @All
@@ -62,6 +66,7 @@ Feature: Validate Contact Us
       | Test | Testing  |       | For Testing Purpose | emailMissing |
 
 
+  @ContactUs
   @footer
     @magnum
     @All
@@ -77,6 +82,7 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment | Criteria       |
       | Test | Testing  | test@test.com |         | commentMissing |
 
+  @ContactUs
   @footer
     @magnum
     @All
@@ -92,6 +98,7 @@ Feature: Validate Contact Us
       | name | lastname | email        | comment             | Criteria     |
       | Test | Testing  | testtest.com | For Testing Purpose | inValidEmail |
 
+  @ContactUs
   @footer
     @magnum
     @All

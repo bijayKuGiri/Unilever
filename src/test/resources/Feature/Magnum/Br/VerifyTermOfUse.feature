@@ -1,5 +1,6 @@
 Feature: Validate the TermOfUse link
 
+  @Termsofuse
   @P1
   @footer
   @brazil

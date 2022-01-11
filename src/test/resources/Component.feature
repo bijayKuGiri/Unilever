@@ -1,7 +1,7 @@
 Feature: Validate the carousel
 
+  @HeroImageCarousel
   @P0
-  @carousel
   @brazil
   @thailand
   @magnum

@@ -1,7 +1,6 @@
 Feature: Validate the Product Listing Page template
-
+  @Template
   @P1
-  @template
   @thailand
   @brazil
   @magnum

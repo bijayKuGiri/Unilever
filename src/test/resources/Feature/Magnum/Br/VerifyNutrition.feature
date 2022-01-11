@@ -1,7 +1,6 @@
 Feature: Validate the product nutrition
-
+  @Accordion
   @P0
-  @Nutritional
   @brazil
   @All
   @magnum

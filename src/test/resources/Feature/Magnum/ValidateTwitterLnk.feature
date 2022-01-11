@@ -1,7 +1,7 @@
 Feature: Validate the Twitter link
 
+  @SocialShare
   @P1
-  @social
   @brazil
   @magnum
   @All
