@@ -19,6 +19,7 @@ import org.testng.Assert;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Hooks extends BaseUtilities {
 
@@ -31,7 +32,7 @@ public class Hooks extends BaseUtilities {
 
     @After
     public void TearDown(Scenario scenario) throws IOException {
-        writeCSV(scenario.getName(),scenario.getStatus().toString());
+        writeCSV(scenario.getSourceTagNames().stream().collect(Collectors.toList()).get(0).substring(1),scenario.getName(),scenario.getStatus().toString());
         System.out.println(scenario.getName());
         System.out.println(scenario.getStatus());
         System.out.println(scenario.getSourceTagNames());
@@ -104,16 +105,16 @@ public class Hooks extends BaseUtilities {
     public void createCSV() throws IOException{
         String csvFile = "TestCases.csv";
         CSVWriter cw = new CSVWriter(new FileWriter(csvFile));
-        String[] line = {"TestCase","Status"};
+        String[] line = {"Component","TestCase","Status"};
         //Writing data to the csv file
         cw.writeNext(line);
         cw.close();
     }
 
-    public  void writeCSV(String testCaseName, String Status) throws IOException{
+    public  void writeCSV(String category, String testCaseName, String Status) throws IOException{
         String csvFile = "TestCases.csv";
         CSVWriter cw = new CSVWriter(new FileWriter(csvFile,true));
-        String[] line = {testCaseName,Status};
+        String[] line = {category,testCaseName,Status};
         //Writing data to the csv file
         cw.writeNext(line);
         //close the file

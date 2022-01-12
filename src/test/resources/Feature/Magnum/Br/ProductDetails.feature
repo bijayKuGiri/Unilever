@@ -1,5 +1,6 @@
 Feature: Validate the Product Details
-  @
+
+  @KnowMoreButton
   @P1
   @brazil
   @magnum
