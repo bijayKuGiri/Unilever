@@ -23,7 +23,7 @@ public class BuyNowSteps extends BaseUtilities {
     }
     @Then("the respective page should be open.")
     public void the_respective_page_should_be_open() {
-        Assert.assertTrue("Expected Buy Now pop up should visibel",
+        Assert.assertTrue("Expected Buy Now pop up should visible",
                 _home.verifyBuyNowpopup(_driver));
     }
 }
