@@ -1,6 +1,7 @@
 Feature: Validate the Language Option
 
-
+  @LanguageSwitcher
+  @All
   @P0
   @footer
   @thailand

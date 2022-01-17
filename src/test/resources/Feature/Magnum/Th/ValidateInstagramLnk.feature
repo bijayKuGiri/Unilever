@@ -1,7 +1,8 @@
 Feature: Validate the Instagram link
 
-  @P1
   @social
+  @All
+  @P1
   @magnum
   @thailand
   Scenario: Verifying Instagram link navigation

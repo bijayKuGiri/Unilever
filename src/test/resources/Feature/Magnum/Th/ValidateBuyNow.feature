@@ -1,6 +1,7 @@
 Feature: Validate the BuyNow Option
 
-
+  @BuyNow
+  @All
   @P0
   @footer
   @thailand
