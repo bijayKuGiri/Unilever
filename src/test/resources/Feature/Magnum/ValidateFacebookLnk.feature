@@ -1,6 +1,6 @@
 Feature: Validate the facebook link
 
-  @SocialShare
+  @social
   @P1
   @brazil
   @All
