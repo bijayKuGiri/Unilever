@@ -1,6 +1,7 @@
 package Pages;
 
 import Utility.Helper;
+import lombok.var;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;

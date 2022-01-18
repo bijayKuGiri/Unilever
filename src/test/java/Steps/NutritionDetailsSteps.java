@@ -6,14 +6,12 @@ import Utility.Helper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import lombok.var;
 import org.testng.Assert;
-import org.testng.asserts.SoftAssert;
-
-import java.util.Random;
 
 public class NutritionDetailsSteps extends BaseUtilities {
 
-    private BaseUtilities base;
+    private final BaseUtilities base;
     private Home _home;
 
     public NutritionDetailsSteps(BaseUtilities base) {

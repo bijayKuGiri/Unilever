@@ -4,8 +4,9 @@ import Base.BaseUtilities;
 import Pages.Home;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.junit.Assert;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.testng.Assert;
+//import org.testng.Assert;
 
 public class VerifySearchSteps extends BaseUtilities {
 
@@ -20,11 +21,13 @@ public class VerifySearchSteps extends BaseUtilities {
     public void i_navigate_to_search_page_and_search_for_a_product() throws InterruptedException {
         _home = new Home(_driver);
         _home.search("Magnum");
+
+
     }
 
     @Then("it should shows the products in Results")
     public void it_should_shows_the_products_in_results()  {
-        Assert.assertTrue(_home.getSearchCount()>0,"Expected search result should show one or more products");
+        Assert.assertTrue("Expected search result should show one or more products",_home.getSearchCount()>0);
         //Assert.assertTrue(_home.getErrorCount()==0,"Expected no error message should display");
     }
 
@@ -36,7 +39,7 @@ public class VerifySearchSteps extends BaseUtilities {
 
     @Then("it should not shows any products in Results")
     public void itShouldNotShowsAnyProductsInResults() {
-        Assert.assertEquals(_home.getSearchCount(), 0, "Expected search result should show one or more products");
+        Assert.assertEquals(_home.getSearchCount()== 0, "Expected search result should show one or more products");
 
         //Assert.assertTrue(_home.isNoResultDisplay());
     }

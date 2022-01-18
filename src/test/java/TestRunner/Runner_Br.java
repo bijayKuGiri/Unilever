@@ -13,11 +13,10 @@ import org.junit.runner.RunWith;
         //plugin = {"json:resources/cucumber.json","html:resources/cucumber.html"},
 
         glue = "Steps",
-        plugin = {"pretty", "io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"},
+        plugin = {"pretty","io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"},
         tags = "@brazil",
         monochrome = true
 )
-
 
 public class Runner_Br {
 }

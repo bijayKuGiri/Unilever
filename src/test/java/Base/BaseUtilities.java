@@ -1,7 +1,6 @@
 package Base;
 
-import com.aventstack.extentreports.ExtentReports;
-import com.aventstack.extentreports.ExtentTest;
+
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 public class BaseUtilities {

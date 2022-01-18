@@ -6,7 +6,7 @@ import Utility.Helper;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.openqa.selenium.WebElement;
+import lombok.var;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.asserts.SoftAssert;
 import org.xml.sax.SAXException;

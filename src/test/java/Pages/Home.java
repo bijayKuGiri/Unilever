@@ -2,7 +2,8 @@ package Pages;
 
 
 import Utility.Helper;
-import org.apache.commons.lang3.tuple.Pair;
+
+import lombok.var;
 import org.junit.Assert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
