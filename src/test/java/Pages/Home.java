@@ -176,6 +176,9 @@ public class Home {
     @FindBy(xpath = "//ol[@role='tablist' and @class='cmp-tabs__tablist']//parent::div")
     WebElement productTabImages;
 
+    @FindBy(xpath = "//li[@class='o-quick-panel c-product-listing-v2-quickview clearfix active']/div/div/div[2]/div[3]/a")
+    WebElement FindOutMoreButton;
+
 
     public void IsHeaderDisplayed() {
         Assert.assertTrue("Header is displayed", Header.isDisplayed());
@@ -788,11 +791,35 @@ public class Home {
         //buyItems.get(int_random).click();
     }
 
+
     public Boolean verifyBuyNowpopup(RemoteWebDriver _driver) {
 
         if (_driver.findElements(By.cssSelector("h2.cw_product_title")).size() > 0)
             return true;
         else
             return false;
+    }
+
+    public void ClickOnQuickView(RemoteWebDriver _driver) {
+        var quickView = _driver.findElements(By.cssSelector("button.quick-view-btn"));
+        Random rand = new Random();
+        int upperbound = quickView.size() - 2;
+        int int_random = rand.nextInt(upperbound);
+        Helper.scrollClick(_driver,quickView.get(int_random));
+        //buyItems.get(int_random).click();
+    }
+
+    public Boolean verifyQuickViewpopup(RemoteWebDriver _driver) {
+
+        if (_driver.findElements(By.cssSelector("h2.c-product-listing-v2-quickview__productname")).size() > 0)
+            return true;
+        else
+            return false;
+    }
+
+    public PDP ClickOnFindOutMoreButton(RemoteWebDriver _driver) {
+        Helper.click(driver, FindOutMoreButton);
+        return new PDP(_driver);
+
     }
 }

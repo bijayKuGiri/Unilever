@@ -1,7 +1,8 @@
 Feature: Validate the Youtube link
 
-  @P1
   @social
+  @P1
+  @All
   @magnum
   @thailand
   Scenario: Verifying Youtube link navigation
