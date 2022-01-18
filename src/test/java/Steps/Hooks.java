@@ -2,12 +2,15 @@ package Steps;
 
 import Base.BaseUtilities;
 import Utility.Helper;
+import com.opencsv.CSVReader;
+import com.opencsv.CSVReaderBuilder;
 import com.opencsv.CSVWriter;
 import io.cucumber.java.After;
 import io.cucumber.java.Before;
 import io.cucumber.java.Scenario;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import io.qameta.allure.Allure;
+import lombok.var;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.PageLoadStrategy;
 import org.openqa.selenium.TakesScreenshot;
@@ -19,6 +22,7 @@ import org.testng.Assert;
 
 import java.io.*;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Hooks extends BaseUtilities {
 
@@ -31,10 +35,28 @@ public class Hooks extends BaseUtilities {
 
     @After
     public void TearDown(Scenario scenario) throws IOException {
-        writeCSV(scenario.getName(),scenario.getStatus().toString());
-        System.out.println(scenario.getName());
-        System.out.println(scenario.getStatus());
-        System.out.println(scenario.getSourceTagNames());
+        var lstData=getCSVData("src/test/resources/ExpectedData.csv");
+        List<String> exValue=lstData.get(scenario.getName().toLowerCase().trim());
+        if(exValue==null){
+            System.out.println("Please check the Method is implemented or Data is enter into the master list correctly");
+        }
+        if (exValue.get(1).toLowerCase().equals("yes")){
+            writeCSV(scenario.getName(),scenario.getSourceTagNames().stream().collect(Collectors.toList()).get(0).substring(1),scenario.getStatus().toString(),"NO");
+        }
+        else if(exValue.get(1).toLowerCase().equals("no") && scenario.getStatus().toString()=="FAILED"){
+            writeCSV(scenario.getName(),scenario.getSourceTagNames().stream().collect(Collectors.toList()).get(0).substring(1),scenario.getStatus().toString(),"NO");
+        }
+        else if(exValue.get(1).toLowerCase().equals("no") && scenario.getStatus().toString()=="PASSED"){
+            writeCSV(scenario.getName(),scenario.getSourceTagNames().stream().collect(Collectors.toList()).get(0).substring(1),scenario.getStatus().toString(),"YES");
+        }
+        else{
+            writeCSV(scenario.getName(),scenario.getSourceTagNames().stream().collect(Collectors.toList()).get(0).substring(1),scenario.getStatus().toString(),"UNKNOWN");
+        }
+
+
+//        System.out.println(scenario.getName());
+//        System.out.println(scenario.getStatus());
+//        System.out.println(scenario.getSourceTagNames());
         if(scenario.isFailed()){
             Allure.addAttachment(scenario.getName(),
                     new ByteArrayInputStream(((TakesScreenshot)_driver)
@@ -62,13 +84,6 @@ public class Hooks extends BaseUtilities {
     public void SelectBrowser(Browsertype browser) {
 
         if(browser==Browsertype.CHROME) {
-            /*System.setProperty("webdriver.chrome.silentOutput","true");
-            if (OS.contains("win"))
-                System.setProperty("webdriver.chrome.driver", ".\\src\\main\\resources\\ChromeDriver\\windows.exe");
-            else if(OS.contains("mac"))
-                System.setProperty("webdriver.chrome.driver", ".//src//main//resources//ChromeDriver//mac64m1");
-            else if(OS.contains("nix") || OS.contains("nux") || OS.contains("aix"))
-                System.setProperty("webdriver.chrome.driver", ".//src//main//resources//ChromeDriver//linux");*/
             WebDriverManager.chromedriver().setup();
             ChromeOptions options = new ChromeOptions();
             options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT_AND_NOTIFY);
@@ -104,23 +119,40 @@ public class Hooks extends BaseUtilities {
     public void createCSV() throws IOException{
         String csvFile = "TestCases.csv";
         CSVWriter cw = new CSVWriter(new FileWriter(csvFile));
-        String[] line = {"TestCase","Status"};
-        //Writing data to the csv file
+        String[] line = {"TestCase","Category","Execution Status","VARIANCE"};
         cw.writeNext(line);
         cw.close();
     }
 
-    public  void writeCSV(String testCaseName, String Status) throws IOException{
+    public  void writeCSV(String category,String testCaseName, String Status,String Variance) throws IOException{
         String csvFile = "TestCases.csv";
         CSVWriter cw = new CSVWriter(new FileWriter(csvFile,true));
-        String[] line = {testCaseName,Status};
-        //Writing data to the csv file
+        String[] line = {category,testCaseName,Status,Variance};
         cw.writeNext(line);
-        //close the file
         cw.close();
     }
 
+    public Map<String,List<String>> getCSVData(String file)
+    {
+        Map<String,List<String>> dataLst=new HashMap<>();
+        try {
+            FileReader filereader = new FileReader(file);
+            CSVReader csvReader = new CSVReaderBuilder(filereader)
+                    .withSkipLines(1)
+                    .build();
+            List<String[]> allData = csvReader.readAll();
 
+            for (var item : allData) {
+                dataLst.put(item[0].toLowerCase(), Arrays.stream(item).skip(1).collect(Collectors.toList()));
+            }
+
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+        return dataLst;
+    }
 }
 
 enum Browsertype{
