@@ -1,7 +1,6 @@
 package Utility;
 
 
-
 import lombok.var;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -119,10 +118,16 @@ public class Helper {
     }*/
 
     public static void scrollAndClick(RemoteWebDriver driver, WebElement element) {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
-        driver.executeScript("arguments[0].click();", element);
-        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
-        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+        try {
+            scrollClick(driver,element);
+        } catch (ElementClickInterceptedException ex) {
+            WebDriverWait wait = new WebDriverWait(driver, 30);
+            wait.until(ExpectedConditions.visibilityOf(element));
+            driver.executeScript("arguments[0].click();", element);
+        } catch (StaleElementReferenceException ex) {
+            ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", element);
+            driver.executeScript("arguments[0].click();", element);
+        }
     }
 
     public static void scrollClick(RemoteWebDriver driver, WebElement element) {
@@ -155,11 +160,31 @@ public class Helper {
         }
     }
 
-    public static void clickItem(RemoteWebDriver driver, WebElement element){
-        WebDriverWait wait = new WebDriverWait(driver, 30);
-        wait.until(ExpectedConditions.visibilityOf(element));
-        Actions action = new Actions(driver);
-        action.moveToElement(element).click().perform();
+    public static void clickItem(RemoteWebDriver driver, WebElement element) {
+
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, 30);
+            wait.until(ExpectedConditions.visibilityOf(element));
+            Actions action = new Actions(driver);
+            action.moveToElement(element).click().perform();
+        } catch (StaleElementReferenceException ex) {
+            scrollAndClick(driver, element);
+        }
+    }
+
+    public static boolean retryingFindClick(RemoteWebDriver driver, By by) {
+        boolean result = false;
+        int attempts = 0;
+        while (attempts < 2) {
+            try {
+                driver.findElement(by).click();
+                result = true;
+                break;
+            } catch (StaleElementReferenceException e) {
+            }
+            attempts++;
+        }
+        return result;
     }
 
     public static Boolean isCookieDisplay(RemoteWebDriver driver) {
@@ -178,11 +203,12 @@ public class Helper {
         /*Actions actions = new Actions(_driver);
         actions.moveToElement(webElement);
         actions.click().perform();*/
-        clickItem(_driver,webElement);
+        clickItem(_driver, webElement);
         while (_driver.findElement(By.cssSelector("div#onetrust-button-group-parent")).isDisplayed()) {
         }
 
     }
+
 
     public static void EnterText(RemoteWebDriver driver, WebElement element, String value) {
 
@@ -196,15 +222,6 @@ public class Helper {
             element.sendKeys(value);
         }
     }
-
-   /* public static void scrollUpPage(RemoteWebDriver driver, int timesToScroll) throws InterruptedException {
-        Actions action = new Actions(driver);
-        action.sendKeys(Keys.PAGE_UP);
-        for (int i = 0; i < timesToScroll; i++) {
-            action.perform();
-            Thread.sleep(1000);
-        }
-    }*/
 
     public static void scrollDownPage(RemoteWebDriver driver, int timesToScroll) throws InterruptedException {
         Actions action = new Actions(driver);
@@ -264,6 +281,13 @@ public class Helper {
             return "";
         }
 
+    }
+
+    public static void handleCookie_Reject(RemoteWebDriver _driver) {
+        scrollAndClick(_driver, _driver.findElement(By.cssSelector("#onetrust-button-group>#onetrust-pc-btn-handler")));
+        scrollAndClick(_driver, _driver.findElement(By.cssSelector(".ot-pc-footer>.ot-btn-container>.ot-pc-refuse-all-handler")));
+        _driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
     }
 
 

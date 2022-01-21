@@ -114,3 +114,16 @@ Feature: Validate Contact Us
       | Test | Testing  | test@test.com | For Testing Purpose | ageConfirmMissing |
 
 
+  @ContactUs
+    @P0
+    @footer
+    @magnum
+    @All
+    @brazil
+    @thailand
+  Scenario Outline: Verifying contact us page for Concern over Unilever business or brand
+    Given The site is Up and Running
+    When navigate to contact us page and fill the details <name>,<lastname>,<email> and <comment>
+    Then user should get message based on <Criteria> Criteria
+
+

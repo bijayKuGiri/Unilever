@@ -53,4 +53,14 @@ public class CookiesSteps extends BaseUtilities {
     public void the_popup_should_disable() {
         Assert.assertFalse(Helper.isCookieDisplay(_driver));
     }
+
+    @When("Click on Reject all button")
+    public void click_on_reject_all_button() throws InterruptedException {
+        Helper.handleCookie_Reject(_driver);
+        Thread.sleep(2000);
+    }
+    @Then("cookie popup should disappear")
+    public void cookie_popup_should_disappear() {
+        Assert.assertFalse(Helper.isCookieDisplay(_driver));
+    }
 }

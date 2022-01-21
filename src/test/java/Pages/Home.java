@@ -2,7 +2,6 @@ package Pages;
 
 
 import Utility.Helper;
-
 import lombok.var;
 import org.junit.Assert;
 import org.openqa.selenium.By;
@@ -11,14 +10,15 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
-import org.openqa.selenium.remote.RemoteWebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import java.util.*;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -103,8 +103,11 @@ public class Home {
     @FindBy(css = "section.kr-summary-section>div")
     WebElement summarySection;
 
-   /* @FindBy(css = "kr-aggregateRating kr-Stars")
-    WebElement summarySection;*/
+    @FindBy(css = "#onetrust-button-group>#onetrust-pc-btn-handler")
+    WebElement lnkManageSettings;
+
+@FindBy(css = ".ot-pc-footer>.ot-btn-container>.ot-pc-refuse-all-handler")
+    WebElement btnRefuseAll;
 
     @FindBy(css = "button.cmp-carousel__action.cmp-carousel__action--next>span.cmp-carousel__action-icon")
     WebElement carouselNavigateNext;
@@ -178,7 +181,6 @@ public class Home {
 
     @FindBy(xpath = "//li[@class='o-quick-panel c-product-listing-v2-quickview clearfix active']/div/div/div[2]/div[3]/a")
     WebElement FindOutMoreButton;
-
 
     public void IsHeaderDisplayed() {
         Assert.assertTrue("Header is displayed", Header.isDisplayed());
@@ -444,6 +446,30 @@ public class Home {
         return new ContactUs(driver);
     }
 
+    /*private void getElementUsingTab(Integer count){
+        WebElement webElement = driver.findElement(By.xpath("//html"));
+        for (int i = 0; i <= count; i++) {
+            webElement.sendKeys(Keys.TAB);
+        }
+        WebElement currentElement = driver.switchTo().activeElement();
+        currentElement.sendKeys(Keys.ENTER);
+    }
+
+    public void navContactUsUsingKeyboard() {
+        getElementUsingTab(32);
+
+    }
+    public void SelectReasonUsingKeyBoard() throws InterruptedException {
+        getElementUsingTab(10);
+        Actions actions = new Actions(driver);
+        actions.sendKeys(Keys.ARROW_DOWN).perform();
+        Thread.sleep(5000);
+        actions.sendKeys("Question").perform();
+        actions.sendKeys(Keys.ENTER).perform();
+
+
+    }
+*/
     public void selectSiteMap() throws InterruptedException {
         ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", lnkSiteMap);
         Helper.click(driver, lnkSiteMap);
@@ -782,17 +808,31 @@ public class Home {
         return new MagnumDelivery(_driver);
     }
 
-    public void ClickOnBuynow(RemoteWebDriver _driver) {
+    public void ClickOnBuyNow(RemoteWebDriver _driver) {
         var buyItems = _driver.findElements(By.cssSelector("button.cartwire.btn-primary"));
         Random rand = new Random();
         int upperbound = buyItems.size() - 2;
         int int_random = rand.nextInt(upperbound);
-        Helper.scrollClick(_driver,buyItems.get(int_random));
+        Helper.scrollAndClick(_driver,buyItems.get(int_random));
         //buyItems.get(int_random).click();
     }
 
+    public String selectVendor(RemoteWebDriver _driver) throws InterruptedException {
+        Helper.WaitForPageLoad(_driver,20);
+        WebElement tblVendorLst = _driver.findElement(By.cssSelector("#cwRetailsTbl"));
+        var items=tblVendorLst.findElements(By.tagName("a"));
+        Random rand = new Random();
+        int upperbound = items.size() - 1;
+        int int_random = rand.nextInt(upperbound);
+        String navUrl=items.get(int_random).getAttribute("href");
+        Helper.scrollAndClick(_driver,items.get(int_random));
+        Helper.WaitForPageLoad(_driver,20);
+        Thread.sleep(3000);
+        return  navUrl;
+    }
 
-    public Boolean verifyBuyNowpopup(RemoteWebDriver _driver) {
+
+    public Boolean verifyBuyPopup(RemoteWebDriver _driver) {
 
         if (_driver.findElements(By.cssSelector("h2.cw_product_title")).size() > 0)
             return true;
@@ -821,5 +861,33 @@ public class Home {
         Helper.click(driver, FindOutMoreButton);
         return new PDP(_driver);
 
+    }
+
+    public boolean isNoResultDisplay() {
+         return driver.findElements(By.cssSelector("p.no-results-suggestion__description")).size()>0;
+    }
+
+    public String navSuggestionList() {
+        var items=driver.findElements(By.cssSelector(".search-result-card"));
+        Random rand = new Random();
+        int upperbound = items.size() - 1;
+        int int_random = rand.nextInt(upperbound);
+
+        var targetElement= items.get(int_random).findElement(By.cssSelector(".search-image>a"));
+        String hrefTxt=targetElement.getAttribute("href");
+        Helper.scrollAndClick (driver,items.get(int_random).findElement(By.cssSelector(".search-image>a")));
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+        return hrefTxt;
+    }
+
+    public RemoteWebDriver getActiveWindow(){
+        ArrayList<String> tabs2 = new ArrayList<>(driver.getWindowHandles());
+        if (tabs2.size() > 1) {
+            driver.switchTo().window(tabs2.get(1));
+        }
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
+        driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
+        return driver;
     }
 }

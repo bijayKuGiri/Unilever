@@ -3,6 +3,7 @@ package Pages;
 import Utility.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -111,9 +112,13 @@ public class ContactUs extends Helper {
         Helper.selectFromDDn(driver, reason, selectReason);
     }
 
+
     public void SelectSubject(String subject) {
         Helper.selectFromDDn(driver, subject, selectSubject);
     }
+    /*public void SelectSubjectUsingKeyBoard(String subject) {
+        Helper.selectFromDDn(driver, subject, selectSubject);
+    }*/
 
     public void enterNameEmailAndComments(String name, String lastName, String email, String Comments) throws InterruptedException {
         Helper.scrollDownPage(driver, 1);

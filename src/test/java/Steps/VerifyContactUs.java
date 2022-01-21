@@ -82,4 +82,19 @@ public class VerifyContactUs extends BaseUtilities {
         _contact.SelectSubject("Business");
         _contact.enterDetailsWithoutAgeConfirm(name, lastname, email, Comment);
     }
+
+    /*@When("using keyboard navigate to contact us page and fill the details {},{},{} and {}")
+    public void navigate_to_contact_us_page_and_fill_the_details_using_keyboard(String name, String lastname,
+                                                                                String email, String Comment) throws InterruptedException {
+        _home = new Home(base._driver);
+        _home.navContactUsUsingKeyboard();
+        Thread.sleep(3000);
+        _home.SelectReasonUsingKeyBoard();
+        //_contact.SelectSubject("Business");
+    }
+    @Then("user should get appropriate message based on <Criteria> Criteria")
+    public void user_should_get_appropriate_message_based_on_criteria_criteria() {
+        // Write code here that turns the phrase above into concrete actions
+        throw new io.cucumber.java.PendingException();
+    }*/
 }
