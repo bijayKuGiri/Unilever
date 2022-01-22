@@ -440,9 +440,10 @@ public class Home {
     }*/
 
     public ContactUs navContactUs() {
-        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", contactUs);
+//        ((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView();", contactUs);
         //Helper.click(driver, contactUs);
-        contactUs.click();
+//        contactUs.click();
+        Helper.scrollAndClick(driver,contactUs);
         return new ContactUs(driver);
     }
 

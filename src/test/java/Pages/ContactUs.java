@@ -45,6 +45,20 @@ public class ContactUs extends Helper {
     @FindBy(css = "#commentsContainer")
     WebElement txtComments;
 
+    @FindBy(css = "#productName")
+    WebElement txtProductName;
+    @FindBy(css = "#barCode")
+    WebElement txtProductBarCode;
+    @FindBy(css = "#productionCode")
+    WebElement txtProductionCode;
+    @FindBy(css = "#uploadFile")
+    WebElement lnkFileUpload;
+    @FindBy(css = "#contactUs-productUsage")
+    WebElement ddnProductUse;
+    @FindBy(css = "#contactUs-purchasedFrom")
+    WebElement ddnBuyingMode;
+    @FindBy(css = "#retailerName")
+    WebElement txtRetailer;
     @FindBy(css = "#contact-legalAgeConfirmation")
     WebElement chkAgeConfirm;
 
@@ -120,6 +134,14 @@ public class ContactUs extends Helper {
         Helper.selectFromDDn(driver, subject, selectSubject);
     }*/
 
+    private Boolean isEmailConfirmDisplay(){
+        return driver.findElements(By.cssSelector("#confirmGrp>div>div>#confirmButton")).size()>0;
+    }
+    public void clickConfirm(){
+        if(isEmailConfirmDisplay())
+            driver.findElement(By.cssSelector("#confirmGrp>div>div>#confirmButton")).click();
+    }
+
     public void enterNameEmailAndComments(String name, String lastName, String email, String Comments) throws InterruptedException {
         Helper.scrollDownPage(driver, 1);
         Helper.EnterText(driver, txtName.findElement(By.tagName("input")), name);
@@ -129,8 +151,7 @@ public class ContactUs extends Helper {
             Helper.EnterText(driver, txtComments.findElement(By.tagName("textarea")), Comments);
 
         if (!Comments.trim().isEmpty()) {
-
-            Helper.click(driver, chkAgeConfirm);
+            Helper.scrollAndClick(driver, chkAgeConfirm);
         }
 
     }
@@ -220,5 +241,26 @@ public class ContactUs extends Helper {
 
     public boolean IsNavigateCookiesNotice(RemoteWebDriver driver) {
         return driver.getCurrentUrl().contains("cookie-notice");
+    }
+
+    public void enterDetailsForProduct(String name, String lastName, String email, String productname, String barcode,
+                                       String code, String uploadfile, String duration, String buyingMode,String retailer ,String Comments) throws InterruptedException {
+        Helper.scrollDownPage(driver, 1);
+        Helper.EnterText(driver, txtName.findElement(By.tagName("input")), name);
+        Helper.EnterText(driver, txtLastName.findElement(By.tagName("input")), lastName);
+        Helper.EnterText(driver, txtEmail.findElement(By.tagName("input")), email);
+        Helper.EnterText(driver, txtProductName, productname);
+        Helper.EnterText(driver, txtProductBarCode, barcode);
+        Helper.EnterText(driver, txtProductionCode, code);
+        lnkFileUpload.sendKeys(uploadfile);
+        Helper.selectFromDDn(driver,duration,ddnProductUse);
+        Helper.selectFromDDn(driver,buyingMode,ddnBuyingMode);
+        Helper.EnterText(driver, txtRetailer, retailer);
+        if (!Comments.trim().isEmpty())
+            Helper.EnterText(driver, txtComments.findElement(By.tagName("textarea")), Comments);
+
+        if (!Comments.trim().isEmpty()) {
+            Helper.scrollAndClick(driver, chkAgeConfirm);
+        }
     }
 }

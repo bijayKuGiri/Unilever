@@ -4,6 +4,7 @@ import Base.BaseUtilities;
 import Pages.ContactUs;
 import Pages.Home;
 //import gherkin.formatter.model.ScenarioOutline;
+import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
@@ -41,6 +42,7 @@ public class VerifyContactUs extends BaseUtilities {
             case "Valid":
                 _contact.setValid(true);
                 _contact.hitSubmit();
+                _contact.clickConfirm();
                 Assert.assertTrue(_contact.VerifySuccessContactUS());
                 System.out.println(_contact.getMessage());
                 break;
@@ -83,6 +85,31 @@ public class VerifyContactUs extends BaseUtilities {
         _contact.enterDetailsWithoutAgeConfirm(name, lastname, email, Comment);
     }
 
+    @Given("navigate to contact us page for Concern")
+    public void navigate_to_contact_us_page_for_concern() {
+        _home = new Home(base._driver);
+        _contact = _home.navContactUs();
+        _contact.SelectReason("Concern");
+        _contact.SelectSubject("Business");
+    }
+    @When("fill the details {},{},{} and {}")
+    public void fill_the_details_name_lastname_email_and_comment(String name,String lastname,
+                                                                 String email, String Comment) throws InterruptedException {
+        _contact.enterNameEmailAndComments(name, lastname, email, Comment);
+    }
+    @When("filling the details {},{},{},{},{},{},{},{},{},{} and {} for a product")
+    public void fillDetailsForProduct(String name,String lastname,String email, String productname,String barcode,String code,
+                                      String uploadfile, String duration,String buyingMode,String retailer, String Comment) throws InterruptedException {
+        _contact.enterDetailsForProduct(name, lastname, email, productname,barcode,code,uploadfile,duration,buyingMode,retailer,Comment);
+    }
+
+    @Given("navigate to contact us page for Concern on Product")
+    public void navigate_to_contact_us_page_for_concern_on_product() {
+        _home = new Home(base._driver);
+        _contact = _home.navContactUs();
+        _contact.SelectReason("Concern");
+        _contact.SelectSubject("Product");
+    }
     /*@When("using keyboard navigate to contact us page and fill the details {},{},{} and {}")
     public void navigate_to_contact_us_page_and_fill_the_details_using_keyboard(String name, String lastname,
                                                                                 String email, String Comment) throws InterruptedException {

@@ -1,6 +1,6 @@
 Feature: Validate Contact Us
 
-    @ContactUs
+  @ContactUs
     @P0
     @footer
     @magnum
@@ -17,7 +17,7 @@ Feature: Validate Contact Us
       | name | lastname | email         | comment             | Criteria |
       | Test | Testing  | test@test.com | For Testing Purpose | Valid    |
 
-    @ContactUs
+  @ContactUs
     @footer
     @magnum
     @brazil
@@ -34,7 +34,7 @@ Feature: Validate Contact Us
       |      | Testing  | test@test.com | For Testing Purpose | NameMissing |
 
   @ContactUs
-  @footer
+    @footer
     @magnum
     @brazil
     @All
@@ -50,7 +50,7 @@ Feature: Validate Contact Us
       | Test |          | test@test.com | For Testing Purpose | lastnameMissing |
 
   @ContactUs
-  @footer
+    @footer
     @magnum
     @All
     @brazil
@@ -67,7 +67,7 @@ Feature: Validate Contact Us
 
 
   @ContactUs
-  @footer
+    @footer
     @magnum
     @All
     @brazil
@@ -83,7 +83,7 @@ Feature: Validate Contact Us
       | Test | Testing  | test@test.com |         | commentMissing |
 
   @ContactUs
-  @footer
+    @footer
     @magnum
     @All
     @brazil
@@ -99,7 +99,7 @@ Feature: Validate Contact Us
       | Test | Testing  | testtest.com | For Testing Purpose | inValidEmail |
 
   @ContactUs
-  @footer
+    @footer
     @magnum
     @All
     @brazil
@@ -123,7 +123,30 @@ Feature: Validate Contact Us
     @thailand
   Scenario Outline: Verifying contact us page for Concern over Unilever business or brand
     Given The site is Up and Running
-    When navigate to contact us page and fill the details <name>,<lastname>,<email> and <comment>
+    And navigate to contact us page for Concern
+    When fill the details <name>,<lastname>,<email> and <comment>
     Then user should get message based on <Criteria> Criteria
+
+    Examples:
+      | name | lastname | email         | comment             | Criteria |
+      | Test | Testing  | test@test.com | For Testing Purpose | Valid    |
+
+
+  @ContactUs
+    @P0
+    @footer
+    @magnum
+    @All
+    @brazil
+    @thailand
+  Scenario Outline: Verifying contact us page for Concern over Product
+    Given The site is Up and Running
+    And navigate to contact us page for Concern on Product
+    When filling the details <name>,<lastname>,<email>, <productName>,<barcode>,<code>,<uploadingFile>,<duration>,<buyingMode>,<retailer> and <comments> for a product
+    Then user should get message based on <Criteria> Criteria
+
+    Examples:
+      | name | lastname | email         | productName | barcode    | code       | uploadingFile                          | duration | buyingMode | retailer | comments       | Criteria |
+      | Test | Testing  | test@test.com | icecream    | 2345 62890 | MAY1513BUO | src/test/resources/TestData/Report.pdf | Weekly   | Online     | Testing  | www.magnum.com | Valid    |
 
 
