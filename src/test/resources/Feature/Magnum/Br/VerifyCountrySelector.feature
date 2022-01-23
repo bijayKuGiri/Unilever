@@ -6,6 +6,7 @@ Feature: Verify Country selector
   @brazil
   @magnum
   @All
+  @finland
   Scenario:Verify Country selector
     Given The site is Up and Running
     When i try to click on Select Your Country link in footer

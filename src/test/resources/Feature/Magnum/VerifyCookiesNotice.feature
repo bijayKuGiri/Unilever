@@ -7,6 +7,7 @@ Feature: Validate the CookiesNotice link in Home Page
   @magnum
   @All
   @thailand
+  @finland
   Scenario: Verifying CookiesNotice link navigation in Home Page
     Given The site is Up and Running
     When i try to click on CookiesNotice link in Home Page

@@ -1,9 +1,5 @@
 Feature: Validate the Home Page
-  @MagnumLogo
-  @P1
-  @All
-  @brazil
-  @magnum
+  @MagnumLogo @P1 @All @brazil @magnum @finland
   Scenario: Verifying landing page
     Given The site is Up and Running
     When verifying all the links

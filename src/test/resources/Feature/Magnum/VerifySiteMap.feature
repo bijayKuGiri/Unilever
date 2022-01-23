@@ -7,6 +7,7 @@ Feature: Verify SiteMap Page
   @magnum
   @thailand
   @All
+  @finland
   Scenario: Verify Sitemap Page and Link
     Given The site is Up and Running
     When i try to click on Sitemap link

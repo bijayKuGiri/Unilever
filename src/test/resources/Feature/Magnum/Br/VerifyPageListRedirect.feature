@@ -4,6 +4,7 @@ Feature: Verifying PageList  redirection
   @brazil
   @magnum
   @All
+  @finland
   Scenario: Verifying PageList redirection
     Given The site is Up and Running
     When i try to click on article image

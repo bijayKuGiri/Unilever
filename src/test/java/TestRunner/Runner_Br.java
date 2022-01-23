@@ -14,7 +14,7 @@ import org.junit.runner.RunWith;
 
         glue = "Steps",
         plugin = {"pretty","io.qameta.allure.cucumber6jvm.AllureCucumber6Jvm"},
-        tags = "@brazil",
+        tags = "@finland",
         monochrome = true
 )
 

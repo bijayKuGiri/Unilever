@@ -7,6 +7,7 @@ Feature: Validate Contact Us
     @All
     @brazil
     @thailand
+    @finland
   Scenario Outline: Verifying contact us page
     Given The site is Up and Running
     When navigate to contact us page and fill the details <name>,<lastname>,<email> and <comment>
@@ -23,6 +24,7 @@ Feature: Validate Contact Us
     @brazil
     @All
     @thailand
+    @finland
   Scenario Outline: Verifying contact us page for Empty FirstName
     Given The site is Up and Running
     When navigate to contact us page and fill the details <name>,<lastname>,<email> and <comment>
@@ -39,6 +41,7 @@ Feature: Validate Contact Us
     @brazil
     @All
     @thailand
+    @finland
   Scenario Outline: Verifying contact us page Empty Last Name
     Given The site is Up and Running
     When navigate to contact us page and fill the details <name>,<lastname>,<email> and <comment>
@@ -55,6 +58,7 @@ Feature: Validate Contact Us
     @All
     @brazil
     @thailand
+    @finland
   Scenario Outline: Verifying contact us page Empty Email
     Given The site is Up and Running
     When navigate to contact us page and fill the details <name>,<lastname>,<email> and <comment>
@@ -72,6 +76,7 @@ Feature: Validate Contact Us
     @All
     @brazil
     @thailand
+    @finland
   Scenario Outline: Verifying contact us page for Empty Comment
     Given The site is Up and Running
     When navigate to contact us page and fill the details <name>,<lastname>,<email> and <comment>
@@ -88,6 +93,7 @@ Feature: Validate Contact Us
     @All
     @brazil
     @thailand
+    @finland
   Scenario Outline: Verifying contact us page for wrong Email
     Given The site is Up and Running
     When navigate to contact us page and fill the details <name>,<lastname>,<email> and <comment>
@@ -104,6 +110,7 @@ Feature: Validate Contact Us
     @All
     @brazil
     @thailand
+    @finland
   Scenario Outline: Verifying contact us page without age confirm
     Given The site is Up and Running
     When navigate to contact us page and without Age confirmation fill the details <name>,<lastname>,<email> and <comment>
@@ -121,6 +128,7 @@ Feature: Validate Contact Us
     @All
     @brazil
     @thailand
+    @finland
   Scenario Outline: Verifying contact us page for Concern over Unilever business or brand
     Given The site is Up and Running
     And navigate to contact us page for Concern

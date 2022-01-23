@@ -1,11 +1,7 @@
 Feature: Validate the carousel
 
 
-  @HeroImageCarousel
-  @P1
-  @brazil
-  @magnum
-  @All
+  @HeroImageCarousel @P1 @brazil @magnum @All @finland
 
   Scenario: Verifying carousel available
     Given The site is Up and Running

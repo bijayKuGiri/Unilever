@@ -4,6 +4,7 @@ Feature: Validate the product nutrition
   @brazil
   @All
   @magnum
+  @finland
   Scenario: Verifying product nutrition details
     Given The site is Up and Running
     And Navigate to a product

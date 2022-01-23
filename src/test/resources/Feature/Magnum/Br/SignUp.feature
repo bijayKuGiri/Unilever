@@ -30,7 +30,7 @@ Feature: Validate the Sign Up
   @brazil
   @magnum
   @All
-    Scenario: Verifying signup functionality without lastname
+  Scenario: Verifying signup functionality without lastname
     Given The site is Up and Running
     And navigate to signup page
     When enter all the details without lastname and submit

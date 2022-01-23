@@ -5,6 +5,7 @@ Feature: Validate the Article Page Redirection
   @brazil
   @magnum
   @All
+  @finland
   Scenario: Verifying Article page redirection using image
     Given The site is Up and Running
     And navigate to the Article Page

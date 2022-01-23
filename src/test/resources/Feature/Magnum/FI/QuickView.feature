@@ -1,6 +1,6 @@
 Feature: Validate Quick View button functionality
 
-  @QuickView  @P1  @needToUpdate  @All
+  @QuickView  @P1  @needToUpdate  @All @finland
   Scenario: Verify Quick View button functionality
     Given The site is Up and Running
     And click on the Quick View button in product carousal

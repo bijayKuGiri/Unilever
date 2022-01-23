@@ -7,6 +7,7 @@ Feature: Validate the PDP Page template
   @thailand
   @brazil
   @magnum
+  @finland
   Scenario: Verifying Product Details Template
     Given The site is Up and Running
     When i navigate to a PDP page

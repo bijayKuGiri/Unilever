@@ -5,6 +5,7 @@ Feature: Validate the Product Listing Page template
   @brazil
   @magnum
   @All
+  @finland
   Scenario: Verifying Product Listing Details Template
     Given The site is Up and Running
     When I navigate to a Product Listing page

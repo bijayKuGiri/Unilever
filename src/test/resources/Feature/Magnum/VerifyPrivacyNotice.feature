@@ -6,6 +6,7 @@ Feature: Validate the PrivacyNotice link
   @magnum
   @thailand
   @All
+  @finland
   Scenario: Verifying PrivacyNotice link navigation in home page
     Given The site is Up and Running
     When i try to click on PrivacyNotice link in home page

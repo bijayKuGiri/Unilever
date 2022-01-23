@@ -5,6 +5,7 @@ Feature: Validate the Youtube link
   @All
   @magnum
   @thailand
+  @finland
   Scenario: Verifying Youtube link navigation
     Given The site is Up and Running
     When i try to click on Youtube link

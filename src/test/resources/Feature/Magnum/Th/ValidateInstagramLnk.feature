@@ -5,6 +5,7 @@ Feature: Validate the Instagram link
   @P1
   @magnum
   @thailand
+  @finland
   Scenario: Verifying Instagram link navigation
     Given The site is Up and Running
     When i try to click on Instagram link

@@ -6,6 +6,7 @@ Feature: Validate the facebook link
   @All
   @magnum
   @thailand
+  @finland
   Scenario: Verifying facebook link navigation
     Given The site is Up and Running
     When i try to click on facebook link

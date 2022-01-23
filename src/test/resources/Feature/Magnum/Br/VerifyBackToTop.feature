@@ -5,6 +5,7 @@ Feature: Verifying Back To Start functionality
   @All
   @brazil
   @magnum
+  @finland
   Scenario: Verifying Back to top button redirection
     Given The site is Up and Running
     When i try to click on Back To Start button

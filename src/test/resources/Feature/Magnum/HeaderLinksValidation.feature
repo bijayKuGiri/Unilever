@@ -6,6 +6,7 @@ Feature: Validate the hyperlink validation
   @brazil
   @magnum
   @thailand
+  @finland
   Scenario: Verifying Header Hyperlink loading time
     Given The site is Up and Running
     When i try to get the header links

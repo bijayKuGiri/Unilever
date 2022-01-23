@@ -6,6 +6,7 @@ Feature: Validate the product tab
   @magnum
   @thailand
   @All
+  @finland
   Scenario: Verifying product tabs
     Given The site is Up and Running
     And navigate to Product tab switch
