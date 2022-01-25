@@ -7,9 +7,11 @@ import Utility.Helper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class ProductQuickViewbuttonValidationSteps extends BaseUtilities{
+public class ProductQuickViewbuttonValidationSteps {
 
+    private RemoteWebDriver _driver;
     public ProductListing prodLst;
     public ProductQuickViewbuttonValidationSteps(BaseUtilities base) {_driver= base._driver;}
 

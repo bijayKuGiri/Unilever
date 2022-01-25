@@ -11,16 +11,14 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
-public class VerifyContactUs extends BaseUtilities {
+public class VerifyContactUs  {
 
-    private BaseUtilities base;
     private Home _home;
     private ContactUs _contact;
     SoftAssert softAssert = new SoftAssert();
     private RemoteWebDriver _driver;
 
     public VerifyContactUs(BaseUtilities base) {
-        this.base = base;
         _driver = base._driver;
     }
 
@@ -28,7 +26,7 @@ public class VerifyContactUs extends BaseUtilities {
     @When("navigate to contact us page and fill the details {},{},{} and {}")
     public void navigateToContactUsPageAndFillTheDetailsNameLastnameEmailAndComment(String name, String lastname,
                                                                                     String email, String Comment) throws InterruptedException {
-        _home = new Home(base._driver);
+        _home = new Home(_driver);
         _contact = _home.navContactUs();
         _contact.SelectReason("Question");
         _contact.SelectSubject("Business");
@@ -78,7 +76,7 @@ public class VerifyContactUs extends BaseUtilities {
     @When("navigate to contact us page and without Age confirmation fill the details {},{},{} and {}")
     public void navigateToContactUsPageAndWithoutAgeConfirmationFillTheDetailsNameLastnameEmailAndComment(String name, String lastname,
                                                                                                           String email, String Comment) throws InterruptedException {
-        _home = new Home(base._driver);
+        _home = new Home(_driver);
         _contact = _home.navContactUs();
         _contact.SelectReason("Question");
         _contact.SelectSubject("Business");
@@ -87,7 +85,7 @@ public class VerifyContactUs extends BaseUtilities {
 
     @Given("navigate to contact us page for Concern")
     public void navigate_to_contact_us_page_for_concern() {
-        _home = new Home(base._driver);
+        _home = new Home(_driver);
         _contact = _home.navContactUs();
         _contact.SelectReason("Concern");
         _contact.SelectSubject("Business");
@@ -105,7 +103,7 @@ public class VerifyContactUs extends BaseUtilities {
 
     @Given("navigate to contact us page for Concern on Product")
     public void navigate_to_contact_us_page_for_concern_on_product() {
-        _home = new Home(base._driver);
+        _home = new Home(_driver);
         _contact = _home.navContactUs();
         _contact.SelectReason("Concern");
         _contact.SelectSubject("Product");

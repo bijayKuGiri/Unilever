@@ -9,7 +9,7 @@ import org.openqa.selenium.WebElement;
 import java.util.List;
 
 
-public class CarouselStepsTest extends BaseUtilities {
+public class CarouselStepsTest {
 
     private BaseUtilities base;
     private Home _home;

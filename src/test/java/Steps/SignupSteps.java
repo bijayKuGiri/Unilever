@@ -9,7 +9,7 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
-public class SignupSteps extends BaseUtilities {
+public class SignupSteps {
 
     private SignUp signUp;
     private RemoteWebDriver _driver;

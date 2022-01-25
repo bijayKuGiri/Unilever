@@ -11,7 +11,7 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import java.util.List;
 
 
-public class LanguageSelectionStep extends BaseUtilities {
+public class LanguageSelectionStep {
 
     List<Boolean> results;
     RemoteWebDriver _driver;

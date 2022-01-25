@@ -7,14 +7,12 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
-public class ValidateTwitterSteps extends BaseUtilities {
+public class ValidateTwitterSteps {
 
-    private BaseUtilities base;
     private Home _home;
     private RemoteWebDriver _driver;
     public ValidateTwitterSteps(BaseUtilities base) {
 
-        this.base = base;
         _driver= base._driver;
     }
     @When("i try to click on twitter link")

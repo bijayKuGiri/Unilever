@@ -6,22 +6,21 @@ import Pages.Home;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class HOMETemplateValidationSteps extends BaseUtilities {
+public class HOMETemplateValidationSteps {
 
-    private BaseUtilities base;
+    private RemoteWebDriver _driver;
     private Home _home;
 
     public HOMETemplateValidationSteps(BaseUtilities base) {
-
-        this.base = base;
         _driver = base._driver;
     }
 
     @When("Verifying Home Page Template")
     public void verifying_home_page_template() {
         System.out.println("Verifying Home Page Template");
-        _home=new Home(base._driver);
+        _home=new Home(_driver);
     }
 
     @Then("Home Page Details should be displayed")

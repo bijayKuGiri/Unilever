@@ -5,10 +5,12 @@ import Pages.Home;
 import Pages.PDP;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 
-public class PDPTemplateValidationSteps extends BaseUtilities {
+public class PDPTemplateValidationSteps {
 
+    private RemoteWebDriver _driver;
     private PDP _pdp;
     public PDPTemplateValidationSteps(BaseUtilities base) {
         _driver= base._driver;

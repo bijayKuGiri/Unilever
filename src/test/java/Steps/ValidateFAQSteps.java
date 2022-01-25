@@ -8,14 +8,11 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
-public class ValidateFAQSteps extends BaseUtilities {
-    private BaseUtilities base;
+public class ValidateFAQSteps {
     private Home _home;
     private RemoteWebDriver _driver;
 
     public ValidateFAQSteps(BaseUtilities base) {
-
-        this.base = base;
         _driver = base._driver;
     }
 

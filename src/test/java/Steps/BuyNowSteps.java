@@ -7,7 +7,7 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class BuyNowSteps extends BaseUtilities {
+public class BuyNowSteps {
 
     private Home _home;
     private RemoteWebDriver _driver;

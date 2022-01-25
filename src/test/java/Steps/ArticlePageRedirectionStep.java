@@ -9,7 +9,7 @@ import org.junit.Assert;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
 @Slf4j
-public class ArticlePageRedirectionStep extends BaseUtilities {
+public class ArticlePageRedirectionStep {
 
     private Home _home;
     private final RemoteWebDriver _driver;

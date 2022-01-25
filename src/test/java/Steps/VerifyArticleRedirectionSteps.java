@@ -9,7 +9,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class VerifyArticleRedirectionSteps extends BaseUtilities {
+public class VerifyArticleRedirectionSteps {
 
     private Article article;
     private final RemoteWebDriver _driver;

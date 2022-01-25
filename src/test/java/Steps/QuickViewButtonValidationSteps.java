@@ -10,7 +10,7 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class QuickViewButtonValidationSteps extends BaseUtilities {
+public class QuickViewButtonValidationSteps {
 
     private Home _home;
     private PDP _pdp;

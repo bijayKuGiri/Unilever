@@ -4,26 +4,27 @@ import Base.BaseUtilities;
 import Pages.Home;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 import org.testng.asserts.SoftAssert;
 
 import java.io.IOException;
 
-public class LogoValidation extends BaseUtilities {
+public class LogoValidation {
 
-    private BaseUtilities base;
+    private RemoteWebDriver _driver;
     private Home _home;
     SoftAssert softAssert=new SoftAssert();
 
     public LogoValidation(BaseUtilities base) {
-        this.base = base;
+        this._driver = base._driver;
     }
 
 
     @When("verifying all the links")
     public void verifying_all_the_links() {
         System.out.println("Verifying the Element on the Page");
-        _home=new Home(base._driver);
+        _home=new Home(_driver);
     }
     @Then("All the elements should placed appropriately")
     public void all_the_elements_should_placed_appropriately() throws IOException, InterruptedException {
@@ -38,7 +39,7 @@ public class LogoValidation extends BaseUtilities {
     @When("verifying logo")
     public void verifying_logo() {
         System.out.println("Verifying the Element on the Page");
-        _home=new Home(base._driver);
+        _home=new Home(_driver);
     }
     @Then("Logo should be visible")
     public void logo_should_be_visible() {

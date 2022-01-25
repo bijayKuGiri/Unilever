@@ -9,22 +9,20 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
-public class VerifyTermOfUseNavSteps extends BaseUtilities {
+public class VerifyTermOfUseNavSteps {
 
-    private BaseUtilities base;
     private Home _home;
     private ContactUs _contact;
     private RemoteWebDriver _driver;
 
     public VerifyTermOfUseNavSteps(BaseUtilities base) {
 
-        this.base = base;
         _driver = base._driver;
     }
 
     @Given("Navigate to Contact US Page")
     public void navigate_to_contact_us_page() {
-        _home = new Home(base._driver);
+        _home = new Home(_driver);
         _contact = _home.navContactUs();
     }
 
@@ -50,7 +48,7 @@ public class VerifyTermOfUseNavSteps extends BaseUtilities {
     }
 
     @Then("page should redirect to TermOfUse page")
-    public void page_should_redirect_to_term_of_use_page() throws InterruptedException {
+    public void page_should_redirect_to_term_of_use_page() {
         Assert.assertTrue(_home.IsNavigateTermsOfUse(_driver));
     }
 }

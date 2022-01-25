@@ -10,13 +10,14 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.util.List;
 
-public class MagnumDeliveryFoodPandaNavigationSteps extends BaseUtilities {
+public class MagnumDeliveryFoodPandaNavigationSteps {
     private MagnumDelivery _magnumdelivery;
-    private BaseUtilities base;
+    private RemoteWebDriver _driver;
     private Home _home;
     private List<WebElement> elements;
 

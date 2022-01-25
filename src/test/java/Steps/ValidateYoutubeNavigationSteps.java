@@ -7,7 +7,7 @@ import io.cucumber.java.en.When;
 import org.junit.Assert;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class ValidateYoutubeNavigationSteps extends BaseUtilities {
+public class ValidateYoutubeNavigationSteps {
     private RemoteWebDriver _driver;
     public ValidateYoutubeNavigationSteps(BaseUtilities base) {
 

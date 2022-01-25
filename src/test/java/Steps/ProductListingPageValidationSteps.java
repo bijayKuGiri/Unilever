@@ -6,9 +6,11 @@ import Pages.ProductListing;
 import Utility.Helper;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class ProductListingPageValidationSteps extends BaseUtilities {
+public class ProductListingPageValidationSteps{
 
+    private RemoteWebDriver _driver;
     public ProductListing prodLst;
     public ProductListingPageValidationSteps(BaseUtilities base) {_driver= base._driver;}
 

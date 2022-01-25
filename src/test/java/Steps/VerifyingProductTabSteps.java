@@ -8,14 +8,13 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class VerifyingProductTabSteps extends BaseUtilities {
-    //private BaseUtilities base;
+public class VerifyingProductTabSteps {
+
     private Home _home;
     private final RemoteWebDriver _driver;
 
     public VerifyingProductTabSteps(BaseUtilities base) {
 
-        //this.base = base;
         _driver = base._driver;
     }
 

@@ -7,18 +7,18 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.util.List;
 
-public class UberEatsPageNavigationSteps extends BaseUtilities {
+public class UberEatsPageNavigationSteps
+{
+    private RemoteWebDriver _driver;
     private PDP _pdp;
-    private BaseUtilities base;
-    private Home _home;
-    private List<WebElement> elements;
 
     public UberEatsPageNavigationSteps(BaseUtilities base) {
-        this.base = base;
+        this._driver = base._driver;
     }
 
 

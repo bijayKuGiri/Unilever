@@ -17,17 +17,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FooterLinkLoadValidation extends BaseUtilities {
+public class FooterLinkLoadValidation {
 
-    private BaseUtilities base;
     private Home _home;
     private RemoteWebDriver _driver;
     private List<String> linkTxt = new ArrayList<String>();
     private int footerLinks = 0;
 
     public FooterLinkLoadValidation(BaseUtilities base) {
-
-        this.base = base;
         _driver = base._driver;
     }
 

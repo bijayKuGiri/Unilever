@@ -10,13 +10,14 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
 import java.util.List;
 
 public class MagnumDeliveryGrabmartNavigationSteps extends BaseUtilities {
     private MagnumDelivery _magnumdelivery;
-    private BaseUtilities base;
+    private RemoteWebDriver _driver;
     private Home _home;
     private List<WebElement> elements;
 
@@ -39,7 +40,7 @@ public class MagnumDeliveryGrabmartNavigationSteps extends BaseUtilities {
     }
 
     @Then("it should open Grabmart in next tab")
-    public void Grrabmart_link_should_be_opened_in_next_tab() throws InterruptedException {
+    public void Grabmart_link_should_be_opened_in_next_tab() throws InterruptedException {
         Assert.assertTrue(_magnumdelivery.IsNavigateToGrabmartPage(_driver));
 
     }

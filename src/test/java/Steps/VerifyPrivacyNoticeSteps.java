@@ -10,14 +10,12 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
-public class VerifyPrivacyNoticeSteps extends BaseUtilities {
+public class VerifyPrivacyNoticeSteps {
 
-    private BaseUtilities base;
     private Home _home;
     private ContactUs _contact;
     private RemoteWebDriver _driver;
     public VerifyPrivacyNoticeSteps(BaseUtilities base) {
-        this.base = base;
         _driver= base._driver;
     }
 
@@ -30,7 +28,7 @@ public class VerifyPrivacyNoticeSteps extends BaseUtilities {
 
     @And("Navigate to ContactUS Page")
     public void navigateToContactUSPage() {
-        _home=new Home(base._driver);
+        _home=new Home(_driver);
         _contact=_home.navContactUs();
     }
 

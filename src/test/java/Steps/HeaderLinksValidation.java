@@ -20,15 +20,13 @@ import org.testng.asserts.SoftAssert;
 
 
 
-public class HeaderLinksValidation extends BaseUtilities {
+public class HeaderLinksValidation {
 
-    private BaseUtilities base;
     private Home _home;
     private List<String> linkTxt=new ArrayList<String>();
     private int links=0;
+    private RemoteWebDriver _driver;
     public HeaderLinksValidation(BaseUtilities base) {
-
-        this.base = base;
         _driver= base._driver;
     }
 

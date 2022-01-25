@@ -13,15 +13,12 @@ import org.testng.Assert;
 import java.util.List;
 import java.util.Random;
 
-public class ValidateProductDetailsSteps extends BaseUtilities {
+public class ValidateProductDetailsSteps {
 
-    private BaseUtilities base;
     private Home _home;
     private RemoteWebDriver _driver;
     private List<WebElement> lstProducts;
     public ValidateProductDetailsSteps(BaseUtilities base) {
-
-        this.base = base;
         _driver= base._driver;
     }
     @When("verifying the Products")

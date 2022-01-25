@@ -252,7 +252,7 @@ public class ContactUs extends Helper {
         Helper.EnterText(driver, txtProductName, productname);
         Helper.EnterText(driver, txtProductBarCode, barcode);
         Helper.EnterText(driver, txtProductionCode, code);
-        lnkFileUpload.sendKeys(uploadfile);
+        //lnkFileUpload.sendKeys(uploadfile);
         Helper.selectFromDDn(driver,duration,ddnProductUse);
         Helper.selectFromDDn(driver,buyingMode,ddnBuyingMode);
         Helper.EnterText(driver, txtRetailer, retailer);

@@ -7,23 +7,24 @@ import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import lombok.var;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
-public class NutritionDetailsSteps extends BaseUtilities {
+public class NutritionDetailsSteps {
 
-    private final BaseUtilities base;
+    private final RemoteWebDriver _driver;
     private Home _home;
 
     public NutritionDetailsSteps(BaseUtilities base) {
-        this.base = base;
+        this._driver = base._driver;
     }
 
     @And("Navigate to a product")
     public void navigate_to_a_product() {
-        _home=new Home(base._driver);
+        _home=new Home(_driver);
         var lstProducts= _home.getProducts();
         Assert.assertTrue(lstProducts.size()>0,"Expected more than 0 products should be available on the page");
-        Helper.scrollAndClick(base._driver, lstProducts.get(1));
+        Helper.scrollAndClick(_driver, lstProducts.get(1));
         Assert.assertTrue(_home.IsSummeryExist());
     }
     @When("i try to click on nutrition details")

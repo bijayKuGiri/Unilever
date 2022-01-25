@@ -15,9 +15,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import java.io.IOException;
 import java.util.List;
 
-public class CookiesSteps extends BaseUtilities {
+public class CookiesSteps {
 
-    private BaseUtilities base;
     private Home _home;
     private List<WebElement> elements;
     private RemoteWebDriver _driver;

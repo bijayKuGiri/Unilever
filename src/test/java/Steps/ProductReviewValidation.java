@@ -14,7 +14,8 @@ import org.testng.Assert;
 import java.util.List;
 import java.util.Random;
 
-public class ProductReviewValidation extends BaseUtilities {
+public class ProductReviewValidation {
+
 
     private Home _home;
     private final RemoteWebDriver _driver;

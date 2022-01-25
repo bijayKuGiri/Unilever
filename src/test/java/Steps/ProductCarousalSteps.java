@@ -6,7 +6,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class ProductCarousalSteps extends BaseUtilities {
+public class ProductCarousalSteps {
     private Home _home;
     private final RemoteWebDriver _driver;
 

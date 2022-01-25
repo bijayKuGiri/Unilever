@@ -8,7 +8,7 @@ import org.junit.Assert;
 import org.openqa.selenium.remote.RemoteWebDriver;
 //import org.testng.Assert;
 
-public class VerifySearchSteps extends BaseUtilities {
+public class VerifySearchSteps {
 
     private Home _home;
     private RemoteWebDriver _driver;

@@ -7,14 +7,11 @@ import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.testng.Assert;
 
-public class BackToTopSteps extends BaseUtilities{
-    private BaseUtilities base;
+public class BackToTopSteps{
     private Home _home;
     private RemoteWebDriver _driver;
 
     public BackToTopSteps(BaseUtilities base) {
-
-        this.base = base;
         _driver = base._driver;
     }
 

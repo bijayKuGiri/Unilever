@@ -8,11 +8,15 @@ import Utility.Helper;
 import io.cucumber.java.en.And;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class ProductFindOutMoreButtonValidationSteps extends BaseUtilities{
-
+public class ProductFindOutMoreButtonValidationSteps {
+    private RemoteWebDriver _driver;
     private PDP _pdp;
-    public ProductFindOutMoreButtonValidationSteps(BaseUtilities base) {_driver= base._driver;}
+
+    public ProductFindOutMoreButtonValidationSteps(BaseUtilities base) {
+        _driver = base._driver;
+    }
 
     @And("click on Find out more button, redirected to PDP page")
     public void iTryToClickOnFindOutMoreButton() {

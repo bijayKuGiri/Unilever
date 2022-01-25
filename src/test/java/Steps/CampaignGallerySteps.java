@@ -7,7 +7,7 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class CampaignGallerySteps extends BaseUtilities {
+public class CampaignGallerySteps {
 
     private BaseUtilities base;
     private MagnumTowel magnumTowel;

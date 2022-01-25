@@ -8,14 +8,12 @@ import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
 import org.openqa.selenium.remote.RemoteWebDriver;
 
-public class VerifyVideosSteps extends BaseUtilities {
+public class VerifyVideosSteps {
 
     private MagnumTowel magnumTowel;
     private final RemoteWebDriver _driver;
 
     public VerifyVideosSteps(BaseUtilities base) {
-
-        //this.base = base;
         _driver = base._driver;
     }
 
