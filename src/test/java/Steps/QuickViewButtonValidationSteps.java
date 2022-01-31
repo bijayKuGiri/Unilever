@@ -19,9 +19,10 @@ public class QuickViewButtonValidationSteps {
     public QuickViewButtonValidationSteps(BaseUtilities base) {
         _driver = base._driver;
     }
-    @And("click on the Quick View button in product carousal")
-    public void click_on_the_Quick_View_button_in_product_carousal() {
+    @And("click on the Quick View button in product carousal on campaign page")
+    public void click_on_the_Quick_View_button_in_product_carousal_on_campaign_page() {
         _home=new Home(_driver);
+        _home.GoToCampaignMagnumBillionairePage(_driver);
         _home.ClickOnQuickView(_driver);
     }
 

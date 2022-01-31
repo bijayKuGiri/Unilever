@@ -1,17 +1,21 @@
 package Utility;
 
 
+import Base.BaseUtilities;
+import io.github.bonigarcia.wdm.WebDriverManager;
 import lombok.var;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.openqa.selenium.*;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.testng.Assert;
 import org.w3c.dom.Document;
 
 import javax.management.InvalidApplicationException;
@@ -20,15 +24,25 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Collections;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 
 
 public class Helper {
 
+    public static BaseUtilities utils;
+
+    static {
+        utils = new BaseUtilities();
+    }
+
     public static String filePath = "src/test/resources/config.xml";
     public static String jsonfilePath = "src/test/resources/environment.json";
+
+    public Helper (BaseUtilities baseUtilities) {
+        utils = baseUtilities;
+    }
 
     public static String getNodeValue(String path, String nodeName) {
         try {
@@ -194,6 +208,10 @@ public class Helper {
         return item != null;*/
     }
 
+    public static Boolean verifyNoCookieBannerVisible(RemoteWebDriver _driver) {
+        return _driver.findElements(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler")).size() > 0;
+    }
+
     public static void handleCookie(RemoteWebDriver _driver) {
         if (_driver.findElements(By.cssSelector("div#onetrust-button-group-parent>div>button#onetrust-accept-btn-handler")).size() <= 0)
             return;
@@ -290,5 +308,45 @@ public class Helper {
         _driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
     }
 
+    public static void setUp_withoutClearCookie(RemoteWebDriver _driver) {
+        System.out.println("setup process start without clearing cookie cache");
+        SelectBrowserAgain(Browsertype.CHROME);
+        utils._driver = _driver;
+
+    }
+
+    public static void SelectBrowserAgain(Browsertype browser) {
+
+        if (browser == Browsertype.CHROME) {
+            WebDriverManager.chromedriver().setup();
+            ChromeOptions options = new ChromeOptions();
+            options.setUnhandledPromptBehaviour(UnexpectedAlertBehaviour.ACCEPT_AND_NOTIFY);
+            options.addArguments("enable-automation");
+            if (Objects.requireNonNull(Helper.getNodeValue(Helper.filePath, "headless")).equalsIgnoreCase("yes"))
+                options.addArguments("--headless");
+            options.addArguments("--window-size=1920,1080");
+            options.addArguments("--no-sandbox");
+            options.addArguments("--disable-extensions");
+            options.addArguments("--dns-prefetch-disable");
+            options.addArguments("--disable-gpu");
+            options.setExperimentalOption("excludeSwitches", Collections.singletonList("enable-automation"));
+            options.setPageLoadStrategy(PageLoadStrategy.NORMAL);
+            RemoteWebDriver _driver = new ChromeDriver(options);
+            Helper.WaitForPageLoad(_driver, 60);
+        } else if (browser == Browsertype.EDGE) {
+            System.out.println("Initialise Edge Browser");
+        } else if (browser == Browsertype.FIREFOX) {
+            System.out.println("Initialise Firefox Browser");
+        } else {
+            Assert.fail("Please Select a Browser");
+        }
+
+    }
+}
+
+enum Browsertype {
+    CHROME,
+    FIREFOX,
+    EDGE
 
 }

@@ -82,6 +82,9 @@ public class Home {
     @FindBy(xpath = "//a[text()='© 2021 Copyright Unilever ']")
     WebElement lnkCopyWrite;
 
+    @FindBy(xpath = "//span[text()='Tutustu Magnum Double Gold Caramel Billionaire']")
+    WebElement ButtonForCampaignRedirection;
+
    /* @FindBy(css = "div.search-list-label")
     WebElement searchResult;*/
 
@@ -179,7 +182,8 @@ public class Home {
     @FindBy(xpath = "//ol[@role='tablist' and @class='cmp-tabs__tablist']//parent::div")
     WebElement productTabImages;
 
-    @FindBy(xpath = "//li[@class='o-quick-panel c-product-listing-v2-quickview clearfix active']/div/div/div[2]/div[3]/a")
+    //@FindBy(xpath = "//li[@class='o-quick-panel c-product-listing-v2-quickview clearfix active']/div/div/div[2]/div[3]/a")
+    @FindBy(css = "a.o-btn.o-btn--primary")
     WebElement FindOutMoreButton;
 
     public void IsHeaderDisplayed() {
@@ -841,25 +845,28 @@ public class Home {
             return false;
     }
 
+    public void GoToCampaignMagnumBillionairePage(RemoteWebDriver _driver) {
+        Helper.scrollAndClick(_driver, ButtonForCampaignRedirection );
+    }
+
     public void ClickOnQuickView(RemoteWebDriver _driver) {
-        var quickView = _driver.findElements(By.cssSelector("button.quick-view-btn"));
+        var quickView = _driver.findElements(By.cssSelector("button.quickview__button"));
         Random rand = new Random();
-        int upperbound = quickView.size() - 2;
+        int upperbound = quickView.size() - 1;
         int int_random = rand.nextInt(upperbound);
-        Helper.scrollClick(_driver,quickView.get(int_random));
-        //buyItems.get(int_random).click();
+        Helper.scrollAndClick(_driver,quickView.get(int_random));
     }
 
     public Boolean verifyQuickViewpopup(RemoteWebDriver _driver) {
 
-        if (_driver.findElements(By.cssSelector("h2.c-product-listing-v2-quickview__productname")).size() > 0)
+        if (_driver.findElements(By.cssSelector("div.quickview__panel")).size() > 0)
             return true;
         else
             return false;
     }
 
     public PDP ClickOnFindOutMoreButton(RemoteWebDriver _driver) {
-        Helper.click(driver, FindOutMoreButton);
+        Helper.scrollAndClick(driver, FindOutMoreButton);
         return new PDP(_driver);
 
     }
@@ -891,4 +898,6 @@ public class Home {
         driver.manage().timeouts().pageLoadTimeout(40, TimeUnit.SECONDS);
         return driver;
     }
+
+
 }

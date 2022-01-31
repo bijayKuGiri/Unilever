@@ -61,4 +61,6 @@
 "Verifying Product Listing Details Template","ReviewRating","Yes"
 "Verifying BuyNow functionality","BuyNow","Yes"
 "Verifying Shop now functionality using vendor","BuyNow","Yes"
+"Verifying behavior of the site when cookie accepted","CookieConsent","Yes"
+"Verify Quick View button functionality","QuickView","Yes"
 

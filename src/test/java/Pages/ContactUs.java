@@ -3,7 +3,6 @@ package Pages;
 import Utility.Helper;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.FindBy;
@@ -19,6 +18,7 @@ public class ContactUs extends Helper {
     private boolean isValid = false;
 
     public ContactUs(RemoteWebDriver _driver) {
+        super(utils);
         Helper.WaitForPageLoad(_driver, 60);
         PageFactory.initElements(_driver, this);
         driver = _driver;
