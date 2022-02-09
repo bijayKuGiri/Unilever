@@ -91,8 +91,11 @@ public class Home {
     @FindBy(css = "img[title='Magnum Logo']")
     WebElement Magnumlogo;
 
-    @FindBy(css = ".cmp-accordion__title")
+    @FindBy(css = "button.cmp-accordion__button")
     WebElement lnkNutritionDetails;
+
+    @FindBy(css = "div.cmp-teaser__description>p>a")
+    WebElement ProductredirectionButton;
 
     @FindBy(css = "button.cmp-button[data-target='#searchmodal']")
     WebElement icnSearch;
@@ -103,7 +106,7 @@ public class Home {
     @FindBy(css = ".search-bar-btn")
     WebElement lblSearch;
 
-    @FindBy(css = "section.kr-summary-section>div")
+    @FindBy(css = "div.productInfoItem")
     WebElement summarySection;
 
     @FindBy(css = "#onetrust-button-group>#onetrust-pc-btn-handler")
@@ -385,6 +388,10 @@ public class Home {
     public List<WebElement> getProducts() {
         return driver.findElements(By.xpath("//div[contains(@class,'button button--primary') or contains(@class,'button button--secondary')]//a"));
         ////a[@class='cmp-button' and not(@target)]//span[@class='cmp-button__text']
+    }
+
+    public void clickOnProductredirectionButton() {
+        Helper.scrollAndClick(driver, ProductredirectionButton);
     }
 
     public List<String> getLinkText() {
